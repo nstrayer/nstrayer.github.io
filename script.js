@@ -13,7 +13,7 @@ if (siteW < siteH){ //if landscape device, ala mobile
 	w = 0.3 * (siteW),
 	radius = 45;
 }
-	
+
 var	selectorWidth = w * 0.8, //Width of open/close menu button
 	selectorHeight = h * 0.055,
 	selectorText = selectorHeight * 0.8,
@@ -29,14 +29,14 @@ var cRed   = "#E74327",
 	cGrey  = "#3D4C53";
 
 var menuData = [{"name": "me",       "color": cRed  },
-				{"name": "resume",   "color": cBrown}, 
+				{"name": "resume",   "color": cBrown},
 				{"name": "projects", "color": cBlue },
 				{"name": "contact",  "color": cGreen}
 		 	   ]
 
 var menuYScale = d3.scale.ordinal()
 					.domain(d3.range(menuData.length))
-					.rangeRoundBands([radius*1.5, h - radius*0.5]); 
+					.rangeRoundBands([radius*1.5, h - radius*0.5]);
 
 var menuSelectionBar = d3.select("#menuSelection")
 						.append("svg")
@@ -51,7 +51,7 @@ var svg = d3.select("#menuBar")
 var menuAction = function(whatToDo){
 	if (whatToDo == "draw"){
 		d3.selectAll(".sectionDivs").classed("blurred", true)
-		changeSelectorText("close menu")		
+		changeSelectorText("close menu")
 		d3.select("#menuBar").style("z-index", 999)
 		svg.selectAll("circle")
 			.data(menuData)
@@ -59,7 +59,7 @@ var menuAction = function(whatToDo){
 			.append("circle")
 			.attr("class","menuBubbles")
 			.attr("cx", w/2)
-			.attr("cy", -radius) //Start outside of window to slide down. 
+			.attr("cy", -radius) //Start outside of window to slide down.
 			.attr("fill", function(d) {return d.color})
 			.transition()
 			.duration(400)
@@ -118,7 +118,7 @@ var menuAction = function(whatToDo){
 		svg.selectAll(".menuText")
 			.transition()
 			.attr("y", -radius)
-			.attr("x", w/2) 
+			.attr("x", w/2)
 			.remove()
 	}
 }
@@ -148,7 +148,7 @@ menuSelectionBar.append("text")
 	.attr("x", w/2)
 	.attr("y", selectorHeight/2 + 7)
 	.attr("text-anchor", "middle")
-	.text("menu")
+	.text("navigate")
 	.attr("fill", "white")
 	.attr("font-family", "optima")
 	.attr("font-size", selectorText)
@@ -166,8 +166,8 @@ function hoveredSelector(how){
 	if (how == "in"){
 		var opacity = 1
 	} else {
-		var opacity = 0.5 
-	}	
+		var opacity = 0.5
+	}
 	d3.select("#selector")
 		.transition()
 		.duration(600)
@@ -189,7 +189,7 @@ function changeSelectorText(whatToSay){
 
 function clickedSelector(){
 		if (menuOpen){
-			menuAction("close")		
+			menuAction("close")
 			return false
 		} else {
 			menuAction("draw")
@@ -201,4 +201,3 @@ function divSwitcher(switchTo){
 	d3.selectAll(".sectionDivs").classed("hidden", true)
 	d3.selectAll(switchTo).classed("hidden", false)
 }
-
