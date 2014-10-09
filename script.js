@@ -1,10 +1,10 @@
-var padding = 8,
-	siteW = parseFloat(d3.select("body").style("width").slice(0,-2)),
-	siteH = parseFloat(d3.select("#menuBar").style("height").slice(0,-2)),
-	h = siteH,
-	w,
-	radius
-	menuTextSize;
+var  padding = 8,
+			siteW = parseFloat(d3.select("body").style("width").slice(0,-2)),
+			siteH = parseFloat(d3.select("#menuBar").style("height").slice(0,-2)),
+			h = siteH,
+			w,
+			radius
+			menuTextSize;
 
 if (siteW < siteH){ //if landscape device, ala mobile
 	w = siteW,
@@ -14,45 +14,48 @@ if (siteW < siteH){ //if landscape device, ala mobile
 	radius = 45;
 }
 
-var	selectorWidth = w * 0.8, //Width of open/close menu button
-	selectorHeight = h * 0.055,
-	selectorText = selectorHeight * 0.8,
-	menuOpen = false,
-	menuTextSize = radius * 0.5, //Start with menu closed
-	divSelection;
+var  selectorWidth = w * 0.8, //Width of open/close menu button
+		selectorHeight = h * 0.055,
+		selectorText = selectorHeight * 0.8,
+		menuOpen = false,
+		menuTextSize = radius * 0.5, //Start with menu closed
+		divSelection;
 
 
 var cRed   = "#E74327",
-	cBrown = "#E8940C",
-	cBlue  = "#0CBDE8",
-	cGreen = "#98C000",
-	cGrey  = "#3D4C53";
+	   cBrown = "#E8940C",
+		cBlue  = "#0CBDE8",
+		cGreen = "#98C000",
+		cGrey  = "#3D4C53";
 
-var menuData = [{"name": "me",       "color": cRed  },
-				{"name": "resume",   "color": cBrown},
-				{"name": "projects", "color": cBlue },
-				{"name": "contact",  "color": cGreen}
-		 	   ]
+var menuData = [  {"name": "me",        "color": cRed   },
+									{"name": "resume",  "color": cBrown},
+									{"name": "projects", "color": cBlue   },
+									{"name": "contact",  "color": cGreen }
+		 	   				]
 
 var menuYScale = d3.scale.ordinal()
-					.domain(d3.range(menuData.length))
-					.rangeRoundBands([radius*1.5, h - radius*0.5]);
+													.domain(d3.range(menuData.length))
+													.rangeRoundBands([radius*1.5, h - radius*0.5]);
 
 var menuSelectionBar = d3.select("#menuSelection")
-						.append("svg")
-						.attr("height", selectorHeight)
-						.attr("width",  w)
+													.append("svg")
+													.attr("height", selectorHeight)
+													.attr("width",  w)
 
 var svg = d3.select("#menuBar")
-				.append("svg")
-				.attr("height", h)
-				.attr("width",  w)
+						.append("svg")
+						.attr("height", h)
+						.attr("width",  w)
+
+
 
 var menuAction = function(whatToDo){
 	if (whatToDo == "draw"){
 		d3.selectAll(".sectionDivs").classed("blurred", true)
 		changeSelectorText("close menu")
 		d3.select("#menuBar").style("z-index", 999)
+
 		svg.selectAll("circle")
 			.data(menuData)
 			.enter()
@@ -63,7 +66,6 @@ var menuAction = function(whatToDo){
 			.attr("fill", function(d) {return d.color})
 			.transition()
 			.duration(400)
-			// .ease("quad")
 			.attr("cy", function(d,i){ return menuYScale(i) }) //draw the circles descending the div
 			.attr("cx", function(d,i) { return menuXPos(i) })
 			.attr("r" , radius)
@@ -92,9 +94,7 @@ var menuAction = function(whatToDo){
 			.text(function(d){return d.name})
 			.transition()
 			.duration(400)
-			// .ease("quad")
-			// .attr("y", function(d,i){ return ( radius*2 + ((h*i)/5)) + 6.5 })
-			.attr("y", function(d,i){ return menuYScale(i) })
+			.attr("y", function(d,i){ return (menuYScale(i) + menuTextSize/4)})
 			.attr("x", function(d,i){ return menuXPos(i) })
 			.each("end", function(){ //avoids transition getting messed up by interactions.
 				svg.selectAll(".menuText").on("click", function(){
@@ -146,7 +146,7 @@ menuSelectionBar.append("rect")
 menuSelectionBar.append("text")
 	.attr("id", "selectorText")
 	.attr("x", w/2)
-	.attr("y", selectorHeight/2 + 7)
+	.attr("y", selectorHeight/2 + selectorText/3.5)
 	.attr("text-anchor", "middle")
 	.text("navigate")
 	.attr("fill", "white")
