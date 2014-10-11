@@ -1,3 +1,22 @@
+function whereToLoad(desiredLocation){
+	var options = ["resume", "me", "contact", "projects"]
+	if (options.indexOf(desiredLocation) > -1 ){
+		d3.selectAll(".sectionDivs").classed("hidden", true)
+
+		d3.select("#" + desiredLocation + "Div")
+			.classed("hidden",false);
+		}
+	}
+
+var desiredLocation;
+
+try{
+	desiredLocation = window.location.href.split("?")[1].replace("/","")
+	whereToLoad(desiredLocation)
+} catch (err){
+	//dont run
+}
+
 var  padding = 8,
 			siteW = parseFloat(d3.select("body").style("width").slice(0,-2)),
 			siteH = parseFloat(d3.select("#menuBar").style("height").slice(0,-2)),
