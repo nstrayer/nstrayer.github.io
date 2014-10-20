@@ -22,7 +22,7 @@ var  padding = 8,
 			siteH = parseFloat(d3.select("#menuBar").style("height").slice(0,-2)),
 			h = siteH,
 			w,
-			radius
+			radius,
 			menuTextSize;
 
 if (siteW < siteH){ //if landscape device, ala mobile
@@ -33,7 +33,7 @@ if (siteW < siteH){ //if landscape device, ala mobile
 	radius = 45;
 }
 
-var  selectorWidth = w * 0.8, //Width of open/close menu button
+var   selectorWidth = w * 0.8, //Width of open/close menu button
 		selectorHeight = h * 0.055,
 		selectorText = selectorHeight * 0.8,
 		menuOpen = false,
@@ -41,35 +41,59 @@ var  selectorWidth = w * 0.8, //Width of open/close menu button
 		divSelection;
 
 
-var cRed   = "#E74327",
+var   cRed   = "#E74327",
 	   cBrown = "#E8940C",
 		cBlue  = "#0CBDE8",
 		cGreen = "#98C000",
-		cGrey  = "#3D4C53";
+		cGrey  = "#3D4C53",
+		menuData = [{"name": "me",       "color": cRed  },
+						{"name": "resume",   "color": cBrown},
+						{"name": "projects", "color": cBlue },
+						{"name": "contact",  "color": cGreen}
+	   			],
+		selected; //for mousing over the menu text.
 
-var menuData = [  {"name": "me",        "color": cRed   },
-									{"name": "resume",  "color": cBrown},
-									{"name": "projects", "color": cBlue   },
-									{"name": "contact",  "color": cGreen }
-		 	   				]
+var menuYScale =   d3.scale.ordinal()
+							.domain(d3.range(menuData.length))
+							.rangeRoundBands([radius*1.5, h - radius*0.5]);
 
-var menuYScale = d3.scale.ordinal()
-													.domain(d3.range(menuData.length))
-													.rangeRoundBands([radius*1.5, h - radius*0.5]);
+function menuXPos(index){
+	if (index%2 == 0) { //if even draw on left side
+		return radius*1.5
+	} else {
+		return (w - radius*1.5)
+	}
+}
 
-var menuSelectionBar = d3.select("#menuSelection")
-													.append("svg")
-													.attr("height", selectorHeight)
-													.attr("width",  w)
+var menuSelectionBar =   d3.select("#menuSelection")
+									.append("svg")
+									.attr("height", selectorHeight)
+									.attr("width",  w)
 
 var svg = d3.select("#menuBar")
-						.append("svg")
-						.attr("height", h)
-						.attr("width",  w)
+				.append("svg")
+				.attr("height", h)
+				.attr("width",  w)
 
 
+function mouseoverMenu(what, type){ //control behavior of moused over menu bubbles
+	if (type == "in"){
+		d3.select(what)
+			.transition()
+			.ease("log")
+			.attr("opacity", 0.7)
+			.attr("r", radius*1.5)
+	}else {
+		d3.select(what)
+			.transition()
+			.ease("log")
+			.attr("opacity", 1)
+			.attr("r", radius)
+	}
+}
 
-var menuAction = function(whatToDo){
+
+function menuAction(whatToDo){
 	if (whatToDo == "draw"){
 		d3.selectAll(".sectionDivs").classed("blurred", true)
 		changeSelectorText("close menu")
@@ -90,12 +114,19 @@ var menuAction = function(whatToDo){
 			.attr("r" , radius)
 			.attr("id", function(d) {return (d.name + "Circ")})
 			.each("end", function(){ //avoids transition getting messed up by interactions.
-				svg.selectAll("circle").on("click", function(){
-					divSelection = "#" + d3.select(this).attr("id").slice(0,-4) + "Div"
-					divSwitcher(divSelection)
-					menuAction("close")
-					menuOpen = false
-				})
+				svg.selectAll("circle")
+					.on("click", function(){
+						divSelection = "#" + d3.select(this).attr("id").slice(0,-4) + "Div"
+						divSwitcher(divSelection)
+						menuAction("close")
+						menuOpen = false
+					})
+					.on("mouseover", function(){
+						mouseoverMenu(this, "in")
+					})
+					.on("mouseout", function(d){
+						mouseoverMenu(this, "out")
+					})
 			})
 
 		svg.selectAll(".menuText")
@@ -116,12 +147,20 @@ var menuAction = function(whatToDo){
 			.attr("y", function(d,i){ return (menuYScale(i) + menuTextSize/4)})
 			.attr("x", function(d,i){ return menuXPos(i) })
 			.each("end", function(){ //avoids transition getting messed up by interactions.
-				svg.selectAll(".menuText").on("click", function(){
-					divSelection = "#" + d3.select(this).attr("id")
-					divSwitcher(divSelection)
-					menuAction("close")
-					menuOpen = false
-				})
+				svg.selectAll(".menuText")
+					.on("click", function(){
+						divSelection = "#" + d3.select(this).attr("id")
+						divSwitcher(divSelection)
+						menuAction("close")
+						menuOpen = false
+					})
+					.on("mouseover", function(){
+						selected = "#" + d3.select(this).text() + "Circ"
+						mouseoverMenu(selected, "in")
+					})
+					.on("mouseout", function(d){
+						mouseoverMenu(selected, "out")
+					})
 			})
 
 
@@ -141,6 +180,7 @@ var menuAction = function(whatToDo){
 			.remove()
 	}
 }
+
 
 menuSelectionBar.append("rect")
 	.attr("id", "selector")
@@ -193,13 +233,6 @@ function hoveredSelector(how){
 		.attr("fill-opacity", opacity)
 }
 
-function menuXPos(index){
-	if (index%2 == 0) { //if even draw on left side
-		return radius
-	} else {
-		return (w - radius)
-	}
-}
 
 function changeSelectorText(whatToSay){
 	menuSelectionBar.select("#selectorText")
