@@ -40,7 +40,8 @@ var cRed     = "#E74327",
 
 if (siteW < siteH){ //if landscape device, ala mobile
 	width = siteW,
-	radius = 0.2 * w;
+	radius = 0.5 * width;
+	console.log("mobile!")
 } else {
 	width = 0.3 * (siteW),
 	radius = 250;
@@ -67,12 +68,12 @@ var svg = d3.select("#menuBar")
 	.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 var arc = d3.svg.arc()
-	.outerRadius(radius - 100)
-	.innerRadius(radius - 200);
+	.outerRadius(radius*.7)
+	.innerRadius(radius*.3);
 
 var selectedArc = d3.svg.arc()
-	.outerRadius(radius - 80)
-	.innerRadius(radius - 200);
+	.outerRadius(radius*.85)
+	.innerRadius(radius*.3);
 
 var shrunkArc =
 	d3.svg.arc()
@@ -93,11 +94,16 @@ function spin(path, duration) {
 path.transition("spin")
 	.duration(duration)
 	.attrTween("transform", function() { return d3.interpolateString("rotate(0)", "rotate(720)"); })
-	.each("end", function(){
-		//shrink()
+	.each("end", function(d,i){
+
+		if (i == 3){ //only want to run it once now 4 sections, probably shouldent hardcode.
 		d3.selectAll(".sectionDivs").classed("blurred", false) //Unblur the sections
-		divSwitcher(divSelection)
-		d3.select("#menuBar").style("z-index", -999)})
+		if(!menuBar){
+			divSwitcher(divSelection)
+			console.log("triggered")}
+		menuBar = false
+		d3.select("#menuBar").style("z-index", -999)}})
+
 }
 
 function shrink(){
@@ -191,7 +197,7 @@ menuSelectionBar.append("text")
 		hoveredSelector("out")
 	})
 
-function hoveredSelector(how){
+function hoveredSelector(how){ //hover behavior for menu open bar
 	if (how == "in"){
 		var opacity = 1
 	} else {
@@ -209,9 +215,16 @@ function changeSelectorText(whatToSay){
 					.text(whatToSay)
 }
 
+var menuBar = false
+
 function clickedSelector(){
 		if (menuOpen){
+			clicked = true
+			menuBar = true
+			g.call(spin,1000)
+			g.call(shrink)
 			menuAction("close")
+			menuOpen = false
 			return false
 		} else {
 			menuAction("draw")
