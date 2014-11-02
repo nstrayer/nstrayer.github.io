@@ -17,174 +17,143 @@ try{
 	//dont run
 }
 
-var  padding = 8,
-			siteW = parseFloat(d3.select("body").style("width").slice(0,-2)),
-			siteH = parseFloat(d3.select("#menuBar").style("height").slice(0,-2)),
-			h = siteH,
-			w,
-			radius,
-			menuTextSize;
+var cRed     = "#E74327",
+	cBrown   = "#E8940C",
+	cBlue    = "#0CBDE8",
+	cGreen   = "#98C000",
+	cGrey    = "#3D4C53",
+	menuData = [{"name": "me",       "color": cRed  },
+				{"name": "resume",   "color": cBrown},
+				{"name": "projects", "color": cBlue },
+				{"name": "contact",  "color": cGreen}],
+	selected,
+	padding = 8,
+	siteW = parseFloat(d3.select("body").style("width").slice(0,-2)),
+	siteH = parseFloat(d3.select("#menuBar").style("height").slice(0,-2)),
+	height = siteH,
+	width,
+	radius,
+	colors           = [cRed, cBrown, cBlue, cGreen, cGrey],
+	colorCounter     = 0,
+	fauxVals         = ["projects","resume","contact","me"]
+	clicked 		 = false;
 
 if (siteW < siteH){ //if landscape device, ala mobile
-	w = siteW,
+	width = siteW,
 	radius = 0.2 * w;
 } else {
-	w = 0.3 * (siteW),
-	radius = 45;
+	width = 0.3 * (siteW),
+	radius = 250;
 }
 
-var   selectorWidth = w * 0.8, //Width of open/close menu button
-		selectorHeight = h * 0.055,
-		selectorText = selectorHeight * 0.8,
-		menuOpen = false,
-		menuTextSize = radius * 0.5, //Start with menu closed
-		divSelection;
+var selectorWidth  = width * 0.8, //Width of open/close menu button
+	selectorHeight = height * 0.055,
+	selectorText   = selectorHeight * 0.8,
+	menuOpen       = false,
+	menuTextSize   = radius * 0.5, //Start with menu closed
+	divSelection;
 
 
-var   cRed   = "#E74327",
-	   cBrown = "#E8940C",
-		cBlue  = "#0CBDE8",
-		cGreen = "#98C000",
-		cGrey  = "#3D4C53",
-		menuData = [{"name": "me",       "color": cRed  },
-						{"name": "resume",   "color": cBrown},
-						{"name": "projects", "color": cBlue },
-						{"name": "contact",  "color": cGreen}
-	   			],
-		selected; //for mousing over the menu text.
-
-var menuYScale =   d3.scale.ordinal()
-							.domain(d3.range(menuData.length))
-							.rangeRoundBands([radius*1.5, h - radius*0.5]);
-
-function menuXPos(index){
-	if (index%2 == 0) { //if even draw on left side
-		return radius*1.5
-	} else {
-		return (w - radius*1.5)
-	}
-}
-
-var menuSelectionBar =   d3.select("#menuSelection")
-									.append("svg")
-									.attr("height", selectorHeight)
-									.attr("width",  w)
+var menuSelectionBar =d3.select("#menuSelection")
+						.append("svg")
+						.attr("height", selectorHeight)
+						.attr("width",  width)
 
 var svg = d3.select("#menuBar")
-				.append("svg")
-				.attr("height", h)
-				.attr("width",  w)
+			.append("svg")
+			.attr("height", height)
+			.attr("width",  width)
+			.append("g")
+	.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+var arc = d3.svg.arc()
+	.outerRadius(radius - 100)
+	.innerRadius(radius - 200);
 
-function mouseoverMenu(what, type){ //control behavior of moused over menu bubbles
-	if (type == "in"){
-		d3.select(what)
-			.transition()
-			.ease("log")
-			.attr("opacity", 0.7)
-			.attr("r", radius*1.5)
-	}else {
-		d3.select(what)
-			.transition()
-			.ease("log")
-			.attr("opacity", 1)
-			.attr("r", radius)
-	}
+var selectedArc = d3.svg.arc()
+	.outerRadius(radius - 80)
+	.innerRadius(radius - 200);
+
+var shrunkArc =
+	d3.svg.arc()
+		.outerRadius(0)
+		.innerRadius(0);
+
+var pie = d3.layout.pie()
+	.sort(null)
+	.value(function(d) { return 10; });
+
+var g = svg.selectAll(".arc")
+	.data(pie(fauxVals))
+	.enter().append("g")
+	.attr("class", "arc")
+	.attr("id", function(d){return d.data})
+
+function spin(path, duration) {
+path.transition("spin")
+	.duration(duration)
+	.attrTween("transform", function() { return d3.interpolateString("rotate(0)", "rotate(720)"); })
+	.each("end", function(){
+		//shrink()
+		d3.selectAll(".sectionDivs").classed("blurred", false) //Unblur the sections
+		divSwitcher(divSelection)
+		d3.select("#menuBar").style("z-index", -999)})
 }
 
+function shrink(){
+	d3.selectAll("path")
+		.transition()
+		.duration(1000)
+		.attr("d", shrunkArc )
+}
 
 function menuAction(whatToDo){
+
 	if (whatToDo == "draw"){
 		d3.selectAll(".sectionDivs").classed("blurred", true)
 		changeSelectorText("close menu")
 		d3.select("#menuBar").style("z-index", 999)
 
-		svg.selectAll("circle")
-			.data(menuData)
-			.enter()
-			.append("circle")
-			.attr("class","menuBubbles")
-			.attr("cx", w/2)
-			.attr("cy", -radius) //Start outside of window to slide down.
-			.attr("fill", function(d) {return d.color})
-			.transition()
-			.duration(400)
-			.attr("cy", function(d,i){ return menuYScale(i) }) //draw the circles descending the div
-			.attr("cx", function(d,i) { return menuXPos(i) })
-			.attr("r" , radius)
-			.attr("id", function(d) {return (d.name + "Circ")})
-			.each("end", function(){ //avoids transition getting messed up by interactions.
-				svg.selectAll("circle")
-					.on("click", function(){
-						divSelection = "#" + d3.select(this).attr("id").slice(0,-4) + "Div"
-						divSwitcher(divSelection)
-						menuAction("close")
-						menuOpen = false
-					})
-					.on("mouseover", function(){
-						mouseoverMenu(this, "in")
-					})
-					.on("mouseout", function(d){
-						mouseoverMenu(this, "out")
-					})
+		g.append("path")
+			.attr("d", arc)
+			.style("fill", function() { return colorChoose(); })
+			.on("mouseover", function(){
+				if(!clicked){d3.select(this).transition().attr("d",selectedArc)}
+			})
+			.on("mouseout",function(){
+				if(!clicked){d3.select(this).transition().attr("d",arc)
+				}else{d3.select(this).transition().attr("d",shrunkArc)}
+			})
+			.on("click", function(d){
+				clicked = true
+				console.log("#" + d.data + "Div")
+				g.call(spin,1000)
+				g.call(shrink)
+				divSelection = "#" + d.data + "Div"
+				menuAction("close")
+				menuOpen = false
 			})
 
-		svg.selectAll(".menuText")
-			.data(menuData)
-			.enter()
-			.append("text")
-			.attr("class", "menuText")
-			.attr("id", function(d){return d.name + "Div"})
-			.attr("x", w/2)
-			.attr("y", -radius)
-			.attr("text-anchor", "middle")
-			.attr("font-family", "optima")
+		g.append("text")
+			.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+			.attr("dy", ".35em")
 			.attr("fill", "white")
-			.attr("font-size", menuTextSize)
-			.text(function(d){return d.name})
-			.transition()
-			.duration(400)
-			.attr("y", function(d,i){ return (menuYScale(i) + menuTextSize/4)})
-			.attr("x", function(d,i){ return menuXPos(i) })
-			.each("end", function(){ //avoids transition getting messed up by interactions.
-				svg.selectAll(".menuText")
-					.on("click", function(){
-						divSelection = "#" + d3.select(this).attr("id")
-						divSwitcher(divSelection)
-						menuAction("close")
-						menuOpen = false
-					})
-					.on("mouseover", function(){
-						selected = "#" + d3.select(this).text() + "Circ"
-						mouseoverMenu(selected, "in")
-					})
-					.on("mouseout", function(d){
-						mouseoverMenu(selected, "out")
-					})
-			})
+			.attr("font-family", "optima")
+			.style("text-anchor", "middle")
+			.text(function(d) { return d.data; });
 
 
 	} else { //Close menu
-		d3.selectAll(".sectionDivs").classed("blurred", false) //Unblur the sections
+
 		changeSelectorText("menu")	 //Change menu text to open menu
-		d3.select("#menuBar").style("z-index", -999) //send menubar to back of page so text can be selected
-		svg.selectAll(".menuBubbles")
-			.transition()
-			.attr("cy", -radius) //Shoot menu bubbles off screen.
-			.attr("cx", w/2)
-			.remove()
-		svg.selectAll(".menuText")
-			.transition()
-			.attr("y", -radius)
-			.attr("x", w/2)
-			.remove()
+		 //send menubar to back of page so text can be selected
 	}
 }
 
 
 menuSelectionBar.append("rect")
 	.attr("id", "selector")
-	.attr("x", w/2 - selectorWidth/2)
+	.attr("x", width/2 - selectorWidth/2)
 	.attr("y", 0)
 	.attr("rx", 15)
 	.attr("ry", 15)
@@ -194,6 +163,7 @@ menuSelectionBar.append("rect")
 	.attr("fill-opacity", 0.5)
 	.on("click", function(){
 		menuOpen = clickedSelector()
+		clicked = false
 	})
 	.on("mouseover", function(){
 		hoveredSelector("in")
@@ -204,7 +174,7 @@ menuSelectionBar.append("rect")
 
 menuSelectionBar.append("text")
 	.attr("id", "selectorText")
-	.attr("x", w/2)
+	.attr("x", width/2)
 	.attr("y", selectorHeight/2 + selectorText/3.5)
 	.attr("text-anchor", "middle")
 	.text("navigate")
@@ -252,4 +222,13 @@ function clickedSelector(){
 function divSwitcher(switchTo){
 	d3.selectAll(".sectionDivs").classed("hidden", true)
 	d3.selectAll(switchTo).classed("hidden", false)
+}
+
+
+function colorChoose(){
+	colorCounter++
+	if (colorCounter > 4){
+		colorCounter = 0
+	}
+	return colors[colorCounter];
 }
