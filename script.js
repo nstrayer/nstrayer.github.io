@@ -22,10 +22,6 @@ var cRed     = "#E74327",
 	cBlue    = "#0CBDE8",
 	cGreen   = "#98C000",
 	cGrey    = "#3D4C53",
-	menuData = [{"name": "me",       "color": cRed  },
-				{"name": "resume",   "color": cBrown},
-				{"name": "projects", "color": cBlue },
-				{"name": "contact",  "color": cGreen}],
 	selected,
 	padding = 8,
 	siteW = parseFloat(d3.select("body").style("width").slice(0,-2)),
@@ -51,7 +47,7 @@ var selectorWidth  = width * 0.8, //Width of open/close menu button
 	selectorHeight = height * 0.055,
 	selectorText   = selectorHeight * 0.8,
 	menuOpen       = false,
-	menuTextSize   = radius * 0.5, //Start with menu closed
+	menuTextSize   = radius * 0.12, //Start with menu closed
 	divSelection;
 
 
@@ -145,6 +141,7 @@ function menuAction(whatToDo){
 			.attr("dy", ".35em")
 			.attr("fill", "white")
 			.attr("font-family", "optima")
+			.attr("font-size", menuTextSize)
 			.style("text-anchor", "middle")
 			.text(function(d) { return d.data; });
 
