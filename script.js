@@ -120,7 +120,7 @@ function menuAction(whatToDo){
 		d3.select("#menuBar").style("z-index", 999)
 
 		g.append("path")
-			.attr("d", arc)
+			.attr("d", shrunkArc)
 			.style("fill", function() { return colorChoose(); })
 			.on("mouseover", function(){
 				if(!clicked){d3.select(this).transition().attr("d",selectedArc)}
@@ -129,7 +129,6 @@ function menuAction(whatToDo){
 			.on("mouseout",function(){
 				if(!clicked){d3.select(this).transition().attr("d",arc)
 				}else{d3.select(this).transition().attr("d",shrunkArc)}
-				//console.log("moused out of path")
 			})
 			.on("click", function(d){
 				clicked = true
@@ -139,6 +138,8 @@ function menuAction(whatToDo){
 				menuAction("close")
 				menuOpen = false
 			})
+			.transition()
+			.attr("d", arc)
 
 		g.append("text")
 			.attr("id", function(d){return "#" + d.data})
@@ -149,13 +150,7 @@ function menuAction(whatToDo){
 			.attr("font-size", menuTextSize)
 			.on("mouseover", function(d){
 				if(!clicked){ d3.select("#" + d.data).select("path").transition().attr("d",selectedArc)}
-				//console.log("moused into text")
 			})
-			// .on("mouseout",function(){
-			// 	// if(!clicked){d3.select("#" + d.data).select("path").transition().attr("d",arc)
-			// 	// }else{d3.select(this).transition().attr("d",shrunkArc)}
-			// 	console.log("moused out of text")
-			// })
 			.on("click", function(d){
 				clicked = true
 				console.log("#" + d.data + "Div")
