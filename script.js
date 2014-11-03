@@ -10,12 +10,6 @@ function whereToLoad(desiredLocation){
 
 var desiredLocation;
 
-try{
-	desiredLocation = window.location.href.split("?")[1].replace("/","")
-	whereToLoad(desiredLocation)
-} catch (err){
-	//dont run
-}
 
 var cRed     = "#E74327",
 	cBrown   = "#E8940C",
@@ -46,10 +40,17 @@ var radius         = 0.5 * width,
  	selectorWidth  = width * 0.8, //Width of open/close menu button
 	selectorHeight = height * 0.055,
 	selectorText   = selectorHeight * 0.8,
-	menuOpen       = false,
+	menuOpen       = true,
 	menuTextSize   = radius * 0.12, //Start with menu closed
 	divSelection;
 
+try{
+	desiredLocation = window.location.href.split("?")[1].replace("/","")
+	whereToLoad(desiredLocation)
+	menuOpen = false;
+} catch (err){
+	//dont run
+}
 
 var menuSelectionBar =d3.select("#menuSelection")
 						.append("svg")
@@ -171,6 +172,7 @@ function menuAction(whatToDo){
 	}
 }
 
+if (menuOpen){menuAction("draw")}
 
 menuSelectionBar.append("rect")
 	.attr("id", "selector")
