@@ -35,15 +35,14 @@ var cRed     = "#E74327",
 	clicked 		 = false;
 
 if (siteW < siteH){ //if landscape device, ala mobile
-	width = siteW,
-	radius = 0.5 * width;
+	width = siteW
 	console.log("mobile!")
 } else {
-	width = 0.3 * (siteW),
-	radius = 250;
+	width = 0.3 * (siteW);
 }
 
-var selectorWidth  = width * 0.8, //Width of open/close menu button
+var radius         = 0.5 * width,
+ 	selectorWidth  = width * 0.8, //Width of open/close menu button
 	selectorHeight = height * 0.055,
 	selectorText   = selectorHeight * 0.8,
 	menuOpen       = false,
@@ -107,6 +106,7 @@ function shrink(){
 		.transition()
 		.duration(1000)
 		.attr("d", shrunkArc )
+	d3.selectAll(".arc").selectAll("text").remove() //remove the text for the menu exit
 }
 
 function menuAction(whatToDo){
@@ -128,7 +128,6 @@ function menuAction(whatToDo){
 			})
 			.on("click", function(d){
 				clicked = true
-				console.log("#" + d.data + "Div")
 				g.call(spin,1000)
 				g.call(shrink)
 				divSelection = "#" + d.data + "Div"
@@ -137,11 +136,28 @@ function menuAction(whatToDo){
 			})
 
 		g.append("text")
+			.attr("id", function(d){return "#" + d.data})
 			.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
 			.attr("dy", ".35em")
 			.attr("fill", "white")
 			.attr("font-family", "optima")
 			.attr("font-size", menuTextSize)
+			.on("mouseover", function(d){
+				if(!clicked){ d3.select("#" + d.data).select("path").transition().attr("d",selectedArc)}
+			})
+			.on("mouseout",function(){
+				if(!clicked){d3.select("#" + d.data).select("path").transition().attr("d",arc)
+				}else{d3.select(this).transition().attr("d",shrunkArc)}
+			})
+			.on("click", function(d){
+				clicked = true
+				console.log("#" + d.data + "Div")
+				g.call(spin,1000)
+				g.call(shrink)
+				divSelection = "#" + d.data + "Div"
+				menuAction("close")
+				menuOpen = false
+			})
 			.style("text-anchor", "middle")
 			.text(function(d) { return d.data; });
 
