@@ -32,7 +32,8 @@ var cRed     = "#E74327",
 	colors           = [cRed, cBrown, cBlue, cGreen, cGrey],
 	colorCounter     = 0,
 	fauxVals         = ["projects","resume","contact","me"]
-	clicked 		 = false;
+	clicked 		 = false,
+	transitioning    = false;
 
 if (siteW < siteH){ //if landscape device, ala mobile
 	width = siteW
@@ -86,6 +87,7 @@ var g = svg.selectAll(".arc")
 	.attr("id", function(d){return d.data})
 
 function spin(path, duration) {
+transitioning    = true
 path.transition("spin")
 	.duration(duration)
 	.attrTween("transform", function() { return d3.interpolateString("rotate(0)", "rotate(720)"); })
@@ -93,10 +95,11 @@ path.transition("spin")
 
 		if (i == 3){ //only want to run it once now 4 sections, probably shouldent hardcode.
 		d3.selectAll(".sectionDivs").classed("blurred", false) //Unblur the sections
-		if(!menuBar){
-			divSwitcher(divSelection)
-			console.log("triggered")}
+		if(!menuBar){divSwitcher(divSelection)}
 		menuBar = false
+		d3.selectAll("path").remove()
+		clicked       = false
+		transitioning = false
 		d3.select("#menuBar").style("z-index", -999)}})
 
 }
@@ -121,10 +124,12 @@ function menuAction(whatToDo){
 			.style("fill", function() { return colorChoose(); })
 			.on("mouseover", function(){
 				if(!clicked){d3.select(this).transition().attr("d",selectedArc)}
+				//console.log("moused into path")
 			})
 			.on("mouseout",function(){
 				if(!clicked){d3.select(this).transition().attr("d",arc)
 				}else{d3.select(this).transition().attr("d",shrunkArc)}
+				//console.log("moused out of path")
 			})
 			.on("click", function(d){
 				clicked = true
@@ -144,11 +149,13 @@ function menuAction(whatToDo){
 			.attr("font-size", menuTextSize)
 			.on("mouseover", function(d){
 				if(!clicked){ d3.select("#" + d.data).select("path").transition().attr("d",selectedArc)}
+				//console.log("moused into text")
 			})
-			.on("mouseout",function(){
-				if(!clicked){d3.select("#" + d.data).select("path").transition().attr("d",arc)
-				}else{d3.select(this).transition().attr("d",shrunkArc)}
-			})
+			// .on("mouseout",function(){
+			// 	// if(!clicked){d3.select("#" + d.data).select("path").transition().attr("d",arc)
+			// 	// }else{d3.select(this).transition().attr("d",shrunkArc)}
+			// 	console.log("moused out of text")
+			// })
 			.on("click", function(d){
 				clicked = true
 				console.log("#" + d.data + "Div")
@@ -181,8 +188,10 @@ menuSelectionBar.append("rect")
 	.attr("fill", cGrey)
 	.attr("fill-opacity", 0.5)
 	.on("click", function(){
-		menuOpen = clickedSelector()
-		clicked = false
+		if (!transitioning){
+			menuOpen = clickedSelector()
+			clicked = false
+		}
 	})
 	.on("mouseover", function(){
 		hoveredSelector("in")
