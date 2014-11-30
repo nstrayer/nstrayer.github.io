@@ -74,8 +74,8 @@ var selectedArc = d3.svg.arc()
 
 var shrunkArc =
 	d3.svg.arc()
-		.outerRadius(0)
-		.innerRadius(0);
+		.outerRadius(2)
+		.innerRadius(1);
 
 var pie = d3.layout.pie()
 	.sort(null)
