@@ -1,0 +1,98 @@
+body {
+    font-family: optima;
+    min-height: 2000px;
+    padding-top: 10px;
+}
+.axis path, .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.x.axis path {
+    display: none;
+}
+.y.axis path {
+    display: none;
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+.section {
+    width: 96%;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+}
+.pictures {
+    text-align: center
+}
+#resumeDiv {
+    display: none;
+}
+.resumeSections {
+    text-align: center;
+    color: #0CBDE8;
+}
+#resumeButton {
+    border: 1px solid;
+    border-radius: 0.5em;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+.photos {
+    width: 30%;
+    height: 30%;
+}
+img {
+    max-width: 350px;
+    max-height: 350px;
+}
+.projectTitle {
+    font-size: large;
+}
+.wrapper {
+    clear: both;
+    padding-top: 15px;
+    width: 70%;
+}
+.projectPhoto {
+    width: 50%;
+    float: left;
+}
+.projectDescrip {
+    width: 50%;
+    float: left;
+}
+@media screen and (max-width: 400px) {
+    .projectDescrip {
+        text-align: left;
+        float: none;
+        width: auto;
+    }
+    .projectPhoto {
+        float: none;
+        width: auto;
+        clear: left;
+        margin-left:0;
+        margin-right:0;
+    }
+
+    .wrapper {
+        clear: both;
+        padding-top: 15px;
+        width:auto;
+    }
+
+    img {
+        max-width: 100%;
+        max-height: 350px;
+    }
+}
+
+hr {
+    clear: both;
+    padding: 10px;
+}
