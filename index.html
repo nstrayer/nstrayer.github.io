@@ -16,6 +16,7 @@
     <script type="text/javascript" src="js/jquery.localScroll.js"></script>
     <script type="text/javascript" src="js/jquery.scrollTo.js"></script>
 
+
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -28,7 +29,7 @@
                 </button>
                 <a class="navbar-brand" href="#main">Nick Strayer</a>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
+            <div id="navbar" class="navbar-collapse navbar-right collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="#about">About</a>
                     </li>
@@ -50,6 +51,7 @@
 
     <hr>
 
+<div class = "container">
     <div id="meDiv" class="section">
         <h1><a name="about">About</a>
         </h1>
@@ -79,37 +81,38 @@
 
     <hr>
 
+
     <div id="projectsDiv" class="section">
 
-        <h1><a name="projects">Projects</a>
+        <h1 class = "col-xs-12"><a name="projects">Projects</a>
         </h1>
 
-        <div class="wrapper">
-            <div class="projectPhoto">
+        <div class="row ">
+            <div class="col-xs-12 col-md-6 text-center">
                 <a href="http://www.uvm.edu/~nstrayer/manhattanPlots" target="_blank">
                     <img class="projectPic" src="images/projectPics/manhattanPlots.png" alt="Manhattan Plots Viewer" width="">
                 </a>
             </div>
 
-            <div class="projectDescrip">
+            <div class="col-xs-12 col-md-6">
                 <ul>
                     <strong class="projectTitle"><a href="http://www.uvm.edu/~nstrayer/manhattanPlots" target="_blank"> Interactive Manhattan Plot Viewer</strong> </a>
                         <li>Developed as an experiment in exploratory data visualization.</li>
-                        <li>Select different controls for comparison, e.g. non-dominant arm growth to see linked snps.</li>
+                        <li>Select different controls for comparison, e.g. non-dominant arm grow projectth to see linked snps.</li>
                         <li>A manhattan plot is a commonly used tool in accessing genetic roots for traits</li>
                         <li>Uses data from the FAMuSS study (<a href="http://isites.harvard.edu/fs/docs/icb.topic1388631.files/thompson_FAMuSS.pdf" target="_blank"> Thompson Et Al. 2004</a>).</li>
                 </ul>
             </div>
         </div>
 
-        <div class="wrapper">
-            <div class="projectPhoto">
+        <div class="row project">
+            <div class="col-xs-12 col-md-6 text-center">
                 <a href="http://www.uvm.edu/~nstrayer/signLanguage" target="_blank">
                     <img class="projectPic" src="images/projectPics/signLanguage.jpg" alt="Leap Motion Project">
                 </a>
             </div>
 
-            <div class="projectDescrip">
+            <div class="col-xs-12 col-md-6">
                 <ul>
                     <strong class="projectTitle"> <a href="http://www.uvm.edu/~nstrayer/signLanguage" target="_blank"> Learn ASL numbers with Leap Motion. </a>
                     </strong>
@@ -121,15 +124,15 @@
             </div>
         </div>
 
-        <div class="wrapper">
-            <div class="projectPhoto">
+        <div class="row project">
+            <div class="col-xs-12 col-md-6 text-center">
                 <a href="http://www.uvm.edu/~nstrayer/leapD3" target="_blank">
                     <img class="projectPic" src="images/projectPics/leap.jpg" alt="Leap Motion Project">
                 </a>
                 <!-- <iframe width="300" height="200" src="//www.youtube.com/embed/yttEEA-Gd2A" frameborder="0" allowfullscreen></iframe> -->
             </div>
 
-            <div class="projectDescrip">
+            <div class="col-xs-12 col-md-6">
                 <ul>
                     <strong class="projectTitle"><a href="http://www.uvm.edu/~nstrayer/leapD3" target="_blank"> Experimental Leap Motion + D3.js project. </a>
                     </strong>
@@ -142,32 +145,32 @@
             </div>
         </div>
 
-        <div class="wrapper">
-            <div class="projectPhoto">
+        <div class="row project">
+            <div class="col-xs-12 col-md-6 text-center">
                 <a href="http://www.uvm.edu/~nstrayer/histOfPolio" target="_blank">
                     <img class="projectPic" src="images/projectPics/polioHist.jpg" alt="Polio History">
                 </a>
             </div>
 
-            <div class="projectDescrip">
+            <div class="col-xs-12 col-md-6">
                 <ul>
                     <strong class="projectTitle"> <a href="http://www.uvm.edu/~nstrayer/histOfPolio" target="_blank"> Polio's impact on the United States. </a>
                     </strong>
-                    <li>A project for <a href="http://bagrow.com/ds2/" target="_blank"> Data Science 2 </a> (Math 295) taught by <a href="http://bagrow.com">Professor James Bagrow</a> at the University of Vermont. </li>
+                    <li>A project for <a href="http://bagrow project.com/ds2/" target="_blank"> Data Science 2 </a> (Math 295) taught by <a href="http://bagrow project.com">Professor James Bagrow project</a> at the University of Vermont. </li>
                     <li><a href="http://nbviewer.ipython.org/github/nstrayer/math295/blob/master/HW01/work/hw01.ipynb" target="_blank"> iPython notebook </a>and data files available on my <a href="https://github.com/nstrayer/math295" target="_blank">github.</a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="wrapper">
-            <div class="projectPhoto">
+        <div class="row project">
+            <div class="col-xs-12 col-md-6 text-center">
                 <a href="http://www.uvm.edu/~nstrayer/d3Tests/dataExplore.html" target="_blank">
                     <img class="projectPic" src="images/projectPics/labInTheWild.jpg" alt="Lab In The Wild Project">
                 </a>
             </div>
 
-            <div class="projectDescrip">
+            <div class="col-xs-12 col-md-6">
                 <ul>
                     <strong class="projectTitle"> <a href="http://www.labinthewild.org/studies/visualization/" target="_blank"> labinthewild.org Interactive Visualization. </a>
                     </strong>
@@ -176,13 +179,13 @@
             </div>
         </div>
 
-        <div class="wrapper">
-            <div class="projectPhoto">
+        <div class="row project">
+            <div class="col-xs-12 col-md-6 text-center">
                 <a href="http://www.uvm.edu/~nstrayer/fillingStations" target="_blank">
                     <img class="projectPic" src="images/projectPics/fillingStations.jpg" alt="Alt Fuel Filling Stations">
                 </a>
             </div>
-            <div class="projectDescrip">
+            <div class="col-xs-12 col-md-6">
                 <ul>
                     <strong class="projectTitle"><a href="http://www.uvm.edu/~nstrayer/fillingStations" target="_blank"> Alternative energy filling stations in the U.S.. </a> </strong>
                     <li>Using d3.hexbin I took took 18k+ data points and binned them to help explore geographic trends in alternative energy filling stations. </li>
@@ -190,13 +193,13 @@
             </div>
         </div>
 
-        <div class="wrapper">
-            <div class="projectPhoto">
+        <div class="row project">
+            <div class="col-xs-12 col-md-6 text-center">
                 <a href="http://www.uvm.edu/~nstrayer/superHeroes" target="_blank">
                     <img class="projectPic" src="images/projectPics/superHeroes.jpg" alt="super heroes at the movies">
                 </a>
             </div>
-            <div class="projectDescrip">
+            <div class="col-xs-12 col-md-6">
                 <ul>
                     <strong class="projectTitle"> <a href="http://www.uvm.edu/~nstrayer/superHeroes" target="_blank"> Marvel Vs. DC in the theater.</a>
                     </strong>
@@ -205,14 +208,14 @@
             </div>
         </div>
 
-        <div class="wrapper">
-            <div class="projectPhoto">
+        <div class="row project">
+            <div class="col-xs-12 col-md-6 text-center">
                 <a href="http://www.uvm.edu/~nstrayer/powerVis" target="_blank">
                     <img class="projectPic" src="images/projectPics/CAPower.jpg" alt="california powerplants">
                 </a>
             </div>
 
-            <div class="projectDescrip">
+            <div class="col-xs-12 col-md-6">
                 <ul>
                     <strong class="projectTitle"> <a href="http://www.uvm.edu/~nstrayer/powerVis" target="_blank"> Where does California get its energy? </a>
                     </strong>
@@ -222,6 +225,7 @@
 
         </div>
     </div>
+
 
     <hr>
 
@@ -451,7 +455,7 @@
             <img class="photos" src="images/lawQuad.jpg" alt="I am a super serious person">
         </p>
     </div>
-
+</div>
 
     <script type="text/javascript">
         $("#resumeButton").click(function() {
