@@ -104,7 +104,14 @@ function change(newData) {
             return 70 * i
         })
         .attr("class", "line")
-        .attr("d", line);
+        .attr("d", line)
+        .each("end", function(d, i) {
+            if (i == newData.length - 1) {
+                $('body').scrollTo('#meDiv', 1800, function() {
+                    $('body').scrollTo('#intro', 800)
+                });
+            }
+        });
 
     title
         .transition()
