@@ -10,12 +10,35 @@ var width = parseInt(d3.select("body").style("width").slice(0, -2)),
 var logistic = function(x, theta, i) {
     var mu = 0.1;
     sign = 1
-        // if (i%2 == 0){
-        //     sign = -1
-        // }
     var y = sign * (1 / (Math.sqrt(2 * Math.PI) * theta)) * (1 / x) *
         Math.exp(-Math.pow((Math.log(x) - mu), 2) / (2 * Math.pow(theta, 2)))
     return y;
+}
+
+var animatelines = function(whichline) {
+    d3.selectAll(".line").style("opacity","0.5");
+
+    //Select All of the lines and process them one by one
+    d3.selectAll(".line").each(function(d,i){
+
+    // Get the length of each line in turn
+    var totalLength = d3.select("#line" + i).node().getTotalLength();
+
+	d3.selectAll("#line" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
+	  .attr("stroke-dashoffset", totalLength)
+	  .transition()
+	  .duration(5000)
+	  .delay(100*i)
+	  .ease("quad") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
+	  .attr("stroke-dashoffset", 0)
+	  .style("stroke-width",3)
+    })
+
+    intro
+        .transition()
+        .duration(800)
+        .attr("fill-opacity", 0)
+        .remove()
 }
 
 // The Scales:
@@ -83,7 +106,6 @@ var svg = d3.select("#intro").append("svg")
     .attr("width", width)
     .attr("height", height + 2 * padding)
     .append("g")
-    //.attr("transform", "translate(" + padding + "," + 0 + ")");
 
 var title = svg.append("text")
     .text("hi")
@@ -104,14 +126,7 @@ function change(newData) {
             return 70 * i
         })
         .attr("class", "line")
-        .attr("d", line)
-        .each("end", function(d, i) {
-            // if (i == newData.length - 1) {
-            //     $('body').scrollTo('#meDiv', 1800, function() {
-            //         $('body').scrollTo('#intro', 800)
-            //     });
-            // }
-        });
+        .attr("d", line);
 
     title
         .transition()
@@ -128,18 +143,21 @@ function change(newData) {
 
 
 svg.selectAll(".line")
-    .data(horizontal)
+    .data(logistic)
     .enter().append("path")
     .attr("class", "line")
+    .attr("id" , function(d, i){ return "line" + i;})
     .attr("d", line)
     .style("stroke-width", 2)
     .style("stroke", function(d, i) {
         return colors[i % 10]
     })
+    .style("opacity", 0)
 
 d3.select("svg")
     .on("click", function() {
-        change(logistic)
+        // change(logistic)
+        animatelines(2)
     })
 
 var introMessage = "Click"
