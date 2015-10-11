@@ -54,27 +54,37 @@
     <div id="meDiv" class="section">
         <h1><a name="about">About</a>
         </h1>
-        <p class="pictures">
-            <img class="photos" src="images/me.jpg" alt="I am a super serious person" height="200px" width="250px">
-            <img class="photos" src="images/bikes.jpg" alt="Biking down the coast of California" height="200px" width="250px">
-            <img class="photos" src="images/billings.jpg" alt="Billings Library, UVM" height="200px" width="250px">
-        </p>
-        <p>I am a graduate student pursuing a PhD in biostatistics at <em>Vanderbilt University</em>.
-            Recently (May '15), I graduated from the
-            <em>University of Vermont</em> where I majored in
-            <strong>mathematics</strong> and
-            <strong>statistics</strong> and minored in
-            <strong>computer science.</strong>
-        </p>
-        <p>I like data. Manipulating it, making it (modeling), visualizing it and yes, even cleaning it. I do these things with
-        some combination of R, Python and Javascript (d3.js in particular).</p>
-        <p>My current research interests include:
-            <strong>statistical genetics</strong>,
-            <strong>data visualization</strong> and
-            <strong>scientific communication</strong>.</p>
-        <p>When I am not in "school mode" I love to bike places, read science fiction and look at cool buildings.</p>
-        <p>The curve at the begining of this page is the beautiful <a href="http://mathworld.wolfram.com/LogisticDistribution.html">logistic distribution</a> with mu fixed at 0.5 and theta varying between .1 and .9.
-            <p>Have a fantastic day!</p>
+
+        <div id = "pictures" class = "col-xs-12">
+            <p class="pictures">
+                <img class="photos" src="images/me.jpg" alt="I am a super serious person" height="200px" width="250px">
+                <img class="photos" src="images/bikes.jpg" alt="Biking down the coast of California" height="200px" width="250px">
+                <img class="photos" src="images/billings.jpg" alt="Billings Library, UVM" height="200px" width="250px">
+            </p>
+        </div>
+
+        <div class = "col-xs-12, col-md-8" id = "aboutText">
+            <p>I am a graduate student pursuing a PhD in biostatistics at <em>Vanderbilt University</em>.
+                Recently (May '15), I graduated from the
+                <em>University of Vermont</em> where I majored in
+                <strong>mathematics</strong> and
+                <strong>statistics</strong> and minored in
+                <strong>computer science.</strong>
+            </p>
+            <p>I like data. Manipulating it, making it (modeling), visualizing it and yes, even cleaning it. I do these things with
+            some combination of R, Python and Javascript (d3.js in particular).</p>
+            <p>My current research interests include:
+                <strong>statistical genetics</strong>,
+                <strong>data visualization</strong> and
+                <strong>scientific communication</strong>.</p>
+            <p>When I am not in "school mode" I love to bike places, read science fiction and look at cool buildings.</p>
+            <p>The curve at the begining of this page is the beautiful <a href="http://mathworld.wolfram.com/LogisticDistribution.html">logistic distribution</a> with mu fixed at 0.5 and theta varying between .1 and .9.
+                <p>Have a fantastic day!</p>
+        </div>
+        <div class = "col-xs-12, col-md-4" id = "twitter">
+            <a class="twitter-timeline" href="https://twitter.com/NicholasStrayer" data-widget-id="653247510123782146">Tweets by @NicholasStrayer</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
     </div>
 
     <hr>
@@ -86,7 +96,7 @@
         </h1>
 
         <!-- Integral transform viz -->
-        <div class="row project">
+        <div class="row">
             <div class="col-xs-12 col-sm-6 text-center">
                 <a href="http://nickstrayer.me/distributionTransforms/" target="_blank">
                     <img class="projectPic" src="images/projectPics/integralTransform.png" alt="Integral Transform" width="">
@@ -604,6 +614,7 @@
             <!-- closes the Honors and Scholarships -->
             <div>
                 <ul>
+                    <li>Vanderbilt University Graduate Fellow </li>
                     <li>Mu Sigma Rho, Statistics Honors Society </li>
                     <li>First place project (among 163 projects) in overall competition at the 2014 UVM Computer Science Fair.</li>
                     <li>One of three UVM students nominated for Goldwater Scholarship national level competition</li>
