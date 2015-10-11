@@ -49,7 +49,7 @@ var animatelines = function(whichline) {
                 .transition()
                 .duration(1800)
                 .delay(800)
-                .attr("fill-opacity", 1)
+                .attr("fill-opacity", 0.65)
         })
         .remove()
 
@@ -119,30 +119,6 @@ title.append("tspan")
     .attr("dy", "1.2em")
     .attr("x", x(4.7))
     .text("scroll down for less exciting stuff")
-
-
-function change(newData) {
-    //animate the lines
-    svg.selectAll(".line")
-        .data(newData)
-        .transition().duration(1500)
-        .delay(function(d, i) { return 70 * i })
-        .attr("class", "line")
-        .attr("d", line);
-
-    //Show the title
-    title
-        .transition()
-        .duration(4000)
-        .attr("fill-opacity", 1)
-
-    //get rid of the intro message.
-    intro
-        .transition()
-        .duration(800)
-        .attr("fill-opacity", 0)
-        .remove()
-}
 
 svg.selectAll(".line")
     .data(logistic)
