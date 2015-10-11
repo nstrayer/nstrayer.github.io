@@ -59,3 +59,11 @@ hr {
     clear: both;
     padding: 10px;
 }
+
+.hidden {
+    visibility: hidden;
+}
+
+svg text{
+    pointer-events: none;
+}

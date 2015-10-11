@@ -1,5 +1,5 @@
-var width = parseInt(d3.select("body").style("width").slice(0, -2)),
-    height = $(window).height() - 30,
+var width   = parseInt(d3.select("body").style("width").slice(0, -2)),
+    height  = $(window).height() - 30,
     padding = 20,
     numOfLines = 20,
     xs = _.range(0.01, 5, .07),
@@ -7,6 +7,13 @@ var width = parseInt(d3.select("body").style("width").slice(0, -2)),
         'rgb(224,243,248)', 'rgb(171,217,233)', 'rgb(116,173,209)', 'rgb(69,117,180)', 'rgb(49,54,149)'
     ];
 
+//define the svg.
+var svg = d3.select("#intro").append("svg")
+    .attr("width", width)
+    .attr("height", height + 2 * padding)
+    .append("g")
+
+//define the pdf of the distribution.
 var logistic = function(x, theta, i) {
     var mu = 0.1;
     sign = 1
@@ -20,25 +27,32 @@ var animatelines = function(whichline) {
 
     //Select All of the lines and process them one by one
     d3.selectAll(".line").each(function(d,i){
+        // Get the length of each line in turn
+        var totalLength = d3.select("#line" + i).node().getTotalLength();
 
-    // Get the length of each line in turn
-    var totalLength = d3.select("#line" + i).node().getTotalLength();
-
-	d3.selectAll("#line" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
-	  .attr("stroke-dashoffset", totalLength)
-	  .transition()
-	  .duration(5000)
-	  .delay(100*i)
-	  .ease("quad") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
-	  .attr("stroke-dashoffset", 0)
-	  .style("stroke-width",2)
+        d3.selectAll("#line" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
+          .attr("stroke-dashoffset", totalLength)
+          .transition()
+          .duration(5000)
+          .delay(100*i)
+          .ease("quad") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
+          .attr("stroke-dashoffset", 0)
+          .style("stroke-width",2)
     })
 
     intro
         .transition()
         .duration(800)
         .attr("fill-opacity", 0)
+        .each("end", function(){
+            title
+                .transition()
+                .duration(1800)
+                .delay(800)
+                .attr("fill-opacity", 1)
+        })
         .remove()
+
 }
 
 // The Scales:
@@ -49,7 +63,6 @@ var thetaMap = d3.scale.linear() //name the values from 0 to 20 and make their v
 var yPos = d3.scale.linear() //scalling for creating horizontal lines
     .domain([0, numOfLines])
     .range([0, 4])
-    //.range([-4, 4])
 
 var x = d3.scale.linear()
     .domain([0, 5])
@@ -57,24 +70,15 @@ var x = d3.scale.linear()
 
 var y = d3.scale.linear()
     .domain([0, 4])
-    //.domain([-5, 5])
     .range([height, 0]);
 
-// The line data:
+// The line functions:
 var logistic = _.map(d3.range(numOfLines), function(i) {
     var odd = true
-        // if (i % 2 !== 0) {
-        //     odd = false
-        //     i = i - 1
-        // }
     var toReturn = _.map(xs, function(num) {
-        var sign = -1
-        if (odd) {
-            sign = 1
-        }
         return {
             "x": num,
-            "y": sign * logistic(num, thetaMap(i), i)
+            "y": logistic(num, thetaMap(i), i)
         }
     })
 
@@ -95,52 +99,50 @@ var horizontal = _.map(d3.range(numOfLines), function(i) {
 // The d3 stuff
 var line = d3.svg.line()
     .interpolate("basis")
-    .x(function(d) {
-        return x(d.x);
-    })
-    .y(function(d) {
-        return y(d.y);
-    });
+    .x(function(d) { return x(d.x); })
+    .y(function(d) { return y(d.y); });
 
-var svg = d3.select("#intro").append("svg")
-    .attr("width", width)
-    .attr("height", height + 2 * padding)
-    .append("g")
-
+//make a greeting message for after the line animation.
 var title = svg.append("text")
-    .text("hi")
-    .attr("font-size", 40)
+    .attr("font-size", 30)
     .attr("font-family", "optima")
     .attr("text-anchor", "end")
     .attr("fill-opacity", 0.0)
     .attr("x", x(4.7))
-    .attr("y", y(2.5))
+    .attr("y", y(1.5))
+
+title.append("tspan")
+    .attr("dy", "1.2em")
+    .attr("x", x(4.7))
+    .text("hi")
+title.append("tspan")
+    .attr("dy", "1.2em")
+    .attr("x", x(4.7))
+    .text("scroll down for less exciting stuff")
 
 
 function change(newData) {
+    //animate the lines
     svg.selectAll(".line")
         .data(newData)
-        .transition()
-        .duration(1500)
-        .delay(function(d, i) {
-            return 70 * i
-        })
+        .transition().duration(1500)
+        .delay(function(d, i) { return 70 * i })
         .attr("class", "line")
         .attr("d", line);
 
+    //Show the title
     title
         .transition()
         .duration(4000)
         .attr("fill-opacity", 1)
 
+    //get rid of the intro message.
     intro
         .transition()
         .duration(800)
         .attr("fill-opacity", 0)
         .remove()
-
 }
-
 
 svg.selectAll(".line")
     .data(logistic)
@@ -149,21 +151,10 @@ svg.selectAll(".line")
     .attr("id" , function(d, i){ return "line" + i;})
     .attr("d", line)
     .style("stroke-width", 2)
-    .style("stroke", function(d, i) {
-        return colors[i % 10]
-    })
+    .style("stroke", function(d, i) { return colors[i % 10] })
     .style("opacity", 0)
 
-d3.select("svg")
-    .on("click", function() {
-        // change(logistic)
-        animatelines(2)
-    })
-
-var introMessage = "Click"
-if (isMobile) {
-    introMessage = "Tap"
-}
+var introMessage = isMobile ? "tap" : "click"
 
 var intro = svg.append("text")
     .text(introMessage)
@@ -172,3 +163,6 @@ var intro = svg.append("text")
     .attr("text-anchor", "middle")
     .attr("x", x(2.5))
     .attr("y", y(2.01))
+
+//kick it off on a click. (or tap)
+d3.select("svg").on("click", function() { animatelines(2) })
