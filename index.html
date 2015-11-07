@@ -55,7 +55,7 @@
         <h1><a name="about">About</a>
         </h1>
 
-        <div id = "pictures" class = "col-xs-12">
+        <div id = "pictures" class = "col-xs-12 col-xs-12 col-md-10 col-md-offset-1">
             <p class="pictures">
                 <img class="photos" src="images/me.jpg" alt="I am a super serious person" height="200px" width="250px">
                 <img class="photos" src="images/bikes.jpg" alt="Biking down the coast of California" height="200px" width="250px">
@@ -63,7 +63,7 @@
             </p>
         </div>
 
-        <div class = "col-xs-12, col-md-8" id = "aboutText">
+        <div class = "col-xs-12 col-md-10 col-md-offset-1 " id = "aboutText">
             <p>I am a graduate student pursuing a PhD in biostatistics at <em>Vanderbilt University</em>.
                 Recently (May '15), I graduated from the
                 <em>University of Vermont</em> where I majored in
@@ -81,10 +81,10 @@
             <p>The curve at the begining of this page is the beautiful <a href="https://en.wikipedia.org/wiki/Log-normal_distribution">log-normal distribution</a> with mu fixed at 0.5 and theta varying between .1 and .9.
                 <p>Have a fantastic day!</p>
         </div>
-        <div class = "col-xs-12, col-md-4" id = "twitter">
+        <!-- <div class = "col-xs-12, col-md-4" id = "twitter">
             <a class="twitter-timeline" href="https://twitter.com/NicholasStrayer" data-widget-id="653247510123782146">Tweets by @NicholasStrayer</a>
             <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-        </div>
+        </div> -->
     </div>
 
     <hr>
@@ -330,16 +330,15 @@
 
     <hr>
 
-    <div id="flip" class="section">
-        <h1><a name="resume">Resume</a>
+    <div id="flip" >
+        <h1><a name="resume">C.V.</a>
         </h1>
-        <div id="resumeButton">
-            <h4 id="buttonText">Expand Resume</h4>
+        <div id="resumeButton"  class = "col-sm-12 col-md-10 col-md-offset-1">
+            <h4 id="buttonText">Expand C.V.</h4>
         </div>
     </div>
 
-    <div id="resumeDiv" class="section">
-
+    <div id="resumeDiv" class = "col-sm-12 col-md-10 col-md-offset-1">
 
         <div id="resumeMenu">
 
@@ -634,26 +633,35 @@
 
     <hr>
 
-    <div id="contactDiv" class="section">
-        <h1><a name="contact">Contact</a>
-        </h1>
-        <p> I am always interested in getting involved in new projects or just connecting with others. Feel free to get in touch!
-        </p>
-        <p>
-            <strong>email: </strong> n.strayer (at) vanderbilt (dot) edu
-        </p>
-        <p>
-            <strong>twitter: </strong> <a href="https://twitter.com/NicholasStrayer" target="_blank">@NicholasStrayer </a>
-        </p>
-        <p>
-            <strong>github: </strong> <a href="https://github.com/nstrayer" target="_blank">nstrayer </a>
-        </p>
-        <p class="pictures">
-            <img class="photos" src="images/rubeLab.jpg" alt="The Rubenstein Ecosystem Science Laboratory">
-            <img class="photos" src="images/bezierCurve.jpg" alt="I am a super serious person" width="15%">
-            <img class="photos" src="images/lawQuad.jpg" alt="I am a super serious person">
-        </p>
-    </div>
+    <div class = "contactDiv">
+        <div id="contactDiv" class="section">
+            <h1><a name="contact">Contact</a>
+            </h1>
+
+            <div class = "col-xs-12 col-md-10 col-md-offset-1 " id = "contactText">
+                <p> I am always interested in getting involved in new projects or just connecting with others. Feel free to get in touch!
+                </p>
+                <p>
+                    <strong>email: </strong> n.strayer (at) vanderbilt (dot) edu
+                </p>
+                <p>
+                    <strong>twitter: </strong> <a href="https://twitter.com/NicholasStrayer" target="_blank">@NicholasStrayer </a>
+                </p>
+                <p>
+                    <strong>github: </strong> <a href="https://github.com/nstrayer" target="_blank">nstrayer </a>
+                </p>
+                <p class="pictures">
+                    <img class="photos" src="images/rubeLab.jpg" alt="The Rubenstein Ecosystem Science Laboratory">
+                    <img class="photos" src="images/bezierCurve.jpg" alt="I am a super serious person" width="15%">
+                    <img class="photos" src="images/lawQuad.jpg" alt="I am a super serious person">
+                </p>
+            </div>
+            <!-- <div class = "col-xs-12, col-md-4" id = "twitter">
+                <a class="twitter-timeline" href="https://twitter.com/NicholasStrayer" data-widget-id="653247510123782146">Tweets by @NicholasStrayer</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            </div> -->
+        </div>
+
 </div>
 
     <script type="text/javascript">
@@ -666,7 +674,7 @@
                 if ($(this).is(":visible")) {
                     link.text('Close');
                 } else {
-                    link.text('Expand Resume');
+                    link.text('Expand C.V.');
                 }
             });
         });
