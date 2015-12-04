@@ -52,6 +52,9 @@ body {
 .project {
     border-top: 1px dotted;
     padding-top: 15px;
+    /*padding-bottom: 15px;*/
+}
+.row {
     padding-bottom: 15px;
 }
 
