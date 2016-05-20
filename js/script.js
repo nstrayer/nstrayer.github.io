@@ -142,3 +142,55 @@ var intro = svg.append("text")
 
 //kick it off on a click. (or tap)
 d3.select("svg").on("click", function() { animatelines(2) })
+
+
+//function to draw projects section.
+function draw_projects(proj_data){
+
+    var entry = d3.select("#projectsDiv")
+        .selectAll(".project")
+        .data(proj_data).enter()
+        .append("div")
+        .attr("class", function(d,i){return i == 0? "row":"row project" })
+        .each(function(proj){
+            //draw picture
+            var pic = d3.select(this)
+                .append("div")
+                .attr("class", "col-xs-12 col-sm-6 text-center")
+
+            pic.append("a")
+                .attr("href", proj.link)
+                .append("img")
+                .attr("class", "projectPic")
+                .attr("src", proj.photo)
+
+            //generate the title and descriptions
+            var proj_descrip = d3.select(this) //make the holder.
+                .append("div")
+                .attr("class", "col-xs-12 col-sm-6")
+
+            proj_descrip.append("strong") //append the title.
+                .attr("class", "projectTitle")
+                    .append("a")
+                    .attr("href", proj.link)
+                    .attr("target", "_blank")
+                    .text(proj.title)
+
+            proj_descrip.append("ul") //append the description bullet point list
+                .selectAll("li")
+                .data(proj.descriptions).enter()
+                .append("li")
+                .html(function(d){return d})
+
+            if(proj.github != null){
+                proj_descrip.select("ul") //append github repo to end of list
+                    .append("li")
+                    .append("a")
+                    .attr("href", proj.github)
+                    .text("Github repo.")
+            }
+
+        })
+}
+
+draw_projects(proj_data)
