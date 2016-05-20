@@ -126,7 +126,66 @@ var proj_data = [
         "Utilizes three.js and webGL for rendering.",
         "Built to exploit multiple HCI and Cognitive Psychology theories (e.g. object consistancy and the generation effect) in order to maximize learning experience."
     ],
+    "github": "https://github.com/nstrayer/cs228/tree/master/final"
+    },
+    {
+    "title": "Experimental Leap Motion + D3.js project.",
+    "link": "http://www.uvm.edu/~nstrayer/leapD3",
+    "photo": "images/projectPics/leap.jpg",
+    "descriptions": [
+        "Wave your hands around and watch D3.js mirror you!",
+        "Requires a leap motion device.",
+        "In the future I plan on implementing ways to interact with D3 visualizations by recognizing gestures using machine learning algorithms.",
+        "a href='https://www.youtube.com/watch?v=yttEEA-Gd2A'>Video of it in action</a> for if you don't have a Leap.",
+        "strong>Note:</strong> When using, start by waving your hands around above the Leap Motion device and watch it calibrate!</li>"
+    ],
     "github": "https://github.com/nstrayer/leapD3"
+    },
+    {
+    "title": "Polio's impact on the United States.",
+    "link": "http://www.uvm.edu/~nstrayer/histOfPolio",
+    "photo": "images/projectPics/polioHist.jpg",
+    "descriptions": [
+        "A project for <a href='http://bagrow.com/ds2/' target='_blank'> Data Science 2 </a> (Math 295) taught by <a href='http://bagrow.com'>Professor James Bagrow</a> at the University of Vermont.",
+        "<a href='http://nbviewer.ipython.org/github/nstrayer/math295/blob/master/HW01/work/hw01.ipynb' target='_blank'> iPython notebook </a>and data files available on my <a href='https://github.com/nstrayer/math295' target='_blank'>github.</a>"
+    ],
+    "github": "https://github.com/nstrayer/math295"
+    },
+    {
+    "title": "labinthewild.org Interactive Visualization.",
+    "link": "http://www.labinthewild.org/studies/visualization/",
+    "photo": "images/projectPics/labInTheWild.jpg",
+    "descriptions": [
+        "A visualization developed for LabInTheWild at the University of Michigan to help participants place themselves among differing demographics.</li>"
+    ],
+    "github": null
+    },
+    {
+    "title": "Alternative energy filling stations in the U.S..",
+    "link": "http://www.uvm.edu/~nstrayer/fillingStations",
+    "photo": "images/projectPics/fillingStations.jpg",
+    "descriptions": [
+        "Using d3.hexbin I took took 18k+ data points and binned them to help explore geographic trends in alternative energy filling stations."
+    ],
+    "github": "https://github.com/nstrayer/hexbinFillingStations"
+    },
+    {
+    "title": "Marvel Vs. DC in the theater.",
+    "link": "http://www.uvm.edu/~nstrayer/superHeroes",
+    "photo": "images/projectPics/superHeroes.jpg",
+    "descriptions": [
+        "I extracted data from The Verge article <a href='http://www.theverge.com/2014/8/22/6056617/marvels-movie-business-is-crushing-dcs-and-its-not-close' target='_blank'> 'Marvel's movie business is crushing DC's and it's not close.'"
+    ],
+    "github": "https://github.com/nstrayer/superheroes"
+    },
+    {
+    "title": "Where does California get its energy?",
+    "link": "http://www.uvm.edu/~nstrayer/powerVis",
+    "photo": "images/projectPics/CAPower.jpg",
+    "descriptions": [
+        "A visualization that explores how electricity is generated in the state of California. Data was cleaned using python and then the visualization was generated using d3.js."
+    ],
+    "github": "https://github.com/nstrayer/caPowerViz"
     }
 ]
 

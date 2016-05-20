@@ -151,7 +151,7 @@ function draw_projects(proj_data){
         .selectAll(".project")
         .data(proj_data).enter()
         .append("div")
-        .attr("class", "row project")
+        .attr("class", function(d,i){return i == 0? "row":"row project" })
         .each(function(proj){
             //draw picture
             var pic = d3.select(this)
@@ -182,11 +182,14 @@ function draw_projects(proj_data){
                 .append("li")
                 .html(function(d){return d})
 
-            proj_descrip.select("ul") //append github repo to end of list
-                .append("li")
-                .append("a")
-                .attr("href", proj.github)
-                .text("Github repo.")
+            if(proj.github != null){
+                proj_descrip.select("ul") //append github repo to end of list
+                    .append("li")
+                    .append("a")
+                    .attr("href", proj.github)
+                    .text("Github repo.")
+            }
+
         })
 }
 
