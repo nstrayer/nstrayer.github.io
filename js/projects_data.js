@@ -18,6 +18,17 @@ var proj_data = [
     "github": "https://github.com/nstrayer/growingSeasons"
     },
     {
+    "title": "Data Visualization In R",
+    "link": "http://nickstrayer.me/visualization_in_r/",
+    "photo": "images/projectPics/rVisualization.png",
+    "descriptions": [
+        "Rmarkdown document for a statistical computing workshop I gave at Vanderbilt.",
+        "A brief overview of some common visualization mistakes and code to fix them in ggplot",
+        "Provides an overview of some newer visualization tools."
+    ],
+    "github": "https://github.com/nstrayer/visualization_in_r"
+    },
+    {
     "title": "Binomially Distributed Fun!",
     "link": "http://nickstrayer.me/binomialFun/",
     "photo": "images/projectPics/binomial.png",
