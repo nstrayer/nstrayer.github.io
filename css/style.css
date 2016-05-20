@@ -3,17 +3,21 @@ body {
     min-height: 2000px;
     padding-top: 10px;
 }
+
 .axis path, .axis line {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
 }
+
 .x.axis path {
     display: none;
 }
+
 .y.axis path {
     display: none;
 }
+
 .line {
     fill: none;
     stroke: steelblue;
@@ -23,19 +27,23 @@ body {
 .pictures {
     text-align: center
 }
+
 #resumeDiv {
     display: none;
 }
+
 .resumeSections {
     text-align: center;
     color: #0CBDE8;
 }
+
 #resumeButton {
     border: 1px solid;
     border-radius: 0.5em;
     background-color: rgba(0, 0, 0, 0.2);
     text-align: center;
 }
+
 .photos {
     width: 30%;
     height: 30%;
