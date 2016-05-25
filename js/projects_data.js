@@ -8,6 +8,16 @@
 
 var proj_data = [
     {
+    "title": "Reusable Statistics Plots in D3",
+    "link": "http://bl.ocks.org/nstrayer/37a503dd1db369a8f7e3ce21757e19ee",
+    "photo": "images/projectPics/reusableCharts.png",
+    "descriptions": ["Also see my <a href = 'http://bl.ocks.org/nstrayer/776ca46537c557e59b994aa439fdb26c'>histogram</a> made in the same way.",
+                     "My first attempts at making a d3 library.",
+                     "Ultimately will be tied with a companion R app for interactive visualization for statisticians.",
+                     "Uses the <a href = 'http://ejb.github.io/2016/05/23/a-better-way-to-structure-d3-code.html'> reusable d3 structure </a> proposed by <a href = 'https://twitter.com/elliot_bentley'>Elliot Bentely.</a>"],
+    "github": "https://github.com/nstrayer/d3Stats"
+    },
+    {
     "title": "What's In Season?",
     "link": "http://nickstrayer.me/growingSeasons",
     "photo": "images/projectPics/growingSeasons.png",
