@@ -138,7 +138,7 @@ function writeGreeting(){
             if (start.length < greeting.length + 1) { //if the in progress greeting is less than the full, keep going.
                 drawGreeting(i+1,start,greeting);      //  increment i and call again.
             };
-        }, 100)
+        }, 200)
     })(0, "", "less exciting stuff");
 }
 
