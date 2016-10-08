@@ -114,11 +114,14 @@ var title = svg.append("text")
 title.append("tspan")
     .attr("dy", "1.2em")
     .attr("x", x(4.7))
-    .text("hi")
+    .text("hi...")
+    .attr("font-size", 40)
+
 title.append("tspan")
-    .attr("dy", "1.2em")
+    .attr("dy", "1.6em")
     .attr("x", x(4.7))
-    .text("scroll down for less exciting stuff")
+    .html("less exciting stuff &#8681")
+
 
 svg.selectAll(".line")
     .data(logistic)
