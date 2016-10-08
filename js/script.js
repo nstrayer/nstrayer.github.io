@@ -45,11 +45,12 @@ var animatelines = function(whichline) {
         .duration(800)
         .attr("fill-opacity", 0)
         .each("end", function(){
-            title
-                .transition()
-                .duration(1800)
-                .delay(800)
-                .attr("fill-opacity", 0.65)
+            writeGreeting()
+            // title
+            //     .transition()
+            //     .duration(1800)
+            //     .delay(800)
+            //     .attr("fill-opacity", 0.65)
         })
         .remove()
 
@@ -103,25 +104,43 @@ var line = d3.svg.line()
     .y(function(d) { return y(d.y); });
 
 //make a greeting message for after the line animation.
-var title = svg.append("text")
-    .attr("font-size", 30)
-    .attr("font-family", "optima")
-    .attr("text-anchor", "end")
-    .attr("fill-opacity", 0.0)
-    .attr("x", x(4.7))
-    .attr("y", y(1.5))
 
-title.append("tspan")
-    .attr("dy", "1.2em")
-    .attr("x", x(4.7))
-    .text("hi...")
-    .attr("font-size", 40)
+function writeGreeting(){
 
-title.append("tspan")
-    .attr("dy", "1.6em")
-    .attr("x", x(4.7))
-    .html("less exciting stuff &#8681")
+    var title = svg.append("text")
+        .attr("font-size", 30)
+        .attr("font-family", "optima")
+        .attr("text-anchor", "end")
+        // .attr("fill-opacity", 0.0)
+        .attr("fill-opacity", 0.65)
+        .attr("x", x(4.7))
+        .attr("y", y(1.5));
 
+    var hiSegment = title.append("tspan")
+        .attr("dy", "1.2em")
+        .attr("x", x(4.7))
+        .text("hi...")
+        .attr("font-size", 40);
+
+    var lessExciting = title.append("tspan")
+        .attr("dy", "1.6em")
+        .attr("x", x(4.7))
+        .html("");
+
+    (function drawGreeting (i, start, greeting) {
+        setTimeout(function () {
+
+            //add next letter to the greeting in progress
+            start += i == greeting.length ? " &#8681" : greeting[i];
+
+            lessExciting.html(start) //append this to the html
+
+            if (start.length < greeting.length + 1) { //if the in progress greeting is less than the full, keep going.
+                drawGreeting(i+1,start,greeting);      //  increment i and call again.
+            };
+        }, 100)
+    })(0, "", "less exciting stuff");
+}
 
 svg.selectAll(".line")
     .data(logistic)
