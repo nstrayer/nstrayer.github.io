@@ -13,7 +13,7 @@ var proj_data = [
     "photo": "images/projectPics/survival_curve.png",
     "descriptions": ["A visual exploration of Kaplin-Meier survival curves on left-truncated survival data.",
                      "Drag the conditional slider to see how the survival curve changes depending on the age of entry.",
-                     "All logic for K-M curve written from scratch in javascript and much more perfomant than the <code>survival</code> package in R.",
+                     "All logic for K-M curve written from scratch in javascript and much more performant than the <code>survival</code> package in R.",
                      "For more information on the algorithm to generate a K-M curve see <a href = 'https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator'> the </a> wikipedia page."],
     "github": "https://gist.github.com/nstrayer/4e613a109707f0487da87300097ca502"
     },
