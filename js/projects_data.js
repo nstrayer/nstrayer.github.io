@@ -8,13 +8,25 @@
 
 var proj_data = [
     {
+    "title": "Making Nice Looking Websites Using RMarkdown",
+    "link": "http://nickstrayer.me/RMarkdown_Sites_tutorial/",
+    "photo": "images/projectPics/markdown_sites.png",
+    "descriptions": ["A walkthrough from start to finish of making a website using RMarkdown and hosting it on Github.",
+                     "Made in collaboration with <a href='http://www.lucymcgowan.com/'>Lucy McGowan</a>",
+                     "Presented at the statistical computing workshop for Vanderbilt Medical Center",
+                     "See sample site <a href='http://nickstrayer.me/personal_site/'>here</a>"
+                 ],
+    "github": "https://github.com/nstrayer/RMarkdown_Sites_tutorial"
+    },
+    {
     "title": "Conditional Survival Curves on Truncated Survival Data",
     "link": "http://bl.ocks.org/nstrayer/4e613a109707f0487da87300097ca502",
     "photo": "images/projectPics/survival_curve.png",
     "descriptions": ["A visual exploration of Kaplin-Meier survival curves on left-truncated survival data.",
                      "Drag the conditional slider to see how the survival curve changes depending on the age of entry.",
                      "All logic for K-M curve written from scratch in javascript and much more performant than the <code>survival</code> package in R.",
-                     "For more information on the algorithm to generate a K-M curve see <a href = 'https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator'> the </a> wikipedia page."],
+                     "For more information on the algorithm to generate a K-M curve see <a href = 'https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator'> the </a> wikipedia page."
+                 ],
     "github": "https://gist.github.com/nstrayer/4e613a109707f0487da87300097ca502"
     },
     {
@@ -24,7 +36,8 @@ var proj_data = [
     "descriptions": ["Also see my <a href = 'http://bl.ocks.org/nstrayer/776ca46537c557e59b994aa439fdb26c'>histogram</a> made in the same way.",
                      "My first attempts at making a d3 library.",
                      "Ultimately will be tied with a companion R app for interactive visualization for statisticians.",
-                     "Uses the <a href = 'http://ejb.github.io/2016/05/23/a-better-way-to-structure-d3-code.html'> reusable d3 structure </a> proposed by <a href = 'https://twitter.com/elliot_bentley'>Elliot Bentely.</a>"],
+                     "Uses the <a href = 'http://ejb.github.io/2016/05/23/a-better-way-to-structure-d3-code.html'> reusable d3 structure </a> proposed by <a href = 'https://twitter.com/elliot_bentley'>Elliot Bentely.</a>"
+                 ],
     "github": "https://github.com/nstrayer/d3Stats"
     },
     {
