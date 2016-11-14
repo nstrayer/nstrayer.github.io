@@ -8,7 +8,7 @@ var width   = parseInt(d3.select("body").style("width").slice(0, -2)),
     ];
 
 //define the svg.
-var svg = d3.select("#intro").append("svg")
+var svg = d3.select("#introAnimation").append("svg")
     .attr("width", width)
     .attr("height", height + 2 * padding)
     .append("g")
@@ -112,34 +112,34 @@ function writeGreeting(){
         .attr("font-family", "optima")
         .attr("text-anchor", "end")
         // .attr("fill-opacity", 0.0)
-        .attr("fill-opacity", 0.65)
+        .attr("fill-opacity", 0.85)
         .attr("x", x(4.7))
         .attr("y", y(1.5));
 
-    var hiSegment = title.append("tspan")
-        .attr("dy", "1.2em")
-        .attr("x", x(4.7))
-        .text("hi...")
-        .attr("font-size", 40);
+    // var hiSegment = title.append("tspan")
+    //     .attr("dy", "1.2em")
+    //     .attr("x", x(4.7))
+    //     .text("hi...")
+    //     .attr("font-size", 40);
 
     var lessExciting = title.append("tspan")
         .attr("dy", "1.6em")
         .attr("x", x(4.7))
         .html("");
 
-    (function drawGreeting (i, start, greeting) {
-        setTimeout(function () {
-
-            //add next letter to the greeting in progress
-            start += i == greeting.length ? " &#8681" : greeting[i];
-
-            lessExciting.html(start) //append this to the html
-
-            if (start.length < greeting.length + 1) { //if the in progress greeting is less than the full, keep going.
-                drawGreeting(i+1,start,greeting);      //  increment i and call again.
-            };
-        }, 200)
-    })(0, "", "less exciting stuff");
+    // (function drawGreeting (i, start, greeting) {
+    //     setTimeout(function () {
+    //
+    //         //add next letter to the greeting in progress
+    //         start += i == greeting.length ? " &#8681" : greeting[i];
+    //
+    //         lessExciting.html(start) //append this to the html
+    //
+    //         if (start.length < greeting.length + 1) { //if the in progress greeting is less than the full, keep going.
+    //             drawGreeting(i+1,start,greeting);      //  increment i and call again.
+    //         };
+    //     }, 200)
+    // })(0, "", "less exciting stuff");
 }
 
 svg.selectAll(".line")
@@ -148,11 +148,11 @@ svg.selectAll(".line")
     .attr("class", "line")
     .attr("id" , function(d, i){ return "line" + i;})
     .attr("d", line)
-    .style("stroke-width", 2)
+    .style("stroke-width", 3)
     .style("stroke", function(d, i) { return colors[i % 10] })
     .style("opacity", 0)
 
-var introMessage = isMobile ? "tap" : "click"
+var introMessage = isMobile ? "" : ""
 
 var intro = svg.append("text")
     .text(introMessage)
