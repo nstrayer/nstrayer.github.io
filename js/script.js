@@ -133,7 +133,7 @@ d3.select("#introSvg")
 
         //disable click to load again on mobile. May add back later but currently causes too much hasle on mobile.
 
-        d3.select("#introSvg").on("click",false);
+        // d3.select("#introSvg").on("click",false);
 
     });
 
@@ -144,32 +144,39 @@ d3.select(window).on('resize', ()=>{
     //debounce the resize to elimate overactive events.
     clearTimeout(resizeTimer);
 
+    //grab new width and height
+    var new_width  = parseInt(d3.select("body").style("width").slice(0, -2));
+    var new_height = $(window).height() - 70;
+
     resizeTimer = setTimeout(() => {
-      //kill any currently animating walks.
-      clearInterval(line_drawer);
 
-      //grab new width and height
-      width  = parseInt(d3.select("body").style("width").slice(0, -2))
-      height = $(window).height() - 70,
+        if(new_width != width || new_height != height){
 
-      //update canvas.
-      canvas
-          .attr("width", width*2)
-          .attr("height", height*2)
-          .style("width", width)
-          .style("height", height);
+              //kill any currently animating walks.
+              clearInterval(line_drawer);
 
-      svg
-          .attr("width", width)
-          .attr("height", height + 2 * padding)
+              width = new_width;
+              height = new_height;
 
-      //new walk.
-      lets_go_walking(canvas, context, height, width);
+              //update canvas.
+              canvas
+                  .attr("width", width*2)
+                  .attr("height", height*2)
+                  .style("width", width + "px")
+                  .style("height", height + "px");
 
-      //redraw intro text.
-      writeGreeting();
+              svg
+                  .attr("width", width)
+                  .attr("height", height + 2 * padding)
 
+              //new walk.
+              lets_go_walking(canvas, context, height, width);
+
+              //redraw intro text.
+              writeGreeting();
+        }
     }, 250);
+
 });
 
 function writeGreeting(){
