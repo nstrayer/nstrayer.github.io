@@ -1,19 +1,19 @@
-var width   = parseInt(d3.select("body").style("width").slice(0, -2)),
-    height  = $(window).height() - 70,
+var width   = (parseInt(d3.select("body").style("width").slice(0, -2)))*2,
+    height  = ($(window).height() - 70)*2,
     padding = 20,
     line_drawer;
 
 ////////// Random Walk draw code //////////
 var canvas = d3.select("#randomWalkCanvas")
     .append("canvas")
-    .attr("width", width*2)
-    .attr("height", height*2)
-    .style("width", width + "px")
-    .style("height", height + "px   ");
+    .attr("width", width)
+    .attr("height", height)
+    .style("width", (width/2) + "px")
+    .style("height", (height/2) + "px   ");
 
 var svg = d3.select("#introSvg").append("svg")
-    .attr("width", width)
-    .attr("height", height + 2 * padding)
+    .attr("width", width/2)
+    .attr("height", (height/2) + 2 * padding)
     .append("g");
 
 var context = canvas.node().getContext("2d");
@@ -111,8 +111,8 @@ var intro = svg.append("text")
     .attr("font-size", isMobile? 30: 35)
     .attr("font-family", "optima")
     .attr("text-anchor", "middle")
-    .attr("x", width/2)
-    .attr("y", height/2)
+    .attr("x", width/4)
+    .attr("y", height/4)
 
 
 // ====================== start visualization when user clicks ======================
@@ -150,24 +150,24 @@ d3.select(window).on('resize', ()=>{
 
     resizeTimer = setTimeout(() => {
 
-        if(new_width != width || new_height != height){
+        if(new_width != width/2 || new_height != height/2){
 
               //kill any currently animating walks.
               clearInterval(line_drawer);
 
-              width = new_width;
-              height = new_height;
+              width = new_width*2;
+              height = new_height*2;
 
               //update canvas.
               canvas
-                  .attr("width", width*2)
-                  .attr("height", height*2)
-                  .style("width", width + "px")
-                  .style("height", height + "px");
+                  .attr("width", width)
+                  .attr("height", height)
+                  .style("width", (width/2) + "px")
+                  .style("height", (height/2) + "px");
 
               svg
-                  .attr("width", width)
-                  .attr("height", height + 2 * padding)
+                  .attr("width", (width/2))
+                  .attr("height", (height/2) + 2 * padding)
 
               //new walk.
               lets_go_walking(canvas, context, height, width);
