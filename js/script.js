@@ -72,10 +72,10 @@ var lets_go_walking = function(canvas, context, height, width){
 
         // clear the canvas
         context.clearRect(0, 0, width, height);
-        context.lineWidth = 2;
+        context.lineWidth = isMobile? 2 : 4;
         context.beginPath();
         context.moveTo(0, 0);
-        context.globalAlpha = 0.55;
+        context.globalAlpha = isMobile? 0.55 : 0.75; 
         drawing_points.forEach((d, i) => {
             context.beginPath();
             //if it's the first step start in middle, otherwise start where last line ended.
