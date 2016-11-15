@@ -54,11 +54,11 @@ var lets_go_walking = function(canvas, context, height, width){
 
     var x = d3.scaleLinear()
         .domain(x_range)
-        .range([0, width]);
+        .range([padding, width-padding]);
 
     var y = d3.scaleLinear()
         .domain(y_range)
-        .range([height, 0]);
+        .range([height-padding, padding]);
 
     var color = d3.scaleLinear()
         .domain([0,number_of_steps])
