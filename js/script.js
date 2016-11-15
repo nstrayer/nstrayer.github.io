@@ -7,167 +7,262 @@ var width   = parseInt(d3.select("body").style("width").slice(0, -2)),
         'rgb(224,243,248)', 'rgb(171,217,233)', 'rgb(116,173,209)', 'rgb(69,117,180)', 'rgb(49,54,149)'
     ];
 
-d3.select("#intro")
-    .style("width", width)
-    .style("height", height + 2 * padding);
 
-//define the svg.
-var svg = d3.select("#introSvg").append("svg")
+////////// Random Walk draw code //////////
+
+var canvas = d3.select("#randomWalkCanvas").append("canvas")
     .attr("width", width)
-    .attr("height", height + 2 * padding)
-    .append("g")
+    .attr("height", height);
 
-//define the pdf of the distribution.
-var logistic = function(x, theta, i) {
-    var mu = 0.1;
-    sign = 1
-    var y = sign * (1 / (Math.sqrt(2 * Math.PI) * theta)) * (1 / x) *
-        Math.exp(-Math.pow((Math.log(x) - mu), 2) / (2 * Math.pow(theta, 2)))
-    return y;
+var context = canvas.node().getContext("2d");
+
+//Random walks!
+var number_of_steps = 5000;
+var number_of_directions = 5;
+var start_point = [{x: 0, y: 0}];
+var step_length = 5;
+
+function nextStep(current) {
+	var pi = 3.1415926;
+	var theta = Math.random() * (2 * pi);
+
+	var x_direction = Math.cos(theta) * step_length;
+	var y_direction = Math.sin(theta) * step_length;
+
+	return {x: current.x + x_direction, y: current.y + y_direction}
 }
 
-var animatelines = function(whichline) {
-    d3.selectAll(".line").style("opacity","0.5");
-
-    //Select All of the lines and process them one by one
-    d3.selectAll(".line").each(function(d,i){
-        // Get the length of each line in turn
-        var totalLength = d3.select("#line" + i).node().getTotalLength();
-
-        d3.selectAll("#line" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
-          .attr("stroke-dashoffset", totalLength)
-          .transition()
-          .duration(5000)
-          .delay(100*i)
-          .ease("quad") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
-          .attr("stroke-dashoffset", 0)
-          .style("stroke-width",2)
-    })
-
-    intro
-        .transition()
-        .duration(800)
-        .attr("fill-opacity", 0)
-        .each("end", function(){
-            writeGreeting()
-            // title
-            //     .transition()
-            //     .duration(1800)
-            //     .delay(800)
-            //     .attr("fill-opacity", 0.65)
-        })
-        .remove()
-
+function go_walking(i, num_steps, walk){
+	if(i < num_steps){
+		walk.push(nextStep(walk[i]));
+		go_walking(i+1, num_steps, walk);
+	}
+	return(walk);
 }
 
-// The Scales:
-var thetaMap = d3.scale.linear() //name the values from 0 to 20 and make their values from .1-.7
-    .domain([0, numOfLines])
-    .range([0.8, 0.085])
+console.log("starting walk...")
+var ourWalk = go_walking(0,number_of_steps, start_point);
+console.log("...ended walk")
+//ourWalk.forEach((w) => console.log(w.x));
 
-var yPos = d3.scale.linear() //scalling for creating horizontal lines
-    .domain([0, numOfLines])
-    .range([0, 4])
+//draw
+// The d3 stuff
+var x_range = d3.extent(ourWalk, (v) => v.x)
+var y_range = d3.extent(ourWalk, (v) => v.y)
+var screen_center = [x_range/2, y]
 
-var x = d3.scale.linear()
-    .domain([0, 5])
+var x = d3.scaleLinear()
+    .domain(x_range)
     .range([0, width]);
 
-var y = d3.scale.linear()
-    .domain([0, 4])
+var y = d3.scaleLinear()
+    .domain(y_range)
     .range([height, 0]);
 
-// The line functions:
-var logistic = _.map(d3.range(numOfLines), function(i) {
-    var odd = true
-    var toReturn = _.map(xs, function(num) {
-        return {
-            "x": num,
-            "y": logistic(num, thetaMap(i), i)
-        }
+var color = d3.scaleLinear()
+    .domain([0,number_of_steps])
+    .range(["#e41a1c","#377eb8", "#4daf4a", "#984ea3"]);
+
+//We animate through drawing the curve by adding a point at a time and drawing from there.
+
+var current_point = 0;
+
+function draw(){
+
+    drawing_points = ourWalk.slice(0, current_point)
+
+    // clear the canvas
+    context.clearRect(0, 0, width, height);
+    context.beginPath();
+    context.moveTo(0, 0);
+    context.globalAlpha = 0.4;
+    drawing_points.forEach((d, i) => {
+        context.beginPath();
+        //if it's the first step start in middle, otherwise start where last line ended.
+        var move_to = i > 1 ? drawing_points[i-1]: {x: 0, y: 0};
+        context.strokeStyle = color(i); //set our color here.
+        context.moveTo(x(move_to.x),y(move_to.y));
+        context.lineTo(x(d.x), y(d.y));
+        context.stroke();
+        context.closePath();
     })
+    context.stroke();
+    context.closePath();
+    //increment point upwards
+    current_point++;
 
-    return toReturn;
-})
-
-var horizontal = _.map(d3.range(numOfLines), function(i) {
-    toReturn = _.map(xs, function(num) {
-        return {
-            "x": num,
-            "y": yPos(i)
-        }
-    })
-
-    return toReturn;
-})
-
-// The d3 stuff
-var line = d3.svg.line()
-    .interpolate("basis")
-    .x(function(d) { return x(d.x); })
-    .y(function(d) { return y(d.y); });
-
-//make a greeting message for after the line animation.
-
-function writeGreeting(){
-
-    var title = svg.append("text")
-        .attr("font-size", 30)
-        .attr("font-family", "optima")
-        .attr("text-anchor", "end")
-        // .attr("fill-opacity", 0.0)
-        .attr("fill-opacity", 0.65)
-        .attr("x", x(4.7))
-        .attr("y", y(1.5));
-
-    var hiSegment = title.append("tspan")
-        .attr("dy", "1.2em")
-        .attr("x", x(4.7))
-        .text("hi...")
-        .attr("font-size", 40);
-
-    var lessExciting = title.append("tspan")
-        .attr("dy", "1.6em")
-        .attr("x", x(4.7))
-        .html("");
-
-    (function drawGreeting (i, start, greeting) {
-        setTimeout(function () {
-
-            //add next letter to the greeting in progress
-            start += i == greeting.length ? " &#8681" : greeting[i];
-
-            lessExciting.html(start) //append this to the html
-
-            if (start.length < greeting.length + 1) { //if the in progress greeting is less than the full, keep going.
-                drawGreeting(i+1,start,greeting);      //  increment i and call again.
-            };
-        }, 200)
-    })(0, "", "less exciting stuff");
+    if(current_point > number_of_steps){
+        clearInterval(line_drawer);
+    }
 }
 
-svg.selectAll(".line")
-    .data(logistic)
-    .enter().append("path")
-    .attr("class", "line")
-    .attr("id" , function(d, i){ return "line" + i;})
-    .attr("d", line)
-    .style("stroke-width", 2)
-    .style("stroke", function(d, i) { return colors[i % 10] })
-    .style("opacity", 0)
+//kick it off
+// draw()
 
-var introMessage = isMobile ? "tap" : "click"
+var line_drawer = setInterval(draw, 2);
 
-var intro = svg.append("text")
-    .text(introMessage)
-    .attr("font-size", 45)
-    .attr("font-family", "optima")
-    .attr("text-anchor", "middle")
-    .attr("x", x(2.5))
-    .attr("y", y(2.01))
-
-//kick it off on a click. (or tap)
-d3.select("svg").on("click", function() { animatelines(2) })
+////////// end random walk draw code //////////
+// d3.select("#intro")
+//     .style("width", width)
+//     .style("height", height + 2 * padding);
+//
+// //define the svg.
+// var svg = d3.select("#introSvg").append("svg")
+//     .attr("width", width)
+//     .attr("height", height + 2 * padding)
+//     .append("g")
+//
+// //define the pdf of the distribution.
+// var logistic = function(x, theta, i) {
+//     var mu = 0.1;
+//     sign = 1
+//     var y = sign * (1 / (Math.sqrt(2 * Math.PI) * theta)) * (1 / x) *
+//         Math.exp(-Math.pow((Math.log(x) - mu), 2) / (2 * Math.pow(theta, 2)))
+//     return y;
+// }
+//
+// var animatelines = function(whichline) {
+//     d3.selectAll(".line").style("opacity","0.5");
+//
+//     //Select All of the lines and process them one by one
+//     d3.selectAll(".line").each(function(d,i){
+//         // Get the length of each line in turn
+//         var totalLength = d3.select("#line" + i).node().getTotalLength();
+//
+//         d3.selectAll("#line" + i).attr("stroke-dasharray", totalLength + " " + totalLength)
+//           .attr("stroke-dashoffset", totalLength)
+//           .transition()
+//           .duration(5000)
+//           .delay(100*i)
+//           .ease("quad") //Try linear, quad, bounce... see other examples here - http://bl.ocks.org/hunzy/9929724
+//           .attr("stroke-dashoffset", 0)
+//           .style("stroke-width",2)
+//     })
+//
+//     intro
+//         .transition()
+//         .duration(800)
+//         .attr("fill-opacity", 0)
+//         .each("end", function(){
+//             writeGreeting()
+//             // title
+//             //     .transition()
+//             //     .duration(1800)
+//             //     .delay(800)
+//             //     .attr("fill-opacity", 0.65)
+//         })
+//         .remove()
+//
+// }
+//
+// // The Scales:
+// var thetaMap = d3.scale.linear() //name the values from 0 to 20 and make their values from .1-.7
+//     .domain([0, numOfLines])
+//     .range([0.8, 0.085])
+//
+// var yPos = d3.scale.linear() //scalling for creating horizontal lines
+//     .domain([0, numOfLines])
+//     .range([0, 4])
+//
+// var x = d3.scale.linear()
+//     .domain([0, 5])
+//     .range([0, width]);
+//
+// var y = d3.scale.linear()
+//     .domain([0, 4])
+//     .range([height, 0]);
+//
+// // The line functions:
+// var logistic = _.map(d3.range(numOfLines), function(i) {
+//     var odd = true
+//     var toReturn = _.map(xs, function(num) {
+//         return {
+//             "x": num,
+//             "y": logistic(num, thetaMap(i), i)
+//         }
+//     })
+//
+//     return toReturn;
+// })
+//
+// var horizontal = _.map(d3.range(numOfLines), function(i) {
+//     toReturn = _.map(xs, function(num) {
+//         return {
+//             "x": num,
+//             "y": yPos(i)
+//         }
+//     })
+//
+//     return toReturn;
+// })
+//
+// // The d3 stuff
+// var line = d3.svg.line()
+//     .interpolate("basis")
+//     .x(function(d) { return x(d.x); })
+//     .y(function(d) { return y(d.y); });
+//
+// //make a greeting message for after the line animation.
+//
+// function writeGreeting(){
+//
+//     var title = svg.append("text")
+//         .attr("font-size", 30)
+//         .attr("font-family", "optima")
+//         .attr("text-anchor", "end")
+//         // .attr("fill-opacity", 0.0)
+//         .attr("fill-opacity", 0.65)
+//         .attr("x", x(4.7))
+//         .attr("y", y(1.5));
+//
+//     var hiSegment = title.append("tspan")
+//         .attr("dy", "1.2em")
+//         .attr("x", x(4.7))
+//         .text("hi...")
+//         .attr("font-size", 40);
+//
+//     var lessExciting = title.append("tspan")
+//         .attr("dy", "1.6em")
+//         .attr("x", x(4.7))
+//         .html("");
+//
+//     (function drawGreeting (i, start, greeting) {
+//         setTimeout(function () {
+//
+//             //add next letter to the greeting in progress
+//             start += i == greeting.length ? " &#8681" : greeting[i];
+//
+//             lessExciting.html(start) //append this to the html
+//
+//             if (start.length < greeting.length + 1) { //if the in progress greeting is less than the full, keep going.
+//                 drawGreeting(i+1,start,greeting);      //  increment i and call again.
+//             };
+//         }, 200)
+//     })(0, "", "less exciting stuff");
+// }
+//
+// svg.selectAll(".line")
+//     .data(logistic)
+//     .enter().append("path")
+//     .attr("class", "line")
+//     .attr("id" , function(d, i){ return "line" + i;})
+//     .attr("d", line)
+//     .style("stroke-width", 2)
+//     .style("stroke", function(d, i) { return colors[i % 10] })
+//     .style("opacity", 0)
+//
+// var introMessage = isMobile ? "tap" : "click"
+//
+// var intro = svg.append("text")
+//     .text(introMessage)
+//     .attr("font-size", 45)
+//     .attr("font-family", "optima")
+//     .attr("text-anchor", "middle")
+//     .attr("x", x(2.5))
+//     .attr("y", y(2.01))
+//
+// //kick it off on a click. (or tap)
+// d3.select("svg").on("click", function() { animatelines(2) })
 
 
 //function to draw projects section.
