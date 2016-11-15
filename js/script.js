@@ -132,9 +132,9 @@ d3.select("#introSvg")
         writeGreeting()
 
         //disable click to load again on mobile. May add back later but currently causes too much hasle on mobile.
-        if(isMobile){
-            d3.select("#introSvg").on("click",false);
-        }
+
+        d3.select("#introSvg").on("click",false);
+
     });
 
 // ====================== On resize do another random walk! ======================
