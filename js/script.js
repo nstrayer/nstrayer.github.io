@@ -11,8 +11,14 @@ var canvas = d3.select("#randomWalkCanvas")
     .style("width", width)
     .style("height", height);
 
+var svg = d3.select("#introSvg").append("svg")
+    .attr("width", width)
+    .attr("height", height + 2 * padding)
+    .append("g");
+
 var context = canvas.node().getContext("2d");
 
+// ====================== Function for generating a random walk and drawing it to canvas ======================
 var lets_go_walking = function(canvas, context, height, width){
     //Random walks!
     var number_of_steps = 5000,
@@ -96,13 +102,7 @@ var lets_go_walking = function(canvas, context, height, width){
 
 }
 
-///////// Code for svg intro overlay for click events/ greeting ///////
-//define the svg.
-var svg = d3.select("#introSvg").append("svg")
-    .attr("width", width)
-    .attr("height", height + 2 * padding)
-    .append("g");
-
+// ====================== Svg intro overlay for click events/ greeting ======================
 var intro_text = isMobile ? "tap" : "click";
 
 var intro = svg.append("text")
@@ -113,7 +113,8 @@ var intro = svg.append("text")
     .attr("x", width/2)
     .attr("y", height/2)
 
-// //kick it off on a click. (or tap)
+
+// ====================== start visualization when user clicks ======================
 d3.select("#introSvg")
     .on("click", () => {
 
@@ -130,39 +131,40 @@ d3.select("#introSvg")
         writeGreeting()
     });
 
-    //if the user changes screen size give them another random walk!
-    var resizeTimer; //for debouncing, see inside function
-    d3.select(window).on('resize', ()=>{
-        //debounce the resize to elimate overactive events.
-        clearTimeout(resizeTimer);
+// ====================== On resize do another random walk! ======================
 
-        resizeTimer = setTimeout(() => {
-          //kill any currently animating walks.
-          clearInterval(line_drawer);
+var resizeTimer; //for debouncing, see inside function
+d3.select(window).on('resize', ()=>{
+    //debounce the resize to elimate overactive events.
+    clearTimeout(resizeTimer);
 
-          //grab new width and height
-          width  = parseInt(d3.select("body").style("width").slice(0, -2))
-          height = $(window).height() - 70,
+    resizeTimer = setTimeout(() => {
+      //kill any currently animating walks.
+      clearInterval(line_drawer);
 
-          //update canvas.
-          canvas
-              .attr("width", width*2)
-              .attr("height", height*2)
-              .style("width", width)
-              .style("height", height);
+      //grab new width and height
+      width  = parseInt(d3.select("body").style("width").slice(0, -2))
+      height = $(window).height() - 70,
 
-          svg
-              .attr("width", width)
-              .attr("height", height + 2 * padding)
+      //update canvas.
+      canvas
+          .attr("width", width*2)
+          .attr("height", height*2)
+          .style("width", width)
+          .style("height", height);
 
-          //new walk.
-          lets_go_walking(canvas, context, height, width);
+      svg
+          .attr("width", width)
+          .attr("height", height + 2 * padding)
 
-          //redraw intro text.
-          writeGreeting();
+      //new walk.
+      lets_go_walking(canvas, context, height, width);
 
-        }, 250);
-    });
+      //redraw intro text.
+      writeGreeting();
+
+    }, 250);
+});
 
 function writeGreeting(){
 
