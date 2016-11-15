@@ -108,7 +108,7 @@ var intro_text = isMobile ? "tap" : "click";
 
 var intro = svg.append("text")
     .text("Let's Go Walking (" + intro_text + ")")
-    .attr("font-size", isMobile? 25: 35)
+    .attr("font-size", isMobile? 30: 35)
     .attr("font-family", "optima")
     .attr("text-anchor", "middle")
     .attr("x", width/2)
