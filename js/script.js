@@ -7,8 +7,12 @@ var width   = parseInt(d3.select("body").style("width").slice(0, -2)),
         'rgb(224,243,248)', 'rgb(171,217,233)', 'rgb(116,173,209)', 'rgb(69,117,180)', 'rgb(49,54,149)'
     ];
 
+d3.select("#intro")
+    .style("width", width)
+    .style("height", height + 2 * padding);
+
 //define the svg.
-var svg = d3.select("#intro").append("svg")
+var svg = d3.select("#introSvg").append("svg")
     .attr("width", width)
     .attr("height", height + 2 * padding)
     .append("g")
