@@ -21,7 +21,7 @@ var context = canvas.node().getContext("2d");
 // ====================== Function for generating a random walk and drawing it to canvas ======================
 var lets_go_walking = function(canvas, context, height, width){
     //Random walks!
-    var number_of_steps = 5000,
+    var number_of_steps = 7000,
         number_of_directions = 5,
         step_length = 5,
         current_point = 0; //step counter for walk animation.
@@ -99,7 +99,7 @@ var lets_go_walking = function(canvas, context, height, width){
     }
 
     //run it.
-    line_drawer = setInterval(draw, 2);
+    line_drawer = setInterval(draw, 1);
 
 }
 
