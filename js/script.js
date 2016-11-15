@@ -188,17 +188,17 @@ function writeGreeting(){
         .attr("font-family", "optima")
         .attr("text-anchor", "end")
         .attr("fill-opacity", 0.65)
-        .attr("y", height - 6*padding);
+        .attr("y", (height/2) - 6*padding);
 
     var hiSegment = title.append("tspan")
         .attr("dy", "1.2em")
-        .attr("x", width - padding)
+        .attr("x", (width/2)- padding)
         .text("hi...")
         .attr("font-size", 40);
 
     var lessExciting = title.append("tspan")
         .attr("dy", "1.6em")
-        .attr("x", width - padding)
+        .attr("x", (width/2) - padding)
         .html("");
 
     (function drawGreeting (i, start, greeting) {
