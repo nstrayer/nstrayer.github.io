@@ -9,7 +9,7 @@ var canvas = d3.select("#randomWalkCanvas")
     .attr("width", width*2)
     .attr("height", height*2)
     .style("width", width + "px")
-    .style("height", height + "px");
+    .style("height", height + "px   ");
 
 var svg = d3.select("#introSvg").append("svg")
     .attr("width", width)
@@ -72,9 +72,10 @@ var lets_go_walking = function(canvas, context, height, width){
 
         // clear the canvas
         context.clearRect(0, 0, width, height);
+        context.lineWidth = 2;
         context.beginPath();
         context.moveTo(0, 0);
-        context.globalAlpha = 0.65;
+        context.globalAlpha = 0.55;
         drawing_points.forEach((d, i) => {
             context.beginPath();
             //if it's the first step start in middle, otherwise start where last line ended.
@@ -129,6 +130,11 @@ d3.select("#introSvg")
             .remove()
 
         writeGreeting()
+
+        //disable click to load again on mobile. May add back later but currently causes too much hasle on mobile.
+        if(isMobile){
+            d3.select("#introSvg").on("click",false);
+        }
     });
 
 // ====================== On resize do another random walk! ======================
