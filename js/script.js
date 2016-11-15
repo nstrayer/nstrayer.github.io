@@ -8,8 +8,8 @@ var canvas = d3.select("#randomWalkCanvas")
     .append("canvas")
     .attr("width", width*2)
     .attr("height", height*2)
-    .style("width", width)
-    .style("height", height);
+    .style("width", width + "px")
+    .style("height", height + "px");
 
 var svg = d3.select("#introSvg").append("svg")
     .attr("width", width)
