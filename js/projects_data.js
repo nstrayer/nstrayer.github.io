@@ -8,6 +8,16 @@
 
 var proj_data = [
     {
+    "title": "What are P-Values, Really?",
+    "link": "http://nickstrayer.me/pValueExplainer/",
+    "photo": "images/projectPics/pvalues.png",
+    "descriptions": ["A resource for explaining what statistical significance really means.",
+                     "Storified to try and make it memorable.",
+                     "Takes the form of a reproducible r-markdown document so others can recreate"
+                 ],
+    "github": "https://github.com/nstrayer/pValueExplainer/"
+    },
+    {
     "title": "Making Nice Looking Websites Using RMarkdown",
     "link": "http://nickstrayer.me/RMarkdown_Sites_tutorial/",
     "photo": "images/projectPics/markdown_sites.png",
