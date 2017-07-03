@@ -8,6 +8,16 @@
 
 var proj_data = [
     {
+    "title": "Shinysense",
+    "link": "https://github.com/nstrayer/shinysense",
+    "photo": "images/projectPics/shinysense.gif",
+    "descriptions": ["A set of shiny modules for letting shiny sense the world around it. ",
+                     "Currently has touch, sound, and motion with vision coming soon.",
+                     "Bundled into an R package."
+                 ],
+    "github": "https://github.com/nstrayer/shinysense/"
+    },
+    {
     "title": "What are P-Values, Really?",
     "link": "http://nickstrayer.me/pValueExplainer/",
     "photo": "images/projectPics/pvalues.png",
