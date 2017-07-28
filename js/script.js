@@ -1,272 +1,233 @@
-var width   = (parseInt(d3.select("body").style("width").slice(0, -2)))*2,
-    height  = ($(window).height() - 70)*2,
-    padding = 20,
-    line_drawer;
+var canvas = d3
+  .select("#randomWalkCanvas")
+  .append("canvas")
+  .style("width", "100vw")
+  .style("height", "95vh")
+  .node();
 
-////////// Random Walk draw code //////////
-var canvas = d3.select("#randomWalkCanvas")
-    .append("canvas")
-    .attr("width", width)
-    .attr("height", height)
-    .style("width", (width/2) + "px")
-    .style("height", (height/2) + "px   ");
+function getWw(){ return canvas.width = window.innerWidth;}
+function getWh(){ return canvas.height = window.innerHeight;}
+var ww = getWw();
+var wh = getWh();
+var padding = 20;
+var ctx = canvas.getContext("2d");
+var particles = [];
+var amount = 0;
+var mouse = { x: 0, y: 0 };
+var radius = 1;
+var colors = ['#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf'];
 
-var svg = d3.select("#introSvg").append("svg")
-    .attr("width", width/2)
-    .attr("height", (height/2) + 2 * padding)
-    .append("g");
+function Particle(x, y) {
+  this.x = Math.random() * ww;
+  this.y = Math.random() * wh;
+  this.dest = {
+    x: x,
+    y: y
+  };
+  this.r = 3 + Math.random();
+  this.vx = (Math.random() - 0.5) * 20;
+  this.vy = (Math.random() - 0.5) * 20;
+  this.accX = 0;
+  this.accY = 0;
+  this.friction = Math.random() * 0.03 + 0.94;
 
-var context = canvas.node().getContext("2d");
-
-// ====================== Function for generating a random walk and drawing it to canvas ======================
-var lets_go_walking = function(canvas, context, height, width){
-    //Random walks!
-    var number_of_steps = 5000,
-        number_of_directions = 5,
-        step_length = 5,
-        current_point = 0; //step counter for walk animation.
-
-    function nextStep(current) {
-    	var pi = 3.1415926;
-    	var theta = Math.random() * (2 * pi);
-
-    	var x_direction = Math.cos(theta) * step_length;
-    	var y_direction = Math.sin(theta) * step_length;
-
-    	return {x: current.x + x_direction, y: current.y + y_direction}
-    }
-
-    //a recursive randome walk function.
-    function go_walking(i, num_steps, walk){
-    	if(i < num_steps){
-    		walk.push(nextStep(walk[i]));
-    		go_walking(i+1, num_steps, walk);
-    	}
-    	return(walk);
-    }
-
-    // Simulate the random walk real quick...
-    var ourWalk = go_walking(0, number_of_steps, [{x: 0, y: 0}]);
-
-    //draw
-    var x_range = d3.extent(ourWalk, (v) => v.x);
-    var y_range = d3.extent(ourWalk, (v) => v.y);
-
-    var x = d3.scaleLinear()
-        .domain(x_range)
-        .range([padding, width-padding]);
-
-    var y = d3.scaleLinear()
-        .domain(y_range)
-        .range([height-padding, padding]);
-
-    var color = d3.scaleLinear()
-        .domain([0,number_of_steps])
-        .range(["#e41a1c","#377eb8", "#4daf4a", "#984ea3"]);
-
-    //We animate through drawing the curve by adding a point at a time and drawing from there.
-    function draw(){
-
-        //take a slice of the whole walk up till whichever step we are currently at in the animation.
-        var drawing_points = ourWalk.slice(0, current_point)
-
-        // clear the canvas
-        context.clearRect(0, 0, width, height);
-        context.lineWidth = isMobile? 2 : 4;
-        context.beginPath();
-        context.moveTo(0, 0);
-        context.globalAlpha = isMobile? 0.55 : 0.75; 
-        drawing_points.forEach((d, i) => {
-            context.beginPath();
-            //if it's the first step start in middle, otherwise start where last line ended.
-            var move_to = i > 1 ? drawing_points[i-1]: {x: 0, y: 0};
-            context.strokeStyle = color(i); //set our color here.
-            context.moveTo(x(move_to.x),y(move_to.y));
-            context.lineTo(x(d.x), y(d.y));
-            context.stroke();
-            context.closePath();
-        })
-        context.stroke();
-        context.closePath();
-
-        //increment point forward
-        current_point++;
-
-        //kill the interval repetition if we've drawn all the lines.
-        if(current_point > number_of_steps){
-            clearInterval(line_drawer);
-        }
-    }
-
-    //run it.
-    line_drawer = setInterval(draw, 1);
-
+  this.color = colors[Math.floor(Math.random() * 6)];
 }
 
-// ====================== Svg intro overlay for click events/ greeting ======================
-var intro_text = isMobile ? "tap" : "click";
+Particle.prototype.render = function() {
+  this.accX = (this.dest.x - this.x) / 500;
+  this.accY = (this.dest.y - this.y) / 500;
+  this.vx += this.accX;
+  this.vy += this.accY;
+  this.vx *= this.friction;
+  this.vy *= this.friction;
 
-var intro = svg.append("text")
-    .text("Let's Go Walking (" + intro_text + ")")
-    .attr("font-size", isMobile? 30: 35)
-    .attr("font-family", "optima")
-    .attr("text-anchor", "middle")
-    .attr("x", width/4)
-    .attr("y", height/4)
+  this.x += this.vx;
+  this.y += this.vy;
 
+  ctx.fillStyle = this.color;
+  ctx.beginPath();
+  ctx.arc(this.x, this.y, this.r * (ww / 1700), Math.PI * 2, false);
+  ctx.fill();
 
-// ====================== start visualization when user clicks ======================
-d3.select("#introSvg")
-    .on("click", () => {
+  var a = this.x - mouse.x;
+  var b = this.y - mouse.y;
 
-        clearInterval(line_drawer);
+  var distance = Math.sqrt(a * a + b * b);
+  if (distance < radius * 70) {
+    this.accX = (this.x - mouse.x) / 100;
+    this.accY = (this.y - mouse.y) / 100;
+    this.vx += this.accX;
+    this.vy += this.accY;
+  }
+};
 
-        lets_go_walking(canvas, context, height, width);
+function onMouseMove(e) {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+}
 
-        intro
-            .transition()
-            .duration(1000)
-            .style("opacity", 0)
-            .remove()
+function onTouchMove(e) {
+  if (e.touches.length > 0) {
+    mouse.x = e.touches[0].clientX;
+    mouse.y = e.touches[0].clientY;
+  }
+}
 
-        writeGreeting()
+function onTouchEnd(e) {
+  mouse.x = -9999;
+  mouse.y = -9999;
+}
 
-        //disable click to load again on mobile. May add back later but currently causes too much hasle on mobile.
+function initScene() {
+  ww = getWw();
+  wh = getWh();
+  fontSize = ww < wh ? ww / 6 : ww / 10;
 
-        // d3.select("#introSvg").on("click",false);
+  ctx.clearRect(0, 0, ww, wh);
 
-    });
+  ctx.font = "bold " + fontSize + "px optima";
+  ctx.textAlign = "center";
+  ctx.fillText("Nick Strayer", ww / 2, wh / 2);
 
-// ====================== On resize do another random walk! ======================
+  var data = ctx.getImageData(0, 0, ww, wh).data;
+  ctx.clearRect(0, 0, ww, wh);
+  ctx.globalCompositeOperation = "screen";
 
-var resizeTimer; //for debouncing, see inside function
-d3.select(window).on('resize', ()=>{
-    //debounce the resize to elimate overactive events.
-    clearTimeout(resizeTimer);
+  var numParticles = 250;
 
-    //grab new width and height
-    var new_width  = parseInt(d3.select("body").style("width").slice(0, -2));
-    var new_height = $(window).height() - 70;
+  particles = [];
+  for (var i = 0; i < ww; i += Math.round(ww / numParticles)) {
+    for (var j = 0; j < wh; j += Math.round(ww / numParticles)) {
+      if (data[(i + j * ww) * 4 + 3] > 150) {
+        particles.push(new Particle(i, j));
+      }
+    }
+  }
+  amount = particles.length;
+  setTimeout(writeGreeting, 1500);
+}
 
-    resizeTimer = setTimeout(() => {
+function render(a) {
+  requestAnimationFrame(render);
+  ctx.clearRect(0, 0, ww, wh);
+  for (var i = 0; i < amount; i++) {
+    particles[i].render();
+  }
+}
+window.addEventListener("resize", initScene);
+window.addEventListener("mousemove", onMouseMove);
+window.addEventListener("touchmove", onTouchMove);
+window.addEventListener("touchend", onTouchEnd);
+initScene();
+requestAnimationFrame(render);
 
-        if(new_width != width/2 || new_height != height/2){
+var svg = d3
+  .select("#introSvg")
+  .append("svg")
+  .attr("width", ww)
+  .attr("height", wh + 2 * padding)
+  .append("g");
 
-              //kill any currently animating walks.
-              clearInterval(line_drawer);
+function writeGreeting() {
+  svg.selectAll("text").remove();
+  setTimeout(function() {
+    var title = svg
+      .append("text")
+      .attr("font-size", 30)
+      .attr("font-family", "optima")
+      .attr("text-anchor", "end")
+      .attr("fill-opacity", 0.65)
+      .attr("y", wh/1.4);
 
-              width = new_width*2;
-              height = new_height*2;
+    var hiSegment = title
+      .append("tspan")
+      .attr("dy", "1.2em")
+      .attr("x", ww - 2*padding)
+      .text("hi...")
+      .attr("font-size", 40);
 
-              //update canvas.
-              canvas
-                  .attr("width", width)
-                  .attr("height", height)
-                  .style("width", (width/2) + "px")
-                  .style("height", (height/2) + "px");
+    var lessExciting = title
+      .append("tspan")
+      .attr("dy", "1.6em")
+      .attr("x", ww - 2*padding)
+      .html("");
 
-              svg
-                  .attr("width", (width/2))
-                  .attr("height", (height/2) + 2 * padding)
+    (function drawGreeting(i, start, greeting) {
+      setTimeout(function() {
+        //add next letter to the greeting in progress
+        start += i == greeting.length ? " &#8681" : greeting[i];
 
-              //new walk.
-              lets_go_walking(canvas, context, height, width);
+        lessExciting.html(start); //append this to the html
 
-              //redraw intro text.
-              writeGreeting();
+        if (start.length < greeting.length + 1) {
+          //if the in progress greeting is less than the full, keep going.
+          drawGreeting(i + 1, start, greeting); //  increment i and call again.
         }
-    }, 250);
-
-});
-
-function writeGreeting(){
-
-    svg.selectAll("text").remove();
-
-    var title = svg.append("text")
-        .attr("font-size", 30)
-        .attr("font-family", "optima")
-        .attr("text-anchor", "end")
-        .attr("fill-opacity", 0.65)
-        .attr("y", (height/2) - 6*padding);
-
-    var hiSegment = title.append("tspan")
-        .attr("dy", "1.2em")
-        .attr("x", (width/2)- padding)
-        .text("hi...")
-        .attr("font-size", 40);
-
-    var lessExciting = title.append("tspan")
-        .attr("dy", "1.6em")
-        .attr("x", (width/2) - padding)
-        .html("");
-
-    (function drawGreeting (i, start, greeting) {
-        setTimeout(function () {
-
-            //add next letter to the greeting in progress
-            start += i == greeting.length ? " &#8681" : greeting[i];
-
-            lessExciting.html(start) //append this to the html
-
-            if (start.length < greeting.length + 1) { //if the in progress greeting is less than the full, keep going.
-                drawGreeting(i+1,start,greeting);      //  increment i and call again.
-            };
-        }, 200)
-
+      }, 200);
     })(0, "", "less exciting stuff");
+  });
 }
-
-////////// end random walk draw code //////////
 
 
 //function to draw projects section.
-function draw_projects(proj_data){
-
-    var entry = d3.select("#projectsDiv")
-        .selectAll(".project")
-        .data(proj_data).enter()
+function draw_projects(proj_data) {
+  var entry = d3
+    .select("#projectsDiv")
+    .selectAll(".project")
+    .data(proj_data)
+    .enter()
+    .append("div")
+    .attr("class", function(d, i) {
+      return i == 0 ? "row" : "row project";
+    })
+    .each(function(proj) {
+      //draw picture
+      var pic = d3
+        .select(this)
         .append("div")
-        .attr("class", function(d,i){return i == 0? "row":"row project" })
-        .each(function(proj){
-            //draw picture
-            var pic = d3.select(this)
-                .append("div")
-                .attr("class", "col-xs-12 col-sm-6 text-center")
+        .attr("class", "col-xs-12 col-sm-6 text-center");
 
-            pic.append("a")
-                .attr("href", proj.link)
-                .append("img")
-                .attr("class", "projectPic")
-                .attr("src", proj.photo)
+      pic
+        .append("a")
+        .attr("href", proj.link)
+        .append("img")
+        .attr("class", "projectPic")
+        .attr("src", proj.photo);
 
-            //generate the title and descriptions
-            var proj_descrip = d3.select(this) //make the holder.
-                .append("div")
-                .attr("class", "col-xs-12 col-sm-6")
+      //generate the title and descriptions
+      var proj_descrip = d3
+        .select(this) //make the holder.
+        .append("div")
+        .attr("class", "col-xs-12 col-sm-6");
 
-            proj_descrip.append("strong") //append the title.
-                .attr("class", "projectTitle")
-                    .append("a")
-                    .attr("href", proj.link)
-                    .attr("target", "_blank")
-                    .text(proj.title)
+      proj_descrip
+        .append("strong") //append the title.
+        .attr("class", "projectTitle")
+        .append("a")
+        .attr("href", proj.link)
+        .attr("target", "_blank")
+        .text(proj.title);
 
-            proj_descrip.append("ul") //append the description bullet point list
-                .selectAll("li")
-                .data(proj.descriptions).enter()
-                .append("li")
-                .html(function(d){return d})
+      proj_descrip
+        .append("ul") //append the description bullet point list
+        .selectAll("li")
+        .data(proj.descriptions)
+        .enter()
+        .append("li")
+        .html(function(d) {
+          return d;
+        });
 
-            if(proj.github != null){
-                proj_descrip.select("ul") //append github repo to end of list
-                    .append("li")
-                    .append("a")
-                    .attr("href", proj.github)
-                    .text("Github repo.")
-            }
-
-        })
+      if (proj.github != null) {
+        proj_descrip
+          .select("ul") //append github repo to end of list
+          .append("li")
+          .append("a")
+          .attr("href", proj.github)
+          .text("Github repo.");
+      }
+    });
 }
 
-draw_projects(proj_data)
+draw_projects(proj_data);
