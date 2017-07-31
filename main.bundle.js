@@ -58,6 +58,10 @@
 
 	var _makeCurve2 = _interopRequireDefault(_makeCurve);
 
+	var _drawProjects = __webpack_require__(4);
+
+	var _drawProjects2 = _interopRequireDefault(_drawProjects);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -75,7 +79,7 @@
 	});
 
 	// Set up the canvas and grab the context.
-	var canvasSel = d3.select('#randomWalkCanvas').append('canvas');
+	var canvasSel = d3.select('#randomWalkCanvas').append('canvas').attr('id', 'particles');
 	var canvas = canvasSel.node();
 	var context = canvas.getContext('2d');
 
@@ -118,9 +122,12 @@
 	  }
 	}
 
+	var canvasDom = document.getElementById('particles');
+
 	function onMouseMove(e) {
-	  mouse.x = e.clientX * pixelRatio;
-	  mouse.y = e.clientY * pixelRatio;
+	  var boundingBox = canvasDom.getBoundingClientRect();
+	  mouse.x = (event.clientX - boundingBox.left) * pixelRatio;
+	  mouse.y = (event.clientY - boundingBox.top) * pixelRatio;
 	}
 
 	function onTouchMove(e) {
@@ -180,36 +187,7 @@
 
 	startScene();
 
-	// function to draw projects section.
-	function draw_projects(proj_data) {
-	  var entry = d3.select('#projectsDiv').selectAll('.project').data(proj_data).enter().append('div').attr('class', function (d, i) {
-	    return i == 0 ? 'row' : 'row project';
-	  }).each(function (proj) {
-	    // draw picture
-	    var pic = d3.select(this).append('div').attr('class', 'col-xs-12 col-sm-6 text-center');
-
-	    pic.append('a').attr('href', proj.link).append('img').attr('class', 'projectPic').attr('src', proj.photo);
-
-	    // generate the title and descriptions
-	    var proj_descrip = d3.select(this) // make the holder.
-	    .append('div').attr('class', 'col-xs-12 col-sm-6');
-
-	    proj_descrip.append('strong') // append the title.
-	    .attr('class', 'projectTitle').append('a').attr('href', proj.link).attr('target', '_blank').text(proj.title);
-
-	    proj_descrip.append('ul') // append the description bullet point list
-	    .selectAll('li').data(proj.descriptions).enter().append('li').html(function (d) {
-	      return d;
-	    });
-
-	    if (proj.github != null) {
-	      proj_descrip.select('ul') // append github repo to end of list
-	      .append('li').append('a').attr('href', proj.github).text('Github repo.');
-	    }
-	  });
-	}
-
-	draw_projects(proj_data);
+	(0, _drawProjects2.default)(proj_data);
 
 /***/ }),
 /* 1 */
@@ -17460,6 +17438,49 @@
 	}
 
 	module.exports = makeCurve;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _d = __webpack_require__(1);
+
+	var d3 = _interopRequireWildcard(_d);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	// function to draw projects section.
+	function drawProjects(projData) {
+	  d3.select('#projectsDiv').selectAll('.project').data(projData).enter().append('div').attr('class', function (d, i) {
+	    return i == 0 ? 'row' : 'row project';
+	  }).each(function (proj) {
+	    // draw picture
+	    var pic = d3.select(this).append('div').attr('class', 'col-xs-12 col-sm-6 text-center');
+
+	    pic.append('a').attr('href', proj.link).append('img').attr('class', 'projectPic').attr('src', proj.photo);
+
+	    // generate the title and descriptions
+	    var projDescrip = d3.select(this) // make the holder.
+	    .append('div').attr('class', 'col-xs-12 col-sm-6');
+
+	    projDescrip.append('strong') // append the title.
+	    .attr('class', 'projectTitle').append('a').attr('href', proj.link).attr('target', '_blank').text(proj.title);
+
+	    projDescrip.append('ul') // append the description bullet point list
+	    .selectAll('li').data(proj.descriptions).enter().append('li').html(function (d) {
+	      return d;
+	    });
+
+	    if (proj.github != null) {
+	      projDescrip.select('ul') // append github repo to end of list
+	      .append('li').append('a').attr('href', proj.github).text('Github repo.');
+	    }
+	  });
+	}
+
+	module.exports = drawProjects;
 
 /***/ })
 /******/ ]);

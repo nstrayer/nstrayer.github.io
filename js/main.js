@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import Particle from './Particle';
 import makeCurve from './makeCurve';
+import drawProjects from './drawProjects';
 
 // Constants.
 const numParticles = 800;
@@ -15,7 +16,10 @@ const curveData = makeCurve({
 });
 
 // Set up the canvas and grab the context.
-const canvasSel = d3.select('#randomWalkCanvas').append('canvas');
+const canvasSel = d3
+  .select('#randomWalkCanvas')
+  .append('canvas')
+  .attr('id', 'particles');
 const canvas = canvasSel.node();
 const context = canvas.getContext('2d');
 
@@ -50,16 +54,12 @@ function render() {
   }
 }
 
-function getMousePos(canvas, e) {
-  const rect = canvas.getBoundingClientRect();
-  return {
-    x: (e.clientX - rect.left)*pixelRatio,
-    y: (e.clientY - rect.top)*pixelRatio,
-  };
-}
+const canvasDom = document.getElementById('particles');
 
-function onMouseMove(e) { 
-  mouse = getMousePos(canvas, e);
+function onMouseMove(e) {
+  const boundingBox = canvasDom.getBoundingClientRect();
+  mouse.x = (event.clientX - boundingBox.left) * pixelRatio;
+  mouse.y = (event.clientY - boundingBox.top) * pixelRatio;
 }
 
 function onTouchMove(e) {
@@ -104,7 +104,7 @@ function startScene() {
   canvasSel
     .style('width', width / pixelRatio + 'px')
     .style('height', height / devicePixelRatio + 'px');
-  
+
   setScalesRanges(xScale, yScale);
 
   particles = curveData.map((d) => {
@@ -121,64 +121,4 @@ function startScene() {
 
 startScene();
 
-// function to draw projects section.
-function draw_projects(proj_data) {
-  let entry = d3
-    .select('#projectsDiv')
-    .selectAll('.project')
-    .data(proj_data)
-    .enter()
-    .append('div')
-    .attr('class', function(d, i) {
-      return i == 0 ? 'row' : 'row project';
-    })
-    .each(function(proj) {
-      // draw picture
-      let pic = d3
-        .select(this)
-        .append('div')
-        .attr('class', 'col-xs-12 col-sm-6 text-center');
-
-      pic
-        .append('a')
-        .attr('href', proj.link)
-        .append('img')
-        .attr('class', 'projectPic')
-        .attr('src', proj.photo);
-
-      // generate the title and descriptions
-      let proj_descrip = d3
-        .select(this) // make the holder.
-        .append('div')
-        .attr('class', 'col-xs-12 col-sm-6');
-
-      proj_descrip
-        .append('strong') // append the title.
-        .attr('class', 'projectTitle')
-        .append('a')
-        .attr('href', proj.link)
-        .attr('target', '_blank')
-        .text(proj.title);
-
-      proj_descrip
-        .append('ul') // append the description bullet point list
-        .selectAll('li')
-        .data(proj.descriptions)
-        .enter()
-        .append('li')
-        .html(function(d) {
-          return d;
-        });
-
-      if (proj.github != null) {
-        proj_descrip
-          .select('ul') // append github repo to end of list
-          .append('li')
-          .append('a')
-          .attr('href', proj.github)
-          .text('Github repo.');
-      }
-    });
-}
-
-draw_projects(proj_data);
+drawProjects(proj_data);
