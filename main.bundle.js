@@ -54,29 +54,30 @@
 
 	var _Particle2 = _interopRequireDefault(_Particle);
 
+	var _makeCurve = __webpack_require__(3);
+
+	var _makeCurve2 = _interopRequireDefault(_makeCurve);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	// Constants.
 	var numParticles = 800;
+	var pointRadius = 5;
 	var margin = { top: 50, right: 50, bottom: 50, left: 50 };
 	var pixelRatio = window.devicePixelRatio;
+	var curveData = (0, _makeCurve2.default)({
+	  n: numParticles,
+	  min: 0,
+	  max: 6 * Math.PI,
+	  yFun: Math.cos
+	});
 
 	// Set up the canvas and grab the context.
 	var canvasSel = d3.select('#randomWalkCanvas').append('canvas');
-
 	var canvas = canvasSel.node();
 	var context = canvas.getContext('2d');
-
-	// Declare some variables we mutate later (I know I Know)
-	var particles = void 0;
-	var width = void 0;
-	var height = void 0;
-	var mouse = {
-	  x: -9999,
-	  y: -9999
-	};
 
 	// Small helper functions
 	// We multiply by the pixel ratio because otherwise retina screens look blurry.
@@ -86,64 +87,28 @@
 	var getWh = function getWh() {
 	  return canvas.height = 0.9 * window.innerHeight * pixelRatio;
 	};
-	width = getWw();
-	height = getWh();
+	var width = getWw();
+	var height = getWh();
 
-	// const pointRadius = Math.round(Math.min(width, height) / numParticles);
-	var pointRadius = 5;
-	// Takes our math function and returns an array of objects with x,y for it.
-	function makeCurve(_ref) {
-	  var n = _ref.n,
-	      min = _ref.min,
-	      max = _ref.max,
-	      yFun = _ref.yFun;
+	// Declare some variables we mutate later (I know I Know)
+	var particles = void 0;
+	var mouse = {
+	  x: -9999,
+	  y: -9999
+	};
 
-	  var stepSize = (max - min) / n;
-	  var x = void 0;
+	// setup scales.
+	var xScale = d3.scaleLinear().domain(d3.extent(curveData, function (d) {
+	  return d.x;
+	}));
+	var yScale = d3.scaleLinear().domain(d3.extent(curveData, function (d) {
+	  return d.y;
+	}));
 
-	  return d3.range(n).map(function (d, i) {
-	    x = min + (i + 1) * stepSize;
-	    return {
-	      x: x,
-	      y: yFun(x)
-	    };
-	  });
+	function setScalesRanges(xScale, yScale) {
+	  xScale.range([margin.left, width - margin.right]);
+	  yScale.range([height - margin.top, margin.bottom]);
 	}
-
-	// converts the x y positions to screen coordinates and initializes a particle with that screen point as its destination.
-	function dataToParticles(_ref2) {
-	  var curveData = _ref2.curveData,
-	      width = _ref2.width,
-	      height = _ref2.height,
-	      margin = _ref2.margin,
-	      pointRadius = _ref2.pointRadius;
-
-	  // set up the scales.
-	  var x = d3.scaleLinear().domain(d3.extent(curveData, function (d) {
-	    return d.x;
-	  })).range([margin.left, width - margin.right]);
-
-	  var y = d3.scaleLinear().domain(d3.extent(curveData, function (d) {
-	    return d.y;
-	  })).range([height - margin.top, margin.bottom]);
-
-	  return curveData.map(function (d) {
-	    return new _Particle2.default({
-	      x: x(d.x),
-	      y: y(d.y),
-	      width: width,
-	      height: height,
-	      pointRadius: pointRadius
-	    });
-	  });
-	}
-
-	var curveData = makeCurve({
-	  n: numParticles,
-	  min: 0,
-	  max: 6 * Math.PI,
-	  yFun: Math.cos
-	});
 
 	function render() {
 	  requestAnimationFrame(render);
@@ -170,28 +135,45 @@
 	  mouse.y = -9999;
 	}
 
-	window.addEventListener('resize', startScene);
+	window.addEventListener('resize', pageResize);
 	window.addEventListener('mousemove', onMouseMove);
 	window.addEventListener('touchmove', onTouchMove);
 	window.addEventListener('touchend', onTouchEnd);
 
-	canvas.addEventListener("click", function (event) {
-	  var x = event.pageX - (this.offsetLeft + this.parentElement.offsetLeft);
-	  var y = event.pageY - (this.offsetTop + this.parentElement.offsetTop);
-	  console.log("relative x=" + x, "relative y" + y);
-	});
+	function pageResize() {
+	  // grab new dimensions
+	  width = getWw();
+	  height = getWh();
+
+	  // redo the canvas for new size.
+	  canvasSel.style('width', width / pixelRatio + 'px').style('height', height / devicePixelRatio + 'px');
+
+	  // redo scale ranges
+	  setScalesRanges(xScale, yScale);
+
+	  // assign the new destinations based upon the updated scales.
+	  particles.forEach(function (particle) {
+	    return particle.resize({ xScale: xScale, yScale: yScale });
+	  });
+	}
 
 	function startScene() {
 	  width = getWw();
 	  height = getWh();
+
 	  // Set up the canvas for retina.
 	  canvasSel.style('width', width / pixelRatio + 'px').style('height', height / devicePixelRatio + 'px');
-	  particles = dataToParticles({
-	    curveData: curveData,
-	    width: width,
-	    height: height,
-	    margin: margin,
-	    pointRadius: pointRadius
+
+	  setScalesRanges(xScale, yScale);
+
+	  particles = curveData.map(function (d) {
+	    return new _Particle2.default({
+	      x: d.x,
+	      y: d.y,
+	      xScale: xScale,
+	      yScale: yScale,
+	      pointRadius: pointRadius
+	    });
 	  });
 	  render();
 	}
@@ -17363,22 +17345,28 @@
 	  function Particle(_ref) {
 	    var x = _ref.x,
 	        y = _ref.y,
-	        width = _ref.width,
-	        height = _ref.height,
-	        pointRadius = _ref.pointRadius;
+	        pointRadius = _ref.pointRadius,
+	        xScale = _ref.xScale,
+	        yScale = _ref.yScale;
 
 	    _classCallCheck(this, Particle);
 
 	    // starting locations
+	    var width = xScale.range()[1];
+	    var height = yScale.range()[0];
 	    this.x = Math.random() * width;
 	    this.y = Math.random() * height;
 
-	    this.dest = {
+	    this.data = {
 	      x: x,
 	      y: y
 	    };
 
-	    this.r = pointRadius + Math.random();
+	    this.dest = {
+	      x: xScale(x),
+	      y: yScale(y)
+	    };
+	    this.r = (pointRadius + Math.random() * 3) * (width / 1700);
 	    this.vx = (Math.random() - 0.5) * 20;
 	    this.vy = (Math.random() - 0.5) * 20;
 	    this.accX = 0;
@@ -17388,12 +17376,23 @@
 	  }
 
 	  _createClass(Particle, [{
+	    key: 'resize',
+	    value: function resize(_ref2) {
+	      var xScale = _ref2.xScale,
+	          yScale = _ref2.yScale;
+
+	      this.dest = {
+	        x: xScale(this.data.x),
+	        y: yScale(this.data.y)
+	      };
+	    }
+	  }, {
 	    key: 'render',
-	    value: function render(_ref2) {
-	      var context = _ref2.context,
-	          width = _ref2.width,
-	          height = _ref2.height,
-	          mouse = _ref2.mouse;
+	    value: function render(_ref3) {
+	      var context = _ref3.context,
+	          width = _ref3.width,
+	          height = _ref3.height,
+	          mouse = _ref3.mouse;
 
 	      this.accX = (this.dest.x - this.x) / 500;
 	      this.accY = (this.dest.y - this.y) / 500;
@@ -17407,7 +17406,7 @@
 
 	      context.fillStyle = this.color;
 	      context.beginPath();
-	      context.arc(this.x, this.y, this.r * (width / 1700), Math.PI * 2, false);
+	      context.arc(this.x, this.y, this.r, Math.PI * 2, false);
 	      context.fill();
 
 	      var a = this.x - mouse.x;
@@ -17421,9 +17420,6 @@
 	        this.vx += this.accX;
 	        this.vy += this.accY;
 	      }
-
-	      // mouse.x = -9999;
-	      // mouse.y = -9999;
 	    }
 	  }]);
 
@@ -17431,6 +17427,39 @@
 	}();
 
 	module.exports = Particle;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _d = __webpack_require__(1);
+
+	var d3 = _interopRequireWildcard(_d);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	// Takes our math function and returns an array of objects with x,y for it.
+	function makeCurve(_ref) {
+	  var n = _ref.n,
+	      min = _ref.min,
+	      max = _ref.max,
+	      yFun = _ref.yFun;
+
+	  var stepSize = (max - min) / n;
+	  var x = void 0;
+
+	  return d3.range(n).map(function (d, i) {
+	    x = min + (i + 1) * stepSize;
+	    return {
+	      x: x,
+	      y: yFun(x)
+	    };
+	  });
+	}
+
+	module.exports = makeCurve;
 
 /***/ })
 /******/ ]);

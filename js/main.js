@@ -1,81 +1,46 @@
 import * as d3 from 'd3';
 import Particle from './Particle';
+import makeCurve from './makeCurve';
 
 // Constants.
 const numParticles = 800;
+const pointRadius = 5;
 const margin = {top: 50, right: 50, bottom: 50, left: 50};
 const pixelRatio = window.devicePixelRatio;
-
-// Set up the canvas and grab the context.
-const canvasSel = d3
-  .select('#randomWalkCanvas')
-  .append('canvas');
- 
-const canvas = canvasSel.node();
-const context = canvas.getContext('2d');
-
-// Declare some variables we mutate later (I know I Know)
-let particles;
-let width;
-let height;
-const mouse = {
-  x: -9999,
-  y: -9999,
-};
-
-// Small helper functions
-// We multiply by the pixel ratio because otherwise retina screens look blurry.
-const getWw = () => (canvas.width = window.innerWidth * pixelRatio);
-const getWh = () => (canvas.height = 0.9 * window.innerHeight * pixelRatio);
-width = getWw();
-height = getWh();
-
-// const pointRadius = Math.round(Math.min(width, height) / numParticles);
-const pointRadius = 5;
-// Takes our math function and returns an array of objects with x,y for it.
-function makeCurve({n, min, max, yFun}) {
-  const stepSize = (max - min) / n;
-  let x;
-
-  return d3.range(n).map((d, i) => {
-    x = min + (i + 1) * stepSize;
-    return {
-      x: x,
-      y: yFun(x),
-    };
-  });
-}
-
-// converts the x y positions to screen coordinates and initializes a particle with that screen point as its destination.
-function dataToParticles({curveData, width, height, margin, pointRadius}) {
-  // set up the scales.
-  const x = d3
-    .scaleLinear()
-    .domain(d3.extent(curveData, (d) => d.x))
-    .range([margin.left, width - margin.right]);
-
-  const y = d3
-    .scaleLinear()
-    .domain(d3.extent(curveData, (d) => d.y))
-    .range([height - margin.top, margin.bottom]);
-
-  return curveData.map((d) => {
-    return new Particle({
-      x: x(d.x),
-      y: y(d.y),
-      width,
-      height,
-      pointRadius,
-    });
-  });
-}
-
 const curveData = makeCurve({
   n: numParticles,
   min: 0,
   max: 6 * Math.PI,
   yFun: Math.cos,
 });
+
+// Set up the canvas and grab the context.
+const canvasSel = d3.select('#randomWalkCanvas').append('canvas');
+const canvas = canvasSel.node();
+const context = canvas.getContext('2d');
+
+// Small helper functions
+// We multiply by the pixel ratio because otherwise retina screens look blurry.
+const getWw = () => (canvas.width = window.innerWidth * pixelRatio);
+const getWh = () => (canvas.height = 0.9 * window.innerHeight * pixelRatio);
+let width = getWw();
+let height = getWh();
+
+// Declare some variables we mutate later (I know I Know)
+let particles;
+const mouse = {
+  x: -9999,
+  y: -9999,
+};
+
+// setup scales.
+const xScale = d3.scaleLinear().domain(d3.extent(curveData, (d) => d.x));
+const yScale = d3.scaleLinear().domain(d3.extent(curveData, (d) => d.y));
+
+function setScalesRanges(xScale, yScale) {
+  xScale.range([margin.left, width - margin.right]);
+  yScale.range([height - margin.top, margin.bottom]);
+}
 
 function render() {
   requestAnimationFrame(render);
@@ -102,30 +67,47 @@ function onTouchEnd(e) {
   mouse.y = -9999;
 }
 
-window.addEventListener('resize', startScene);
+window.addEventListener('resize', pageResize);
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('touchmove', onTouchMove);
 window.addEventListener('touchend', onTouchEnd);
 
-canvas.addEventListener("click", function(event) {
-var x = event.pageX - (this.offsetLeft + this.parentElement.offsetLeft);
-var y = event.pageY - (this.offsetTop + this.parentElement.offsetTop);
-console.log("relative x=" + x, "relative y" + y);
-})
+function pageResize() {
+  // grab new dimensions
+  width = getWw();
+  height = getWh();
+
+  // redo the canvas for new size.
+  canvasSel
+    .style('width', width / pixelRatio + 'px')
+    .style('height', height / devicePixelRatio + 'px');
+
+  // redo scale ranges
+  setScalesRanges(xScale, yScale);
+
+  // assign the new destinations based upon the updated scales.
+  particles.forEach((particle) => particle.resize({xScale, yScale}));
+}
 
 function startScene() {
   width = getWw();
   height = getWh();
+
   // Set up the canvas for retina.
   canvasSel
     .style('width', width / pixelRatio + 'px')
     .style('height', height / devicePixelRatio + 'px');
-  particles = dataToParticles({
-    curveData,
-    width,
-    height,
-    margin,
-    pointRadius,
+  
+  setScalesRanges(xScale, yScale);
+
+  particles = curveData.map((d) => {
+    return new Particle({
+      x: d.x,
+      y: d.y,
+      xScale,
+      yScale,
+      pointRadius,
+    });
   });
   render();
 }

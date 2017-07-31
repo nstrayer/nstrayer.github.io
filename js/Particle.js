@@ -10,23 +10,36 @@ const colors = [
 ];
 
 class Particle {
-  constructor({x, y, width, height, pointRadius}) {
+  constructor({x, y, pointRadius, xScale, yScale}) {
     // starting locations
+    const width = xScale.range()[1];
+    const height = yScale.range()[0];
     this.x = Math.random() * width;
     this.y = Math.random() * height;
 
-    this.dest = {
+    this.data = {
       x: x,
       y: y,
     };
 
-    this.r = pointRadius + Math.random();
+    this.dest = {
+      x: xScale(x),
+      y: yScale(y),
+    };
+    this.r = (pointRadius + Math.random() * 3) * (width / 1700);
     this.vx = (Math.random() - 0.5) * 20;
     this.vy = (Math.random() - 0.5) * 20;
     this.accX = 0;
     this.accY = 0;
     this.friction = Math.random() * 0.03 + 0.94;
     this.color = colors[Math.floor(Math.random() * 6)];
+  }
+
+  resize({xScale, yScale}) {
+    this.dest = {
+      x: xScale(this.data.x),
+      y: yScale(this.data.y),
+    };
   }
 
   render({context, width, height, mouse}) {
@@ -42,7 +55,7 @@ class Particle {
 
     context.fillStyle = this.color;
     context.beginPath();
-    context.arc(this.x, this.y, this.r * (width / 1700), Math.PI * 2, false);
+    context.arc(this.x, this.y, this.r, Math.PI * 2, false);
     context.fill();
 
     const a = this.x - mouse.x;
@@ -56,9 +69,6 @@ class Particle {
       this.vx += this.accX;
       this.vy += this.accY;
     }
-
-    // mouse.x = -9999;
-    // mouse.y = -9999;
   }
 }
 
