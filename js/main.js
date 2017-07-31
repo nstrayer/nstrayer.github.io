@@ -50,9 +50,16 @@ function render() {
   }
 }
 
-function onMouseMove(e) {
-  mouse.x = e.clientX * pixelRatio;
-  mouse.y = e.clientY * pixelRatio;
+function getMousePos(canvas, e) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: (e.clientX - rect.left)*pixelRatio,
+    y: (e.clientY - rect.top)*pixelRatio,
+  };
+}
+
+function onMouseMove(e) { 
+  mouse = getMousePos(canvas, e);
 }
 
 function onTouchMove(e) {
