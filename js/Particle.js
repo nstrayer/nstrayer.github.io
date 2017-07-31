@@ -1,13 +1,4 @@
-const colors = [
-  '#e41a1c',
-  '#377eb8',
-  '#4daf4a',
-  '#984ea3',
-  '#ff7f00',
-  '#ffff33',
-  '#a65628',
-  '#f781bf',
-];
+const colors = ['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00'];
 
 class Particle {
   constructor({x, y, pointRadius, xScale, yScale}) {
@@ -26,7 +17,9 @@ class Particle {
       x: xScale(x),
       y: yScale(y),
     };
-    this.r = (pointRadius + Math.random() * 3) * (width / 1700);
+    // this.r = (pointRadius + Math.random() * 3) * (width / 1700);
+    this.r = (pointRadius) * (width / 1700);
+
     this.vx = (Math.random() - 0.5) * 20;
     this.vy = (Math.random() - 0.5) * 20;
     this.accX = 0;

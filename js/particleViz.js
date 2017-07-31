@@ -1,26 +1,45 @@
 import * as d3 from 'd3';
 import Particle from './Particle';
 import makeCurve from './makeCurve';
-import drawProjects from './drawProjects';
+import {gammaPdf} from './distributions';
+
+const alphaSteps = 10; // how many of both alpha and beta  we get.
+const gammaSteps = 1;
+const [alphaStart, alphaEnd] = [3, 8];
+const [betaStart, betaEnd] = [1.5,1.5];
+const alphaStep = (alphaEnd - alphaStart) / alphaSteps;
+const betaStep = (betaEnd - betaStart) / gammaSteps;
+
+const params = [];
+for (let i = 0; i < alphaSteps; i++) {
+  for (let j = 0; j < gammaSteps; j++) {
+    params.push({
+      alpha: alphaStart + (i + 1) * alphaStep,
+      beta: betaStart + (j + 1) * betaStep,
+    });
+  }
+}
 
 function particleViz(divId) {
   // Constants.
-  const numParticles = 800;
+  const numParticles = 1200;
   const pointRadius = 5;
   const margin = {top: 50, right: 50, bottom: 50, left: 50};
   const pixelRatio = window.devicePixelRatio;
-  const curveData = makeCurve({
-    n: numParticles,
-    min: 0,
-    max: 6 * Math.PI,
-    yFun: Math.cos,
+
+  let curveData = [];
+  params.forEach((d) => {
+    const gammaResults = makeCurve({
+      n: numParticles / params.length,
+      min: 0,
+      max: 30,
+      yFun: gammaPdf(d.alpha, d.beta),
+    });
+    curveData = [...curveData, ...gammaResults];
   });
 
   // Set up the canvas and grab the context.
-  const canvasSel = d3
-    .select(divId)
-    .append('canvas')
-    .attr('id', 'particles');
+  const canvasSel = d3.select(divId).append('canvas').attr('id', 'particles');
   const canvas = canvasSel.node();
   const context = canvas.getContext('2d');
 
