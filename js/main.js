@@ -1,124 +1,49 @@
-import * as d3 from 'd3';
-import Particle from './Particle';
-import makeCurve from './makeCurve';
+import $ from "jquery";
+import 'jquery.localscroll';
+import 'jquery.scrollto';
 import drawProjects from './drawProjects';
+import particleViz from './particleViz';
 
-// Constants.
-const numParticles = 800;
-const pointRadius = 5;
-const margin = {top: 50, right: 50, bottom: 50, left: 50};
-const pixelRatio = window.devicePixelRatio;
-const curveData = makeCurve({
-  n: numParticles,
-  min: 0,
-  max: 6 * Math.PI,
-  yFun: Math.cos,
+// add jquery to the window for bootstrap.
+window.$ = $;
+
+const introViz = particleViz('#randomWalkCanvas');
+introViz.startScene();
+drawProjects(proj_data);
+
+$('#resume').scrollTo();
+$('#resumeButton').click(function() {
+  // var link = $(this);
+  let link = $('#buttonText');
+  $('#resumeDiv').slideToggle('slow', function() {
+    if ($(this).is(':visible')) {
+      link.text('Close');
+    } else {
+      link.text('Expand C.V.');
+    }
+  });
 });
 
-// Set up the canvas and grab the context.
-const canvasSel = d3
-  .select('#randomWalkCanvas')
-  .append('canvas')
-  .attr('id', 'particles');
-const canvas = canvasSel.node();
-const context = canvas.getContext('2d');
-
-// Small helper functions
-// We multiply by the pixel ratio because otherwise retina screens look blurry.
-const getWw = () => (canvas.width = window.innerWidth * pixelRatio);
-const getWh = () => (canvas.height = 0.9 * window.innerHeight * pixelRatio);
-let width = getWw();
-let height = getWh();
-
-// Declare some variables we mutate later (I know I Know)
-let particles;
-const mouse = {
-  x: -9999,
-  y: -9999,
-};
-
-// setup scales.
-const xScale = d3.scaleLinear().domain(d3.extent(curveData, (d) => d.x));
-const yScale = d3.scaleLinear().domain(d3.extent(curveData, (d) => d.y));
-
-function setScalesRanges(xScale, yScale) {
-  xScale.range([margin.left, width - margin.right]);
-  yScale.range([height - margin.top, margin.bottom]);
-}
-
-function render() {
-  requestAnimationFrame(render);
-  context.clearRect(0, 0, width, height);
-  for (let i = 0; i < numParticles; i++) {
-    particles[i].render({context, width, height, mouse});
-  }
-}
-
-const canvasDom = document.getElementById('particles');
-
-function onMouseMove(e) {
-  const boundingBox = canvasDom.getBoundingClientRect();
-  mouse.x = (event.clientX - boundingBox.left) * pixelRatio;
-  mouse.y = (event.clientY - boundingBox.top) * pixelRatio;
-}
-
-function onTouchMove(e) {
-  if (e.touches.length > 0) {
-    mouse.x = e.touches[0].clientX * pixelRatio;
-    mouse.y = e.touches[0].clientY * pixelRatio;
-  }
-}
-
-function onTouchEnd(e) {
-  mouse.x = -9999;
-  mouse.y = -9999;
-}
-
-window.addEventListener('resize', pageResize);
-window.addEventListener('mousemove', onMouseMove);
-window.addEventListener('touchmove', onTouchMove);
-window.addEventListener('touchend', onTouchEnd);
-
-function pageResize() {
-  // grab new dimensions
-  width = getWw();
-  height = getWh();
-
-  // redo the canvas for new size.
-  canvasSel
-    .style('width', width / pixelRatio + 'px')
-    .style('height', height / devicePixelRatio + 'px');
-
-  // redo scale ranges
-  setScalesRanges(xScale, yScale);
-
-  // assign the new destinations based upon the updated scales.
-  particles.forEach((particle) => particle.resize({xScale, yScale}));
-}
-
-function startScene() {
-  width = getWw();
-  height = getWh();
-
-  // Set up the canvas for retina.
-  canvasSel
-    .style('width', width / pixelRatio + 'px')
-    .style('height', height / devicePixelRatio + 'px');
-
-  setScalesRanges(xScale, yScale);
-
-  particles = curveData.map((d) => {
-    return new Particle({
-      x: d.x,
-      y: d.y,
-      xScale,
-      yScale,
-      pointRadius,
-    });
+$(document).ready(function() {
+  $('.navbar').localScroll({
+    duration: 800,
+    offset: -60,
+    axis: 'y',
   });
-  render();
+});
+
+let isMobile = /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(
+  navigator.userAgent.toLowerCase()
+);
+
+if (isMobile) {
+  $(document).on('click', '.navbar-brand', function() {
+    $('.navbar-collapse').collapse('hide');
+  });
+
+  $(document).on('click', '.navbar-collapse.in', function(e) {
+    if ($(e.target).is('a')) {
+      $('.navbar-collapse').collapse('hide');
+    }
+  });
 }
-
-startScene();
-
-drawProjects(proj_data);

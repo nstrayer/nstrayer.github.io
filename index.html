@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <meta charset="utf-8">
 
 <body>
@@ -10,17 +10,13 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/navbar-fixed-top.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <script src="//d3js.org/d3.v4.min.js"></script>
-    <script type="text/javascript" src="js/underscore.js"></script>
-    <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/jquery.localScroll.js"></script>
-    <script type="text/javascript" src="js/jquery.scrollTo.js"></script>
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -45,167 +41,130 @@
     </nav>
 
     <div id="intro">
-        <!-- <div id = "introSvg"></div> -->
-        <div id = "randomWalkCanvas"></div>
+        <div id="randomWalkCanvas"></div>
     </div>
 
     <hr>
 
-<div class = "container">
-    <div id="meDiv" class="section">
-        <h1><a name="about">About</a>
-        </h1>
-
-        <div id = "pictures" class = "col-xs-12 col-xs-12 col-md-10 col-md-offset-1">
-            <p class="pictures">
-                <img class="photos" src="images/me.jpg" alt="I am a super serious person" height="200px" width="250px">
-                <img class="photos" src="images/bikes.jpg" alt="Biking down the coast of California" height="200px" width="250px">
-                <img class="photos" src="images/billings.jpg" alt="Billings Library, UVM" height="200px" width="250px">
-            </p>
-        </div>
-
-        <div class = "col-xs-12 col-md-10 col-md-offset-1 " id = "aboutText">
-            <p>
-                I have been extremely lucky to work in many different realms,
-                including as a <a href="http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html">Journalist at the New York Times</a>,
-                data scientist at <a href="http://www.dealer.com/">Dealer.com</a> in Vermont, and as a "data artist in residence" at tech startup <a href = "https://www.conduce.com/">Conduce</a> in California.
-                Currently, I am a PhD student in biostatistics at Vanderbilt University and also an intern at the <a href = "http://jhudatascience.org/"> Johns Hopkins Data Science Lab.</a>
-                Recently (May '15), I graduated from the
-                University of Vermont where I majored in
-                <strong>mathematics</strong> and
-                <strong>statistics</strong> and minored in
-                <strong>computer science.</strong>
-            </p>
-
-            <p>I like data. Manipulating it, modeling it, making it (simulation), visualizing it and yes, even cleaning it. I do these things with
-            some combination of <strong>R</strong>, <strong>Python</strong> and <strong>Javascript</strong> (d3.js in particular). Most recently I have been fascinated with conveying complex statistical topics and methods using <a href = "http://nickstrayer.me/binomialFun/confidenceIntervals">intuitive</a> and <a href="http://nickstrayer.me/likelihood">interactive</a> <a href = "http://nickstrayer.me/binomialFun/">graphics.</a> </p>
-            <p>My current research interests include:
-                <strong>data gathering</strong>,
-                <strong>extracting inference from machine learning</strong>,
-                <strong>data visualization</strong> and
-                <strong>scientific communication</strong>.</p>
-            <p>
-                If you want to read about me and my pursuits in a more eloquently written form, I was recently <a href = "http://www.uvm.edu/newsstories/news/deeper_story_data">profiled</a> by my alma mater.
-            </p>
-            <p>
-                When I am not in "school mode" I love to bike places, read science fiction and wander around gardens/musuems.
-            </p>
-            <p>The crazy line at the begining of this page is a random walk. At each step it moves a single unit in a random direction. I am letting it run for 5000 steps and letting your computer's (or phone's) browser do all the calculations.
-                Click on the simulation to generate a new one.
-                To learn more about random walks see <a href="https://en.wikipedia.org/wiki/Random_walk">here.</a>
-            </p>
-
-            <p>Have a fantastic day!</p>
-        </div>
-        <!-- <div class = "col-xs-12, col-md-4" id = "twitter">
-            <a class="twitter-timeline" href="https://twitter.com/NicholasStrayer" data-widget-id="653247510123782146">Tweets by @NicholasStrayer</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-        </div> -->
-    </div>
-
-    <hr>
-
-
-    <div  class="section">
-        <h1><a name="projects">Projects</a>
-    </div>
-    <div class="col-xs-12 col-md-10 col-md-offset-1 ">
-        <p>Below is a sampling of the things I have done related to data science and visualization. I also regularly blog at my site <a href = "http://livefreeordichotomize.com">LiveFreeOrDichotomize</a> which most likely has more up to date info than this list. 
-    </div>
-        <hr>
-
-    <div id="projectsDiv"> </div>
-
-
-    <hr>
-
-    <div id="flip" >
-        <h1><a name="resume">C.V.</a>
-        </h1>
-        <div id="resumeButton"  class = "col-sm-12 col-md-10 col-md-offset-1">
-            <h4 id="buttonText">Expand C.V.</h4>
-        </div>
-    </div>
-
-    <div id="resumeDiv" class = "col-sm-12 col-md-10 col-md-offset-1">
-        <iframe src="http://docs.google.com/gview?url=https://www.dropbox.com/s/76mum7vyujiwl7o/CV_06-17.pdf?dl=1&embedded=true" style="width:100%; height:700px;" frameborder="0"></iframe>
-    </div>
-        <!-- closes the menu div -->
-
-    <hr>
-
-    <div class = "contactDiv">
-        <div id="contactDiv" class="section">
-            <h1><a name="contact">Contact</a>
+    <div class="container">
+        <div id="meDiv" class="section">
+            <h1><a name="about">About</a>
             </h1>
 
-            <div class = "col-xs-12 col-md-10 col-md-offset-1 " id = "contactText">
-                <p> I am always interested in getting involved in new projects or just connecting with others. Feel free to get in touch!
-                </p>
-                <p>
-                    <strong>email: </strong> n.strayer (at) vanderbilt (dot) edu
-                </p>
-                <p>
-                    <strong>twitter: </strong> <a href="https://twitter.com/NicholasStrayer" target="_blank">@NicholasStrayer </a>
-                </p>
-                <p>
-                    <strong>github: </strong> <a href="https://github.com/nstrayer" target="_blank">nstrayer </a>
-                </p>
+            <div id="pictures" class="col-xs-12 col-xs-12 col-md-10 col-md-offset-1">
                 <p class="pictures">
-                    <img class="photos" src="images/rubeLab.jpg" alt="The Rubenstein Ecosystem Science Laboratory">
-                    <img class="photos" src="images/bezierCurve.jpg" alt="I am a super serious person" width="15%">
-                    <img class="photos" src="images/lawQuad.jpg" alt="I am a super serious person">
+                    <img class="photos" src="images/me.jpg" alt="I am a super serious person" height="200px" width="250px">
+                    <img class="photos" src="images/bikes.jpg" alt="Biking down the coast of California" height="200px" width="250px">
+                    <img class="photos" src="images/billings.jpg" alt="Billings Library, UVM" height="200px" width="250px">
                 </p>
             </div>
+
+            <div class="col-xs-12 col-md-10 col-md-offset-1 " id="aboutText">
+                <p>
+                    I have been extremely lucky to work in many different realms, including as a <a href="http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html">Journalist at the New York Times</a>,
+                    data scientist at <a href="http://www.dealer.com/">Dealer.com</a> in Vermont, and as a "data artist in
+                    residence" at tech startup <a href="https://www.conduce.com/">Conduce</a> in California. Currently, I
+                    am a PhD student in biostatistics at Vanderbilt University and also an intern at the <a href="http://jhudatascience.org/"> Johns Hopkins Data Science Lab.</a>                    Recently (May '15), I graduated from the University of Vermont where I majored in
+                    <strong>mathematics</strong> and
+                    <strong>statistics</strong> and minored in
+                    <strong>computer science.</strong>
+                </p>
+
+                <p>I like data. Manipulating it, modeling it, making it (simulation), visualizing it and yes, even cleaning
+                    it. I do these things with some combination of <strong>R</strong>, <strong>Python</strong> and <strong>Javascript</strong>                    (d3.js in particular). Most recently I have been fascinated with conveying complex statistical topics
+                    and methods using <a href="http://nickstrayer.me/binomialFun/confidenceIntervals">intuitive</a> and
+                    <a
+                        href="http://nickstrayer.me/likelihood">interactive</a> <a href="http://nickstrayer.me/binomialFun/">graphics.</a> </p>
+                <p>My current research interests include:
+                    <strong>data gathering</strong>,
+                    <strong>extracting inference from machine learning</strong>,
+                    <strong>data visualization</strong> and
+                    <strong>scientific communication</strong>.</p>
+                <p>
+                    If you want to read about me and my pursuits in a more eloquently written form, I was recently <a href="http://www.uvm.edu/newsstories/news/deeper_story_data">profiled</a>                    by my alma mater.
+                </p>
+                <p>
+                    When I am not in "school mode" I love to bike places, read science fiction and wander around gardens/musuems.
+                </p>
+                <p>The crazy line at the begining of this page is a random walk. At each step it moves a single unit in a random
+                    direction. I am letting it run for 5000 steps and letting your computer's (or phone's) browser do all
+                    the calculations. Click on the simulation to generate a new one. To learn more about random walks see
+                    <a href="https://en.wikipedia.org/wiki/Random_walk">here.</a>
+                </p>
+
+                <p>Have a fantastic day!</p>
+            </div>
         </div>
+
+        <hr>
+
+
+        <div class="section">
+            <h1><a name="projects">Projects</a>
+        </div>
+        <div class="col-xs-12 col-md-10 col-md-offset-1 ">
+            <p>Below is a sampling of the things I have done related to data science and visualization. I also regularly blog
+                at my site <a href="http://livefreeordichotomize.com">LiveFreeOrDichotomize</a> which most likely has more
+                up to date info than this list.
+        </div>
+        <hr>
+
+        <div id="projectsDiv"> </div>
+
+
+        <hr>
+
+        <div id="flip">
+            <h1><a name="resume">C.V.</a>
+            </h1>
+            <div id="resumeButton" class="col-sm-12 col-md-10 col-md-offset-1">
+                <h4 id="buttonText">Expand C.V.</h4>
+            </div>
+        </div>
+
+        <div id="resumeDiv" class="col-sm-12 col-md-10 col-md-offset-1">
+            <iframe src="http://docs.google.com/gview?url=https://www.dropbox.com/s/76mum7vyujiwl7o/CV_06-17.pdf?dl=1&embedded=true"
+                style="width:100%; height:700px;" frameborder="0"></iframe>
+        </div>
+        <!-- closes the menu div -->
+
+        <hr>
+
+        <div class="contactDiv">
+            <div id="contactDiv" class="section">
+                <h1><a name="contact">Contact</a>
+                </h1>
+
+                <div class="col-xs-12 col-md-10 col-md-offset-1 " id="contactText">
+                    <p> I am always interested in getting involved in new projects or just connecting with others. Feel free
+                        to get in touch!
+                    </p>
+                    <p>
+                        <strong>email: </strong> n.strayer (at) vanderbilt (dot) edu
+                    </p>
+                    <p>
+                        <strong>twitter: </strong> <a href="https://twitter.com/NicholasStrayer" target="_blank">@NicholasStrayer </a>
+                    </p>
+                    <p>
+                        <strong>github: </strong> <a href="https://github.com/nstrayer" target="_blank">nstrayer </a>
+                    </p>
+                    <p class="pictures">
+                        <img class="photos" src="images/rubeLab.jpg" alt="The Rubenstein Ecosystem Science Laboratory">
+                        <img class="photos" src="images/bezierCurve.jpg" alt="I am a super serious person" width="15%">
+                        <img class="photos" src="images/lawQuad.jpg" alt="I am a super serious person">
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- closes the container div -->
     </div>
-    <!-- closes the container div -->
-</div>
 
-    <script type="text/javascript">
-
-        $('#resume').scrollTo()
-        $("#resumeButton").click(function() {
-            //var link = $(this);
-            var link = d3.select("#buttonText");
-            $("#resumeDiv").slideToggle("slow", function() {
-                if ($(this).is(":visible")) {
-                    link.text('Close');
-                } else {
-                    link.text('Expand C.V.');
-                }
-            });
-        });
-
-        $(document).ready(function() {
-            $('.navbar').localScroll({
-                duration: 800,
-                offset: -60,
-                axis: "y"
-            });
-
-        });
-
-        var isMobile = /iphone|ipod|ipad|android|blackberry|opera mini|opera mobi|skyfire|maemo|windows phone|palm|iemobile|symbian|symbianos|fennec/i.test(navigator.userAgent.toLowerCase());
-
-        if (isMobile) {
-            $(document).on('click', '.navbar-brand', function() {
-                $(".navbar-collapse").collapse('hide');
-            });
-
-            $(document).on('click', '.navbar-collapse.in', function(e) {
-                if ($(e.target).is('a')) {
-                    $(".navbar-collapse").collapse('hide');
-                }
-            });
-        }
-    </script>
     <script>
-        (function(i, s, o, g, r, a, m) {
+        (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
-            i[r] = i[r] || function() {
+            i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1  new Date();
+            }, i[r].l = 1;  new Date();
             a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0];
             a.async = 1;
@@ -217,9 +176,8 @@
         ga('send', 'pageview');
     </script>
     <script src="js/projects_data.js"></script>
-    <!-- <script src="js/script.js"></script> -->
     <script src="main.bundle.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+     <script src="js/bootstrap.min.js"></script> 
 
 </body>
 

@@ -4,26 +4,6 @@ body {
     padding-top: 10px;
 }
 
-.axis path, .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-}
-
-.x.axis path {
-    display: none;
-}
-
-.y.axis path {
-    display: none;
-}
-
-.line {
-    fill: none;
-    stroke: steelblue;
-    stroke-width: 1.5px;
-}
-
 .pictures {
     text-align: center
 }
@@ -75,10 +55,6 @@ hr {
     visibility: hidden;
 }
 
-svg text{
-    pointer-events: none;
-}
-
 #intro {
     position:relative;;
     height:100vh;
@@ -91,13 +67,4 @@ svg text{
   top: 7vh;
   left: 0;
   z-index: -1;
-}
-
-#introSvg{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 7vh;
-  left: 0;
-  z-index: 1;
 }
