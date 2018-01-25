@@ -5,7 +5,7 @@
   "main": "js/main.js",
   "scripts": {
     "watch": "webpack -w",
-    "start": "live-server --port=8000 --watch=./main.bundle.js"
+    "start": "live-server --port=9003 --host=0.0.0.0we--watch=./main.bundle.js"
   },
   "author": "Nick Strayer",
   "license": "MIT",

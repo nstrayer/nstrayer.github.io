@@ -11,6 +11,7 @@ const introViz = particleViz('#randomWalkCanvas');
 introViz.startScene();
 drawProjects(proj_data);
 
+
 $('#resume').scrollTo();
 $('#resumeButton').click(function() {
   // var link = $(this);
