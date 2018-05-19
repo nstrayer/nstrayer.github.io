@@ -89,7 +89,7 @@ When I am not in "school mode" I love to bike places, read science fiction and w
 ## Projects
 
 
-For a much more up-to-date and topical list of my work, check out the data science/statisics/visualization blog that I run with [Lucy D'Agostino McGowan](https://www.lucymcgowan.com/): [Life Free or Dichotomize](http://livefreeordichotomize.com/). 
+For a much more up-to-date and topical list of my work, check out the data science/statisics/visualization blog that I run with [Lucy D'Agostino McGowan](https://www.lucymcgowan.com/): [Live Free or Dichotomize](http://livefreeordichotomize.com/). 
 ```{r}
 projects_data <- jsonlite::fromJSON('projects.json')
 ```
