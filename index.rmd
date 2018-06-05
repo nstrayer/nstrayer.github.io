@@ -12,34 +12,9 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 
 library(tidyverse)
-library(RColorBrewer)
 library(htmltools)
 
 htmltools::tagList(rmarkdown::html_dependency_font_awesome())
-
-# collabs <- read_tsv('https://raw.githubusercontent.com/nstrayer/network3d/customTooltips/data/ca-GrQc.txt', skip = 4, col_names = c('source', 'target'))
-
-# size <- 500
-# vertices <- data_frame(id = unique(collabs$source)) %>%
-#     mutate(
-#       index = 1:n(),
-#       color = sample(brewer.pal(9, 'RdYlBu'), size = n(), replace = TRUE),
-#       name = as.character(index),
-#       tooltip = paste0(
-#         '<h2>', index, '</h2>',
-#         '<p> Here are some random numbers ', rnorm(n()), '</p>'
-#       )
-#     ) %>%
-#     head(size)
-# 
-#   edges <- collabs %>%
-#     filter((source %in% vertices$id) & (target %in% vertices$id))
-# 
-# data <- list(
-#     edges = edges,
-#     vertices = vertices
-#   ) %>% jsonlite::toJSON()
-
 ```
 
 
