@@ -17,28 +17,28 @@ library(htmltools)
 
 htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 
-collabs <- read_tsv('https://raw.githubusercontent.com/nstrayer/network3d/customTooltips/data/ca-GrQc.txt', skip = 4, col_names = c('source', 'target'))
+# collabs <- read_tsv('https://raw.githubusercontent.com/nstrayer/network3d/customTooltips/data/ca-GrQc.txt', skip = 4, col_names = c('source', 'target'))
 
-size <- 500
-vertices <- data_frame(id = unique(collabs$source)) %>%
-    mutate(
-      index = 1:n(),
-      color = sample(brewer.pal(9, 'RdYlBu'), size = n(), replace = TRUE),
-      name = as.character(index),
-      tooltip = paste0(
-        '<h2>', index, '</h2>',
-        '<p> Here are some random numbers ', rnorm(n()), '</p>'
-      )
-    ) %>%
-    head(size)
-
-  edges <- collabs %>%
-    filter((source %in% vertices$id) & (target %in% vertices$id))
-
-data <- list(
-    edges = edges,
-    vertices = vertices
-  ) %>% jsonlite::toJSON()
+# size <- 500
+# vertices <- data_frame(id = unique(collabs$source)) %>%
+#     mutate(
+#       index = 1:n(),
+#       color = sample(brewer.pal(9, 'RdYlBu'), size = n(), replace = TRUE),
+#       name = as.character(index),
+#       tooltip = paste0(
+#         '<h2>', index, '</h2>',
+#         '<p> Here are some random numbers ', rnorm(n()), '</p>'
+#       )
+#     ) %>%
+#     head(size)
+# 
+#   edges <- collabs %>%
+#     filter((source %in% vertices$id) & (target %in% vertices$id))
+# 
+# data <- list(
+#     edges = edges,
+#     vertices = vertices
+#   ) %>% jsonlite::toJSON()
 
 ```
 
@@ -48,7 +48,7 @@ data <- list(
 r2d3::r2d3(
   data=data, 
   container = 'canvas', 
-  script="network.js",
+  script="random_lines.js",
   width = '100%')
 ```
 
@@ -56,7 +56,7 @@ r2d3::r2d3(
 ## About
 
 
-I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont,
+I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont, and
 "data artist in residence" at tech startup [Conduce](https://www.conduce.com/) in California. 
 
 Currently, I am a PhD candidate in biostatistics at Vanderbilt University where my research focuses on deep learning with medical data.                  
