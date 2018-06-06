@@ -1,0 +1,137 @@
+---
+title: "Nick Strayer"
+output:
+  html_document:
+    css: styles.css
+    toc: true
+    toc_depth: 2
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(tidyverse)
+library(htmltools)
+
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+
+
+```{r headerPlot, fig.align = 'center'}
+r2d3::r2d3(
+  data=data, 
+  container = 'canvas', 
+  script="random_lines.js",
+  width = '100%')
+```
+
+
+## About
+
+
+I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont, and
+"data artist in residence" at tech startup [Conduce](https://www.conduce.com/) in California. 
+
+Currently, I am a PhD candidate in biostatistics at Vanderbilt University where my research focuses on deep learning with medical data.                  
+Recently (May '15), I graduated from the University of Vermont where I majored in
+__mathematics__ and __statistics__ and minored in __computer science.__
+
+
+I like data. Manipulating it, modeling it, making it (simulation), visualizing it and yes, even cleaning it. I do these things with some combination of __R__, __Python__, and __Javascript__ (d3.js in particular). Most recently I have been fascinated with conveying complex statistical topics and methods using [intuitive](http://nickstrayer.me/binomialFun/confidenceIntervals) and [interactive](http://nickstrayer.me/likelihood) [graphics.](http://nickstrayer.me/binomialFun/)
+
+My current research interests include:
+__visualizing latent spaces in deep learning__, __data/model visualization__, and __scientific communication__.
+
+If you want to read about me and my pursuits in a more eloquently written form, I was recently [profiled](http://www.uvm.edu/newsstories/news/deeper_story_data) by my alma mater.
+
+When I am not in "school mode" I love to bike places, read science fiction and wander around gardens/musuems.
+
+
+Have a fantastic day!
+
+
+## Projects
+
+
+For a much more up-to-date and topical list of my work, check out the data science/statisics/visualization blog that I run with [Lucy D'Agostino McGowan](https://www.lucymcgowan.com/): [Live Free or Dichotomize](http://livefreeordichotomize.com/). 
+```{r}
+projects_data <- jsonlite::fromJSON('projects.json')
+```
+
+```{r}
+github_icon <- HTML("<i class='fa fa-github fa-lg' style='padding-right:5px' aria-hidden='true'></i>")
+link_icon <- HTML("<i class='fa fa-home fa-lg' style='padding-left:5px' aria-hidden='true'></i>")
+
+point_icon <- HTML("<span style='vertical-align: text-bottom;'><i class='fa fa-circle' aria-hidden='true' style='font-size: 5px;'></i></span>")
+
+html_dom = list()
+for(i in 1:nrow(projects_data)){
+  project = projects_data[i,]
+  
+  html_dom[[i]] <- div(
+    h3( a(project$title, href = project$link) ),
+    div(class = 'photo_and_description',
+      img(src = project$photo),
+      div(
+        class = 'description', 
+        purrr::map(
+          project$descriptions[[1]], 
+          ~list(point_icon, span(HTML(.)), br())
+        ), 
+        p(
+          a(HTML(github_icon), href = project$github),
+          a(HTML(link_icon), href = project$link),
+          align = 'center'
+        )
+      ) 
+    ),
+    hr()
+  )
+}
+div(html_dom, class = 'project_list')
+```
+
+
+
+
+## CV
+
+<div id="resumeButton" class="col-sm-12 col-md-10 col-md-offset-1">
+<h4 id="buttonText">Expand C.V.</h4>
+</div>
+
+<div id="resumeDiv" class="col-sm-12 col-md-10 col-md-offset-1">
+<iframe src="http://docs.google.com/gview?url=https://www.dropbox.com/s/ixzkmp69nskohtb/Strayer_CV.pdf?dl=1&embedded=true"
+style="width:100%; height:700px;" frameborder="0"></iframe>
+</div>
+
+```{js}
+function open_hide_cv(){
+  let link = $('#buttonText');
+  $('#resumeDiv').slideToggle('slow', function() {
+    if ($(this).is(':visible')) {
+      link.text('Close');
+    } else {
+      link.text('Expand C.V.');
+    }
+  });
+}
+$('#resumeButton').click(open_hide_cv);
+open_hide_cv();
+```
+
+
+## Contact
+
+I am always interested in getting involved in new projects or just connecting with others. Feel free
+to get in touch!
+
+**email:** n.strayer (at) vanderbilt (dot) edu
+
+
+**twitter:** <a href="https://twitter.com/NicholasStrayer" target="_blank">NicholasStrayer </a>
+   
+
+**github:** <a href="https://github.com/nstrayer" target="_blank">nstrayer </a>
