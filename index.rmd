@@ -67,8 +67,23 @@ link_icon <- HTML("<i class='fa fa-home fa-lg' style='padding-left:5px' aria-hid
 point_icon <- HTML("<span style='vertical-align: text-bottom;'><i class='fa fa-circle' aria-hidden='true' style='font-size: 5px;'></i></span>")
 
 html_dom = list()
-for(i in 1:nrow(projects_data)){
+for (i in 1:nrow(projects_data)) {
   project = projects_data[i,]
+  
+  has_github <- !is.na(project$github)
+  
+  if (has_github) {
+    links <- p(
+      a(HTML(github_icon), href = project$github),
+      a(HTML(link_icon), href = project$link),
+      align = 'center'
+    )
+  } else {
+    links <- p(
+      a(HTML(link_icon), href = project$link),
+      align = 'center'
+    )
+  }
   
   html_dom[[i]] <- div(
     h3( a(project$title, href = project$link) ),
@@ -80,11 +95,7 @@ for(i in 1:nrow(projects_data)){
           project$descriptions[[1]], 
           ~list(point_icon, span(HTML(.)), br())
         ), 
-        p(
-          a(HTML(github_icon), href = project$github),
-          a(HTML(link_icon), href = project$link),
-          align = 'center'
-        )
+        links
       ) 
     ),
     hr()

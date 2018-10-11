@@ -1,4 +1,12 @@
 [{
+		"title": "Data Visualization Best Practices in R",
+		"link": "https://www.datacamp.com/courses/visualization-best-practices-in-r",
+		"photo": "images/vis_best_practices.jpg",
+		"descriptions": ["Intermediate level course exploring visualization best practices in R.",
+			"Uses ggplot2 and the tidyverse packages."
+		]
+	},
+	{
 		"title": "Shinysense",
 		"link": "https://github.com/nstrayer/shinysense",
 		"photo": "images/projectPics/shinysense.gif",
