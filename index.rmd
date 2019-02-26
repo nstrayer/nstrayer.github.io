@@ -55,22 +55,17 @@ r2d3::r2d3(
 ## About
 
 
-I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont, and
-"data artist in residence" at tech startup [Conduce](https://www.conduce.com/) in California. 
+I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont, and "data artist in residence" at startup [Conduce](https://www.conduce.com/) in California. 
 
-Currently, I am a PhD candidate in biostatistics at Vanderbilt University where my research focuses on deep learning with medical data.                  
-Recently (May '15), I graduated from the University of Vermont where I majored in
-__mathematics__ and __statistics__ and minored in __computer science.__
+Currently, I am a PhD candidate in biostatistics at Vanderbilt University. I received my undergraduate degree from the University of Vermont where I majored in __mathematics__ and __statistics__ and minored in __computer science.__
 
+My research focuses on __unsupervized and semi-supervized methods__ for exploring large omics datasets, with a heavy focus on __visualization__. 
 
 I like data. Manipulating it, modeling it, making it (simulation), visualizing it and yes, even cleaning it. I do these things with some combination of __R__, __Python__, and __Javascript__ (d3.js in particular). Most recently I have been fascinated with conveying complex statistical topics and methods using [intuitive](http://nickstrayer.me/binomialFun/confidenceIntervals) and [interactive](http://nickstrayer.me/likelihood) [graphics.](http://nickstrayer.me/binomialFun/)
 
-My current research interests include:
-__visualizing latent spaces in deep learning__, __data/model visualization__, and __scientific communication__.
-
 If you want to read about me and my pursuits in a more eloquently written form, I was recently [profiled](https://www.uvm.edu/uvmnews/news/deeper-story-data) by my alma mater.
 
-When I am not in "school mode" I love to bike places, read science fiction and wander around gardens/musuems.
+When I am not in "school mode" I love to bike places, read science fiction, take photos, and wander around gardens/musuems.
 
 
 Have a fantastic day!
