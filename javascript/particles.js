@@ -1,6 +1,4 @@
-// !preview r2d3 data=beta_data, dependencies = c('javascript/regl.min.js', "javascript/helpers.js"), container = 'div'
-
-
+// !preview r2d3 data=image_tidy, dependencies = c('javascript/regl.min.js', "javascript/helpers.js"), container = 'div'
 const canvas = div
   .style('position', 'relative')
   .html('')
@@ -8,14 +6,15 @@ const canvas = div
   .attr('height', height)
   .attr('width', width);
 
-div.append('div')
+const clickMeText = div.append('div')
   .html(`<span> Click Me! </span>`)
   .style('padding', '15px')
   .style('top', '0px')
   .style('right', '0px')
   .style('pointer-events', 'none')
-  .style('font-family', 'optima')
-  .style('position', 'absolute');
+  .style('font-family', 'PT Sans')
+  .style('position', 'absolute')
+  .style('display', 'none');
 
 const numPoints = data.length;
 const pointWidth = 2;
@@ -27,52 +26,26 @@ const delayByIndex = 500 / numPoints;
 // include max delay in here
 const maxDuration = duration + delayByIndex * numPoints;
 
+// Lets the interaction know if we're currently animating
 let animating = true;
+let firstRunThrough = true;
 
 // create initial set of points
-//const points = createPoints(numPoints, pointWidth, width, height);
-const points = initializePoints(data, width, height);
+const points = createPoints(numPoints, pointWidth, width, height);
 
-const mapToOriginal = points.reduce((id_to_vals, d) => {
-  id_to_vals[d.id] = {
-    x: d.x,
-    y: d.y,
-    color: d.color,
-  };
-  return id_to_vals;
-}, {});
-
-
-  // create helpers that will layout the points in different ways (see helpers.js)
-  const toPhyllotaxis = points => phyllotaxisLayout(points, pointWidth + pointMargin, width / 2, height / 2);
-  const toSpiral      = points => spiralLayout(points, pointWidth + pointMargin, width, height);
-  const toRandom      = points => randomLayout(points, pointWidth, width, height);
-  
-  const toPassedData = (points) => {
-    points.forEach(d => {
-      const {x,y,color} = mapToOriginal[d.id];
-      d.x = x;
-      d.y = y;
-      d.color = color;
-    });
-  };
-
+// create helpers that will layout the points in different ways (see helpers.js)
+// Each to* function will give the each point an x, y, and color property.
+const toPhyllotaxis = points => phyllotaxisLayout(points, pointWidth + pointMargin, width / 2, height / 2);
+const toRandom      = points => randomLayout(points, pointWidth, width, height);
+const toPassedData  = setupPassedDataLayout(data, width, height);
 toRandom(points);
 
 function main(err, regl) {
 
   // set the order of the layouts and some initial animation state
-  const layouts = [toPassedData, toPhyllotaxis, toSpiral, toRandom];
-  let currentLayout = 0;
+  const layouts = [toRandom, toPhyllotaxis, toPassedData];
+  let currentLayout = 1;
   let startTime = null; // in seconds
-
-  // the order of color scales to loop through
-  const colorScales = [
-    d3.scaleSequential(d3.interpolateViridis),
-    d3.scaleSequential(d3.interpolateInferno),
-    d3.scaleSequential(d3.interpolateRdYlGn),
-  ].map(wrapColorScale);
-  let currentColorScale = 0;
 
   // function to compile a draw points regl func
   function createDrawPoints(points) {
@@ -96,7 +69,7 @@ function main(err, regl) {
 			attribute vec2 positionEnd;
 			attribute float index;
 			attribute vec3 colorStart;
-			attribute vec3 colorEnd;
+			attribute vec3 color;
 
 			// variables to send to the fragment shader
 			varying vec3 fragColor;
@@ -162,7 +135,7 @@ function main(err, regl) {
 	      vec2 position = mix(positionStart, positionEnd, t);
 
 	      // interpolate and send color to the fragment shader
-	      fragColor = mix(colorStart, colorEnd, t);
+	      fragColor = mix(colorStart, color, t);
 
 				// scale to normalized device coordinates
 				// gl_Position is a special variable that holds the position of a vertex
@@ -174,7 +147,7 @@ function main(err, regl) {
         positionStart: points.map(d => [d.sx, d.sy]),
         positionEnd: points.map(d => [d.x, d.y]),
         colorStart: points.map(d => d.colorStart),
-        colorEnd: points.map(d => d.colorEnd),
+        color: points.map(d => d.color),
         index: d3.range(points.length),
       },
 
@@ -197,28 +170,26 @@ function main(err, regl) {
   }
 
   canvas.on('click', () => {
-    
-    console.log(`width:${width}, height:${height}`);
-    
     if(!animating){
-      // Update to the next layout
-      currentLayout = (currentLayout + 1) % layouts.length;
-      // Get the new color scale
-      currentColorScale = (currentColorScale + 1) % colorScales.length;
-      // Reset start time
-      startTime = null;
-      // Kickoff the new animation
-      animate(layouts[currentLayout], points);
-      animating = true;
+       nextAnimation();
     }
   });
+  
+  function nextAnimation(){
+    // Update to the next layout
+    currentLayout = (currentLayout + 1) % layouts.length;
+    // Reset start time
+    startTime = null;
+    // Kickoff the new animation
+    animate(layouts[currentLayout], points);
+    animating = true;
+  }
   
   // start animation loop (note: time is in seconds)
   function animate(layout, points) {
     
     // Swap positions as neccesary 
-    setupNewTransition(points, layout, colorScales[currentColorScale]);
-
+    setupNewTransition(points, layout);
     // create the regl function with the new start and end points
     const drawPoints = createDrawPoints(points);
 
@@ -246,6 +217,16 @@ function main(err, regl) {
       if (time - startTime > maxDuration / 1000) {
         // Stop current animation loop
         frameLoop.cancel();
+        
+        if(firstRunThrough){
+          nextAnimation()
+          firstRunThrough = currentLayout < layouts.length - 1;
+          if(!firstRunThrough){
+            clickMeText.style('display', 'block')
+          }
+        }
+
+        
         animating = false;
       }
     });
