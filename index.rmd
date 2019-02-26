@@ -12,19 +12,38 @@ output:
 knitr::opts_chunk$set(echo = FALSE)
 
 library(tidyverse)
+library(magrittr)
 library(htmltools)
+
+x <- seq(0,1,by = 0.01)
+
+get_beta <- function(shape1, shape2){
+  tibble(
+    x = x, 
+    y = pbeta(x,shape1 = shape1, shape2 = shape2),
+    class = glue::glue('{shape1},{shape2}')
+  )
+}
+
+beta_data <- expand.grid(
+  shape1 = 4.5,
+  shape2 = seq(0.25, 7, 0.1)
+) %$% 
+  purrr::map2_df(shape1, shape2, get_beta)
+
 
 htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 ```
 
 
 
-```{r headerPlot, fig.align = 'center'}
+```{r headerPlot}
 r2d3::r2d3(
-  data=data, 
-  container = 'canvas', 
-  script="random_lines.js",
-  width = '100%')
+  data=beta_data, 
+  dependencies = c('javascript/regl.min.js', "javascript/helpers.js"), 
+  container = 'div', 
+  width = "100%",
+  script="javascript/particles.js")
 ```
 
 
