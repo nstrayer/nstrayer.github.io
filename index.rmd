@@ -31,7 +31,7 @@ image_tidy <- image %>%
   transmute(
     x = as.integer(x)/width,
     y = y/height,
-    dist_from_center = (x-0.5)^2 + (y-0.5)^2
+    dist_from_center = (x - 0.5)^2 + (y - 0.5)^2
   ) %>% 
   arrange(dist_from_center) %>% 
   select(-dist_from_center)
