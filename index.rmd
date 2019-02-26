@@ -14,22 +14,27 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(magrittr)
 library(htmltools)
+library(magrittr)
 
-x <- seq(0,1,by = 0.01)
+image <- png::readPNG('images/website_header.png') %>% 
+  extract(,,1)
 
-get_beta <- function(shape1, shape2){
-  tibble(
-    x = x, 
-    y = pbeta(x,shape1 = shape1, shape2 = shape2),
-    class = glue::glue('{shape1},{shape2}')
-  )
-}
+width <- ncol(image)
+height <- nrow(image)
 
-beta_data <- expand.grid(
-  shape1 = 4.5,
-  shape2 = seq(0.25, 7, 0.1)
-) %$% 
-  purrr::map2_df(shape1, shape2, get_beta)
+image_tidy <- image %>% 
+  as_tibble() %>% 
+  set_colnames(1:width) %>% 
+  mutate(y = 1:height) %>% 
+  gather(x, value, -y) %>% 
+  filter(value == 0) %>% 
+  transmute(
+    x = as.integer(x)/width,
+    y = y/height,
+    dist_from_center = (x-0.5)^2 + (y-0.5)^2
+  ) %>% 
+  arrange(dist_from_center) %>% 
+  select(-dist_from_center)
 
 
 htmltools::tagList(rmarkdown::html_dependency_font_awesome())
@@ -39,11 +44,11 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 
 ```{r headerPlot}
 r2d3::r2d3(
-  data=beta_data, 
+  data = image_tidy, 
   dependencies = c('javascript/regl.min.js', "javascript/helpers.js"), 
   container = 'div', 
   width = "100%",
-  script="javascript/particles.js")
+  script = "javascript/particles.js")
 ```
 
 
