@@ -1,3 +1,4 @@
+// Makes pretty nature inspired spiralish layout
 function phyllotaxisLayout(points, pointWidth, xOffset = 0, yOffset = 0, iOffset = 0) {
   
   const colorScale = d3.scaleSequential(d3.interpolateInferno)
@@ -21,7 +22,7 @@ function phyllotaxisLayout(points, pointWidth, xOffset = 0, yOffset = 0, iOffset
   return points;
 }
 
-
+// Takes passed data and builds a function for giving points correct locations and colors
 function setupPassedDataLayout(data, width, height) {
   const hasClassInfo = data[0]['class'] ? true:false;
   let setColor;
@@ -63,21 +64,7 @@ function setupPassedDataLayout(data, width, height) {
   }
 }
 
-
-function gridLayout(points, pointWidth, gridWidth) {
-  const pointHeight = pointWidth;
-  const pointsPerRow = Math.floor(gridWidth / pointWidth);
-  const numRows = points.length / pointsPerRow;
-
-  points.forEach((point, i) => {
-    point.x = pointWidth * (i % pointsPerRow);
-    point.y = pointHeight * Math.floor(i / pointsPerRow);
-  });
-
-  return points;
-}
-
-
+// A simple uncorrelated bivariate normal distribution
 function randomLayout(points, pointWidth, width, height) {
   const colorScale = d3.scaleSequential(d3.interpolateSpectral)
     .domain([0,points.length]);
@@ -93,32 +80,19 @@ function randomLayout(points, pointWidth, width, height) {
   return points;
 }
 
-
+// Convert a color to a 3-dimensional vector which is how GLSL needs it 
 function colorToVec3(color){
   const rgb = d3.rgb(color);
   return [rgb.r / 255, rgb.g / 255, rgb.b / 255];
 }
-
-
-// wrap d3 color scales so they produce vec3s with values 0-1
-function wrapColorScale(scale) {
-  return t => {
-    const rgb = d3.rgb(scale(1 - t));
-    return [rgb.r / 255, rgb.g / 255, rgb.b / 255];
-  };
-}
-
 
 // Simple function to get the unique values in an array
 function unique(data, key){ 
   return d3.set(data.map(d => d[key])).values();
 };
 
-
-/**
- * Generate an object array of `numPoints` length with unique IDs
- * and assigned colors
- */
+// Generate an object array of `numPoints` length with unique IDs
+// and assigned colors
 function createPoints(numPoints, pointWidth, width, height) {
   const colorScale = d3.scaleSequential(d3.interpolateViridis)
     .domain([numPoints - 1, 0]);
@@ -133,7 +107,10 @@ function createPoints(numPoints, pointWidth, width, height) {
   return points
 }
 
-function setupNewTransition(points, layout, colorScale){
+
+// Shuffles locations and colors around so GLSL can interpolate from the current state
+// to the newly desired layout
+function setupNewTransition(points, layout){
   
   // make previous end the new beginning
   points.forEach((d,i) => {

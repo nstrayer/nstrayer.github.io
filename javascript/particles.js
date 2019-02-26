@@ -1,4 +1,4 @@
-// !preview r2d3 data=image_tidy, dependencies = c('javascript/regl.min.js', "javascript/helpers.js"), container = 'div'
+// !preview r2d3 data = list(text = image_tidy,beta = beta_data), dependencies = c('javascript/regl.min.js', "javascript/helpers.js"), container = 'div'
 const canvas = div
   .style('position', 'relative')
   .html('')
@@ -15,8 +15,11 @@ const clickMeText = div.append('div')
   .style('font-family', 'PT Sans')
   .style('position', 'absolute')
   .style('display', 'none');
+  
+data.beta = HTMLWidgets.dataframeToD3(data.beta);
+data.text = HTMLWidgets.dataframeToD3(data.text);
 
-const numPoints = data.length;
+const numPoints = data.beta.length;
 const pointWidth = 2;
 const pointMargin = 1;
 // duration of the animation ignoring delays
@@ -37,14 +40,15 @@ const points = createPoints(numPoints, pointWidth, width, height);
 // Each to* function will give the each point an x, y, and color property.
 const toPhyllotaxis = points => phyllotaxisLayout(points, pointWidth + pointMargin, width / 2, height / 2);
 const toRandom      = points => randomLayout(points, pointWidth, width, height);
-const toPassedData  = setupPassedDataLayout(data, width, height);
+const toBeta  = setupPassedDataLayout(data.beta, width, height);
 toRandom(points);
+const toText = setupPassedDataLayout(data.text, width, height);
 
 function main(err, regl) {
 
   // set the order of the layouts and some initial animation state
-  const layouts = [toRandom, toPhyllotaxis, toPassedData];
-  let currentLayout = 1;
+  const layouts = [toPhyllotaxis, toText, toBeta];
+  let currentLayout = 0;
   let startTime = null; // in seconds
 
   // function to compile a draw points regl func

@@ -36,6 +36,31 @@ image_tidy <- image %>%
   arrange(dist_from_center) %>% 
   select(-dist_from_center)
 
+num_points <- nrow(image_tidy)
+
+num_lines <- 25
+num_x_points <- ceiling(num_points/num_lines)
+
+x <- seq(0,1,length.out = num_x_points)
+
+get_beta <- function(shape1, shape2){
+  tibble(
+    x = x, 
+    y = dbeta(x,shape1 = shape1, shape2 = shape2),
+    class = glue::glue('{shape1},{shape2}')
+  )
+}
+beta_data <- expand.grid(
+  shape1 = 2,
+  shape2 = seq(1.5, 10, length.out = num_lines)
+) %$% 
+  purrr::map2_df(shape1, shape2, get_beta) %>% 
+  head(num_points) %>% 
+  mutate(y = -y/max(y) + 1)
+
+# ggplot(beta_data, aes(x = x, y = y, color = class)) +
+#   geom_line() +
+#   guides(color = FALSE)
 
 htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 ```
@@ -44,7 +69,7 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome())
 
 ```{r headerPlot}
 r2d3::r2d3(
-  data = image_tidy, 
+  data = list(text = image_tidy,beta = beta_data), 
   dependencies = c('javascript/regl.min.js', "javascript/helpers.js"), 
   container = 'div', 
   width = "100%",
