@@ -63,7 +63,7 @@ I like data. Manipulating it, modeling it, making it (simulation), visualizing i
 My current research interests include:
 __visualizing latent spaces in deep learning__, __data/model visualization__, and __scientific communication__.
 
-If you want to read about me and my pursuits in a more eloquently written form, I was recently [profiled](http://www.uvm.edu/newsstories/news/deeper_story_data) by my alma mater.
+If you want to read about me and my pursuits in a more eloquently written form, I was recently [profiled](https://www.uvm.edu/uvmnews/news/deeper-story-data) by my alma mater.
 
 When I am not in "school mode" I love to bike places, read science fiction and wander around gardens/musuems.
 
