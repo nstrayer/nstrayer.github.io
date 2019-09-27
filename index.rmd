@@ -162,6 +162,9 @@ div(html_dom, class = 'project_list')
 style="width:100%; height:700px;" frameborder="0"></iframe>
 </div>
 
+<br>
+
+View an HTML version of CV [here](http://nickstrayer.me/cv/).
 
 
 ```{js}
