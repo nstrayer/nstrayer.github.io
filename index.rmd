@@ -153,18 +153,18 @@ div(html_dom, class = 'project_list')
 
 ## CV
 
-<div id="resumeButton" class="col-sm-12 col-md-10 col-md-offset-1">
+<div id="resumeButton" class="col-sm-12 col-md-10 col-md-offset-1" style="margin-left:0; width: 100%;">
 <h4 id="buttonText">Expand C.V.</h4>
 </div>
 
 <div id="resumeDiv" class="col-sm-12 col-md-10 col-md-offset-1">
-<iframe src="http://docs.google.com/gview?url=https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf&embedded=true"
+<iframe src="http://nickstrayer.me/cv/"
 style="width:100%; height:700px;" frameborder="0"></iframe>
 </div>
 
 <br>
 
-View an HTML version of CV [here](http://nickstrayer.me/cv/).
+Download PDF of CV [here](https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf).
 
 
 ```{js}
