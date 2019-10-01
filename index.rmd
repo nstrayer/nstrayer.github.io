@@ -158,13 +158,12 @@ div(html_dom, class = 'project_list')
 </div>
 
 <div id="resumeDiv" class="col-sm-12 col-md-10 col-md-offset-1">
-<iframe src="http://nickstrayer.me/cv/"
-style="width:100%; height:700px;" frameborder="0"></iframe>
+<iframe src="http://docs.google.com/gview?url=https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf&embedded=true" style="width:100%; height:700px;" frameborder="0"></iframe>
 </div>
 
 <br>
 
-Download PDF of CV [here](https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf).
+View HTML version of CV with links [here](nickstrayer.me/cv).
 
 
 ```{js}
