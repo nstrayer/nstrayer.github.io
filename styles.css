@@ -13,22 +13,12 @@ p {
 }
 
 
-@media screen and (min-width: 980px) /* Desktop */ {
-  .photo_and_description {
-    display: grid;
-    grid-template-columns: 300px 500px;
-    justify-content: center;	
-    grid-column-gap: 25px;
-  }
-}
 
-@media screen  and (max-width: 979px) /* Tablet */ {
-  .photo_and_description {
-    display: grid;
-    grid-template-columns: 190px 290px;
-    justify-content: center;	
-    grid-column-gap: 20px;
-  }
+.photo_and_description {
+  display: grid;
+  grid-template-columns: 3fr 5fr;
+  justify-content: center;	
+  grid-column-gap: 25px;
 }
 
 @media screen and (max-width: 500px) /* Mobile */ {
@@ -41,6 +31,10 @@ p {
   .photo_and_description img {
     padding: 10px;
   }
+}
+
+.links {
+  text-align: center;
 }
 
 

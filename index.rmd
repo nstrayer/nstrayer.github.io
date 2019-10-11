@@ -13,8 +13,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 library(tidyverse)
 library(magrittr)
-library(htmltools)
-library(magrittr)
+library(glue)
+library(googlesheets4)
+# sheets_auth(use_oob = TRUE)
+
+projects_data <- read_sheet("1i4PobTTNsYJptE9KvMCiYq4oWEZ99WADJWqXVk4zDhE")
 
 image <- png::readPNG('images/website_header.png') %>% 
   extract(,,1)
@@ -100,54 +103,49 @@ Have a fantastic day!
 
 
 For a much more up-to-date and topical list of my work, check out the data science/statisics/visualization blog that I run with [Lucy D'Agostino McGowan](https://www.lucymcgowan.com/): [Live Free or Dichotomize](http://livefreeordichotomize.com/). 
-```{r}
-projects_data <- jsonlite::fromJSON('projects.json')
-```
 
-```{r}
-github_icon <- HTML("<i class='fa fa-github fa-lg' style='padding-right:5px' aria-hidden='true'></i>")
-link_icon <- HTML("<i class='fa fa-home fa-lg' style='padding-left:5px' aria-hidden='true'></i>")
+```{r, results = 'asis'}
+projects_gathered <- projects_data %>% 
+  mutate(id = 1:n()) %>% 
+  mutate_all(~ifelse(. == "NA", NA, .)) %>% 
+  pivot_longer(
+     starts_with('description'),
+     names_to = 'description_num',
+     values_to = 'description',
+     values_drop_na = TRUE
+   ) %>% 
+  group_by(id) %>% 
+  mutate(description_bullets = paste0("<li>", description, "</li>", collapse = "\n") ) %>% 
+  ungroup() %>% 
+  filter(description_num == 'description_1') 
 
-point_icon <- HTML("<span style='vertical-align: text-bottom;'><i class='fa fa-circle' aria-hidden='true' style='font-size: 5px;'></i></span>")
+github_icon <- "<i class='fa fa-github fa-lg' style='padding-right:5px' aria-hidden='true'></i>"
+link_icon <- "<i class='fa fa-home fa-lg' style='padding-left:5px' aria-hidden='true'></i>"
 
-html_dom = list()
-for (i in 1:nrow(projects_data)) {
-  project = projects_data[i,]
-  
-  has_github <- !is.na(project$github)
-  
-  if (has_github) {
-    links <- p(
-      a(HTML(github_icon), href = project$github),
-      a(HTML(link_icon), href = project$link),
-      align = 'center'
-    )
-  } else {
-    links <- p(
-      a(HTML(link_icon), href = project$link),
-      align = 'center'
-    )
-  }
-  
-  html_dom[[i]] <- div(
-    h3( a(project$title, href = project$link) ),
-    div(class = 'photo_and_description',
-      img(src = project$photo),
-      div(
-        class = 'description', 
-        purrr::map(
-          project$descriptions[[1]], 
-          ~list(point_icon, span(HTML(.)), br())
-        ), 
-        links
-      ) 
+projects_gathered %>% 
+  mutate(
+    github_link = ifelse(
+      is.na(github), 
+      "", 
+      glue("<a href='{github}'>{github_icon}</a>")
     ),
-    hr()
+    main_link = glue("<a href='{link}'>{link_icon}</a>"),
+    all_links = glue("<p class='links'>{github_link} {main_link}</p>")
+  ) %>% 
+  glue_data(
+    "<div class='project-entry'>",
+      "<h3> <a href='{link}'>{title}</a> </h3>",
+      "<div class='photo_and_description'>",
+        "<img src='{photo}'>",
+        "<div class='description'>",
+          "<ul class='description-list'> {description_bullets} </ul>",
+          "{all_links}",
+        "</div>",
+      "</div>",
+    "</div>", 
+    "<hr>"
   )
-}
-div(html_dom, class = 'project_list')
 ```
-
 
 
 
