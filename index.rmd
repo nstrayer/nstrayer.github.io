@@ -15,9 +15,11 @@ library(tidyverse)
 library(magrittr)
 library(glue)
 library(googlesheets4)
-# sheets_auth(use_oob = TRUE)
+library(r2d3)
 
-projects_data <- read_sheet("1i4PobTTNsYJptE9KvMCiYq4oWEZ99WADJWqXVk4zDhE")
+# Public website, public sheet
+googlesheets4::sheets_deauth()
+projects_data <- read_sheet("https://docs.google.com/spreadsheets/d/1i4PobTTNsYJptE9KvMCiYq4oWEZ99WADJWqXVk4zDhE/edit?usp=sharing")
 
 image <- png::readPNG('images/website_header.png') %>% 
   extract(,,1)
@@ -150,6 +152,65 @@ projects_gathered %>%
 
 
 ## CV/Resume
+
+```{r, cache = TRUE, include = FALSE}
+# Read in all data and initialize a CV printer object
+cv_printer <- datadrivencv::CV_Printer$new(
+  data_location = "https://docs.google.com/spreadsheets/d/14MQICF2F8-vf8CKPF1m4lyGKO6_thG-4aSwat1e2TWc",
+  pdf_location = "https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf",
+  html_location = "nickstrayer.me/cv/")
+
+positions <- cv_printer$position_data %>% 
+  mutate(
+    id = row_number(),
+    title = stringr::str_remove_all(title, '(\\(.+?\\))|(\\[)|(\\])'),
+    section = stringr::str_replace_all(section, "_", " ") %>% stringr::str_to_title()
+  )
+
+combination_indices <- function(n){
+  rep_counts <- (n:1) - 1
+  tibble(
+    a = rep(1:n, times = rep_counts),
+    b = purrr::flatten_int( purrr::map(rep_counts, ~{tail(1:n, .x)}) )
+  )
+}
+
+edges <- positions %>% 
+  select(id, start, end) %>% 
+  mutate(
+    end = ifelse(end == "Current", lubridate::year(lubridate::ymd(Sys.Date())), end),
+    start = ifelse(start == "N/A", end, start)
+  ) %>% 
+  purrr::pmap_dfr(function(id, start, end){
+    tibble(
+      year = start:end,
+      id = id
+    )
+  }) %>% 
+  group_by(year) %>% 
+  nest() %>% 
+  dplyr::rename(ids_for_year = data) %>% 
+  purrr::pmap_dfr(function(year, ids_for_year){
+    combination_indices(nrow(ids_for_year)) %>% 
+      transmute(
+        year = year,
+        source = ids_for_year$id[a],
+        target = ids_for_year$id[b]
+      )
+  })
+```
+
+```{r}
+
+r2d3::r2d3(system.file("js/cv_network.js", package = "datadrivencv"),
+           data = list(
+            nodes = positions %>% select(-in_resume, -end_num, -timeline),
+            edges = edges
+          ),
+           width = "100%",
+           height = "300px",
+           elementId = "cv_network")
+```
 
 
 Want a longer list of the stuff I've done related to my career? I have a __CV__!
