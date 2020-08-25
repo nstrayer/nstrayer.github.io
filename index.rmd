@@ -84,8 +84,6 @@ r2d3::r2d3(
 
 ## About
 
-_I am currently looking for positions for after I graduate (~Sep 2020). Get in touch if you're looking for a visual data scientist!_
-
 I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont, and "data artist in residence" at startup [Conduce](https://www.conduce.com/) in California. 
 
 Currently, I am a PhD candidate in biostatistics at Vanderbilt University. I received my undergraduate degree from the University of Vermont where I majored in __mathematics__ and __statistics__ and minored in __computer science.__
