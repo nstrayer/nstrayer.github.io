@@ -88,7 +88,7 @@ function colorToVec3(color){
 
 // Simple function to get the unique values in an array
 function unique(data, key){ 
-  return d3.set(data.map(d => d[key])).values();
+  return [...new Set(data.map(d => d[key]))];
 };
 
 // Generate an object array of `numPoints` length with unique IDs
