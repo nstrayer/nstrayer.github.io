@@ -84,18 +84,13 @@ r2d3::r2d3(
 
 ## About
 
-I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont, and "data artist in residence" at startup [Conduce](https://www.conduce.com/) in California. 
+I am a software engineer building open-source software on the Shiny team at RStudio. In addition to being a software engineer, I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont, and "data artist in residence" at startup [Conduce](https://www.conduce.com/) in California. 
 
-Currently, I am a PhD candidate in biostatistics at Vanderbilt University. I received my undergraduate degree from the University of Vermont where I majored in __mathematics__ and __statistics__ and minored in __computer science.__
+I recently finished my PhD in biostatistics at Vanderbilt University and before that I got my undergraduate degree from the University of Vermont where I majored in __mathematics__ and __statistics__ and minored in __computer science.__
 
-My research focuses on __network analysis and visualization__ for exploring large omics datasets.
+I like data. Manipulating it, modeling it, making it (simulation), visualizing it and yes, even cleaning it. I do these things with some combination of __R__, __Python__, and __Javascript.__
 
-I like data. Manipulating it, modeling it, making it (simulation), visualizing it and yes, even cleaning it. I do these things with some combination of __R__, __Python__, and __Javascript__ (d3.js in particular). 
-
-If you want to read about me and my pursuits in a more eloquently written form, I was recently [profiled](https://www.uvm.edu/uvmnews/news/deeper-story-data) by my alma mater.
-
-When I am not in "school mode" I love to bike places, read science fiction, take photos of birds, and wander around gardens/museums.
-
+When I am not in "work mode" I love to bike places, read science fiction, take photos of birds, and wander around gardens/museums.
 
 Have a fantastic day!
 
@@ -231,7 +226,7 @@ Interested in how I made these? Check out the repo: [github.com/nstrayer/cv](htt
 I am always interested in getting involved in new projects or just connecting with others. Feel free
 to get in touch!
 
-**email:** n.strayer (at) vanderbilt (dot) edu
+**email:** nick.strayer (at) gmail
 
 
 **twitter:** <a href="https://twitter.com/NicholasStrayer" target="_blank">NicholasStrayer </a>
