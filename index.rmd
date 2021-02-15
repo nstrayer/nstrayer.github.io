@@ -78,7 +78,6 @@ r2d3::r2d3(
   dependencies = c('javascript/regl.min.js', "javascript/helpers.js"), 
   container = 'div', 
   width = "100%",
-  d3_version = "5",
   script = "javascript/particles.js")
 ```
 
