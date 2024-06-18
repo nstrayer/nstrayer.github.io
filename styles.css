@@ -49,3 +49,11 @@ p {
 #contact {
   margin-top: 75px;
 }
+
+img {
+  max-width: 100%;
+}
+
+.cell-output-display:has(.html-widget) {
+  overflow: hidden;
+}
