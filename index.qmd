@@ -85,7 +85,7 @@ r2d3::r2d3(
 
 ## About
 
-I am a senior software engineer at [Posit](https://posit.co/) building tools to help data scientists work better. In addition to being a software engineer, I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont, and "data artist in residence" at startup [Conduce](https://www.conduce.com/) in California. 
+I am a principal software engineer at [Posit](https://posit.co/) building tools to help data scientists work better. In addition to being a software engineer, I have been extremely lucky to work in many different realms, including as a [Journalist at the New York Times](http://www.nytimes.com/interactive/2016/08/26/us/college-student-migration.html), data scientist at the [Johns Hopkins Data Science Lab](http://jhudatascience.org/) and [Dealer.com](http://www.dealer.com/) in Vermont, and "data artist in residence" at startup [Conduce](https://www.conduce.com/) in California. 
 
 I have a PhD in biostatistics from Vanderbilt University and an undergraduate degree from the University of Vermont where I majored in __mathematics__ and __statistics__ and minored in __computer science.__
 
