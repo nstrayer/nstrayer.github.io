@@ -1,7 +1,4 @@
 import { parse } from 'csv-parse/sync';
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
 
 export interface Project {
   title: string;
@@ -11,14 +8,11 @@ export interface Project {
   description: string[];
 }
 
-// Get the directory path of the current module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// Import CSV directly using Vite's import feature
+import projectsCsv from './projects.csv?raw';
 
-// Read and parse the CSV file
-const csvFilePath = join(__dirname, 'projects.csv');
-const fileContent = readFileSync(csvFilePath, 'utf-8');
-const projectsData = parse(fileContent, {
+// Parse the CSV data
+const projectsData = parse(projectsCsv, {
   columns: true,
   skip_empty_lines: true
 });
