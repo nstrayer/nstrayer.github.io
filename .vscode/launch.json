@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "command": "npm run dev",
+      "name": "Development server",
+      "request": "launch",
+      "type": "node-terminal"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Client: Chrome",
+      "url": "http://localhost:4321",
+      "webRoot": "${workspaceFolder}",
+      "sourceMapPathOverrides": {
+        "/@fs/*": "${workspaceFolder}/*"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack Debug",
+      "configurations": ["Development server", "Client: Chrome"]
+    }
+  ]
+}

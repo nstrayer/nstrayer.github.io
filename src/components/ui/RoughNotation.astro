@@ -1,0 +1,73 @@
+---
+interface Props {
+  type: 'underline' | 'box' | 'circle' | 'highlight' | 'strike-through' | 'crossed-off' | 'bracket';
+  color?: string;
+  strokeWidth?: number;
+  padding?: number;
+  multiline?: boolean;
+  animationDuration?: number;
+  iterations?: number;
+  animate?: boolean;
+}
+
+const { 
+  type, 
+  color, 
+  strokeWidth, 
+  padding, 
+  multiline = true, 
+  animationDuration = 800, 
+  iterations = 2,
+  animate = true 
+} = Astro.props;
+---
+
+<span class="rough-notation" data-type={type}>
+  <slot />
+</span>
+
+<script>
+  import { annotate, annotationGroup } from 'rough-notation';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // Select all elements with rough-notation class
+    const elements = document.querySelectorAll('.rough-notation');
+    
+    const annotations = Array.from(elements).map(element => {
+      // Verify the element is an HTMLElement
+      if (!(element instanceof HTMLElement)) {
+        return null;
+      }
+      // Get properties from data attributes
+      const type = element.getAttribute('data-type');
+      const color = element.getAttribute('data-color');
+      const strokeWidth = element.getAttribute('data-stroke-width');
+      const padding = element.getAttribute('data-padding');
+      const multiline = element.getAttribute('data-multiline') !== 'false';
+      const animationDuration = element.getAttribute('data-animation-duration');
+      const iterations = element.getAttribute('data-iterations');
+      const animate = prefersReducedMotion ? false : element.getAttribute('data-animate') !== 'false';
+      
+      // Create annotation with provided options
+      return annotate(element, {
+        type,
+        color,
+        strokeWidth: strokeWidth ? parseInt(strokeWidth, 10) : undefined,
+        padding: padding ? parseInt(padding, 10) : undefined,
+        multiline,
+        animationDuration: animationDuration ? parseInt(animationDuration, 10) : 800,
+        iterations: iterations ? parseInt(iterations, 10) : 2,
+        animate
+      });
+    });
+    
+    // Group annotations and show them
+    if (annotations.length > 0) {
+      const ag = annotationGroup(annotations);
+      ag.show();
+    }
+  });
+</script>

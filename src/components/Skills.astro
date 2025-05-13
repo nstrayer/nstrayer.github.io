@@ -1,0 +1,28 @@
+---
+import { SKILLS } from '../data/constants';
+import Section from './Section.astro';
+import SectionTitle from './SectionTitle.astro';
+---
+
+<Section id="skills">
+  <SectionTitle>Skills</SectionTitle>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
+    {SKILLS.map((skill) => <span class="skill-tag">{skill}</span>)}
+  </div>
+</Section>
+
+<style>
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .skill-tag {
+    background: var(--background-alt);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: 500;
+  }
+</style>

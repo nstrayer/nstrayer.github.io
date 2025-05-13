@@ -1,0 +1,183 @@
+---
+import { SITE_CONFIG } from '../data/constants';
+import Background from '../components/Background.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Personal Developer Portfolio" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <Background />
+    <nav class="nav">
+      <div class="nav-container">
+        <a href="/" class="nav-logo">{SITE_CONFIG.initials}</a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+    <slot />
+    <footer class="footer">
+      <p>&copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --primary: #2563eb;
+    --primary-light: #3b82f6;
+    --text: #1f2937;
+    --text-light: #6b7280;
+    --background: rgba(255, 255, 255, 0.569);
+    --background-alt: rgba(243, 244, 246, 0.9);
+    /* Add a subtle grain texture using a generated SVG */
+    --grain-opacity: 0.15; /* Adjusted for desired intensity, was 0.15, Zed's is very subtle */
+    --grain-svg: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+
+  html {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    scroll-behavior: smooth;
+    color: var(--text);
+  }
+
+  body {
+    line-height: 1.6;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* A light base color */
+    /* Apply the grain texture */
+    background-image: var(--grain-svg);
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-size: auto; /* Or a fixed size like 200px 200px */
+    /* Ensure the grain is subtle */
+    position: relative; /* Needed for the pseudo-element if we go that route */
+  }
+
+  /* Optional: Apply grain as a pseudo-element for more control */
+  body::before {
+    content: "";
+    position: fixed; /* Use fixed to cover the viewport, or absolute for just the body */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--grain-svg);
+    opacity: var(--grain-opacity);
+    pointer-events: none; /* Make sure it doesn't interfere with interactions */
+    z-index: -1; /* Place it behind all content */
+  }
+
+
+  .nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: var(--background);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+    z-index: 100;
+  }
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text);
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--primary);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    background: var(--background-alt);
+    color: var(--text-light);
+    position: relative;
+    z-index: 1;
+  }
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .primary-button {
+    background: var(--primary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+
+  .primary-button:hover {
+    background: var(--primary-light);
+  }
+
+  .secondary-button {
+    background: transparent;
+    color: var(--primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    font-weight: 500;
+    border: 2px solid var(--primary);
+    transition: all 0.2s;
+  }
+
+  .secondary-button:hover {
+    background: var(--primary);
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+  }
+</style>

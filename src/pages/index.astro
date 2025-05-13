@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Projects from '../components/Projects.astro';
+import Skills from '../components/Skills.astro';
+import CVResume from '../components/CVResume.astro';
+import Contact from '../components/Contact.astro';
+import { SITE_CONFIG } from '../data/constants';
+import "../styles/global.css";
+
+
+---
+
+<Layout title={`${SITE_CONFIG.name} - ${SITE_CONFIG.title}`}>
+  <main>
+    <Hero />
+    <About />
+    <Projects />
+    <Skills />
+    <CVResume />
+    <Contact />
+  </main>
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+  }
+</style>

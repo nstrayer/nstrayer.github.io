@@ -1,0 +1,44 @@
+---
+import Section from './Section.astro';
+import SectionTitle from './SectionTitle.astro';
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
+---
+
+<Section id="cv-resume">
+  <SectionTitle class="mb-8">The boring stuff</SectionTitle>
+  
+  <div class="grid gap-8 md:grid-cols-2 md:auto-rows-fr">
+    <Card class="bg-transparent backdrop-blur-sm h-full transition-all hover:shadow-md hover:border-primary/50">
+      <CardHeader>
+        <CardTitle class="text-2xl">CV</CardTitle>
+      </CardHeader>
+      <CardContent class="space-y-4">
+        <p>Want a longer list of the stuff I've done related to my career? I have a <strong>CV</strong>!</p>
+        <ul class="list-disc list-inside space-y-2">
+          <li><a href="http://nickstrayer.me/cv" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">HTML version of CV with clickable links</a></li>
+          <li><a href="https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">PDF version for printing</a></li>
+        </ul>
+      </CardContent>
+    </Card>
+    
+    <Card class="bg-transparent backdrop-blur-sm h-full transition-all hover:shadow-md hover:border-primary/50">
+      <CardHeader>
+        <CardTitle class="text-2xl">Resume</CardTitle>
+      </CardHeader>
+      <CardContent class="space-y-4">
+        <p>Need a short and to-the-point single page annotation of my data-science career? Try my <strong>resume</strong>!</p>
+        <ul class="list-disc list-inside space-y-2">
+          <li><a href="http://nickstrayer.me/cv/resume.html" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">HTML</a></li>
+          <li><a href="https://github.com/nstrayer/cv/raw/master/strayer_resume.pdf" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">PDF</a></li>
+        </ul>
+      </CardContent>
+    </Card>
+  </div>
+  
+  <div class="mt-8 text-center">
+    <p>
+      Interested in how I made these? Check out the repo: 
+      <a href="https://github.com/nstrayer/cv" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">github.com/nstrayer/cv</a>
+    </p>
+  </div>
+</Section>
