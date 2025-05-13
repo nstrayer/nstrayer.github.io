@@ -32,6 +32,8 @@ const csvPlugin = {
 };
 
 export default defineConfig({
+  site: 'https://nickstrayer.me',
+  output: 'static',
   vite: {
     plugins: [shaderPlugin, csvPlugin, tailwindcss()]
   },
