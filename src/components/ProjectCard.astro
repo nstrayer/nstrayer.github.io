@@ -2,10 +2,12 @@
 import type { Project } from '../data/projects';
 import { Icon } from 'astro-icon/components';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
+import { marked } from 'marked';
 
 type Props = Project;
 
 const { title, link, photo, github, description } = Astro.props;
+const parsedDescription = description.map(desc => marked.parse(desc));
 ---
 
 <Card className="h-full backdrop-blur-sm transition-all hover:shadow-md hover:border-primary/50 flex flex-col">
@@ -18,8 +20,8 @@ const { title, link, photo, github, description } = Astro.props;
       <CardTitle className="text-xl font-semibold">{title}</CardTitle>
     </CardHeader>
     <CardContent className="grow">
-      <div class="space-y-2 text-sm text-muted-foreground">
-        {description.map((desc) => <p set:html={desc} />)}
+      <div class="project-description space-y-2 text-sm text-muted-foreground prose prose-sm">
+        {parsedDescription.map((html) => <p class="prose-a:underline" set:html={html} />)}
       </div>
     </CardContent>
     <CardFooter className="flex gap-3 flex-wrap mt-auto">

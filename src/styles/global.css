@@ -116,4 +116,7 @@
   body {
     @apply bg-background text-foreground;
   }
+  .project-description p a {
+    @apply text-blue-500 underline;
+  }
 }
