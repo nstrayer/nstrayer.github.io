@@ -24,7 +24,9 @@ const { title } = Astro.props;
     <Background />
     <nav class="nav">
       <div class="nav-container">
-        <a href="/" class="nav-logo">{SITE_CONFIG.initials}</a>
+        <a href="/" class="nav-logo">
+            <img src="/favicon.svg" alt="Logo" class="h-10" />
+        </a>
         <div class="nav-links">
           <a href="#about">About</a>
           <a href="#projects">Projects</a>
@@ -107,12 +109,6 @@ const { title } = Astro.props;
     align-items: center;
   }
 
-  .nav-logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary);
-    text-decoration: none;
-  }
 
   .nav-links {
     display: flex;

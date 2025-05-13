@@ -1,9 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 128 128">
-    <path d="M50.4 78.5a75.1 75.1 0 0 0-28.5 6.9l24.2-65.7c.7-2 1.9-3.2 3.4-3.2h29c1.5 0 2.7 1.2 3.4 3.2l24.2 65.7s-11.6-7-28.5-7L67 45.5c-.4-1.7-1.6-2.8-2.9-2.8-1.3 0-2.5 1.1-2.9 2.7L50.4 78.5Zm-1.1 28.2Zm-4.2-20.2c-2 6.6-.6 15.8 4.2 20.2a17.5 17.5 0 0 1 .2-.7 5.5 5.5 0 0 1 5.7-4.5c2.8.1 4.3 1.5 4.7 4.7.2 1.1.2 2.3.2 3.5v.4c0 2.7.7 5.2 2.2 7.4a13 13 0 0 0 5.7 4.9v-.3l-.2-.3c-1.8-5.6-.5-9.5 4.4-12.8l1.5-1a73 73 0 0 0 3.2-2.2 16 16 0 0 0 6.8-11.4c.3-2 .1-4-.6-6l-.8.6-1.6 1a37 37 0 0 1-22.4 2.7c-5-.7-9.7-2-13.2-6.2Z" />
-    <style>
-        path { fill: #000; }
-        @media (prefers-color-scheme: dark) {
-            path { fill: #FFF; }
-        }
-    </style>
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="22.5146" cy="141.871" r="11.5146" fill="black"/>
+<circle cx="22.5146" cy="70.69" r="11.5146" fill="black"/>
+<circle cx="22.5146" cy="18.3509" r="11.5146" fill="black"/>
+<circle cx="60.1988" cy="18.3509" r="11.5146" fill="black"/>
+<circle cx="147.082" cy="18.3509" r="11.5146" fill="black"/>
+<circle cx="178.485" cy="18.3509" r="11.5146" fill="black"/>
+<circle cx="178.485" cy="141.871" r="11.5146" fill="black"/>
+<circle cx="178.485" cy="181.649" r="11.5146" fill="black"/>
+<circle cx="151.269" cy="181.649" r="11.5146" fill="black"/>
+<circle cx="129.287" cy="106.281" r="11.5146" fill="black"/>
+<circle cx="147.082" cy="85.345" r="11.5146" fill="black"/>
+<circle cx="60.1988" cy="63.3626" r="11.5146" fill="black"/>
+<circle cx="60.1988" cy="181.649" r="11.5146" fill="black"/>
+<circle cx="22.5146" cy="181.649" r="11.5146" fill="black"/>
+<path d="M21.9912 182.696L21.9912 141.871" stroke="black" stroke-width="4"/>
+<path d="M21.9912 182.696L60.1988 182.173" stroke="black" stroke-width="4"/>
+<path d="M21.8428 141.506L60.1988 182.173" stroke="black" stroke-width="4"/>
+<path d="M21.9912 141.871L21.9912 71.7368" stroke="black" stroke-width="4"/>
+<path d="M21.9912 71.7369L21.9912 18.3509" stroke="black" stroke-width="4"/>
+<path d="M21.9912 71.7368L60.1988 63.8859" stroke="black" stroke-width="4"/>
+<path d="M60.1989 63.8859L21.9372 142.103" stroke="black" stroke-width="4"/>
+<path d="M60.1988 63.8859L60.1988 182.173" stroke="black" stroke-width="4"/>
+<path d="M21.9912 18.3509H60.1988" stroke="black" stroke-width="4"/>
+<path d="M60.1988 63.8859L60.1988 18.3509" stroke="black" stroke-width="4"/>
+<path d="M128.763 107.327L60.1988 18.3509" stroke="black" stroke-width="4"/>
+<path d="M128.763 107.327L60.1988 63.8859" stroke="black" stroke-width="4"/>
+<path d="M150.746 183.219L60.1988 63.8859" stroke="black" stroke-width="4"/>
+<path d="M21.9912 18.3509L60.1988 63.8859" stroke="black" stroke-width="4"/>
+<path d="M128.763 107.327L150.746 183.219" stroke="black" stroke-width="4"/>
+<path d="M128.763 107.327L178.485 141.871" stroke="black" stroke-width="4"/>
+<path d="M178.485 183.219L178.485 141.871" stroke="black" stroke-width="4"/>
+<path d="M150.746 183.219L178.485 183.219" stroke="black" stroke-width="4"/>
+<path d="M178.485 141.871L179.009 18.8742" stroke="black" stroke-width="4"/>
+<path d="M146.035 18.8742L179.009 18.8742" stroke="black" stroke-width="4"/>
+<path d="M146.558 19.3977L146.558 85.8684" stroke="black" stroke-width="4"/>
+<path d="M146.558 85.8683L179.009 18.8742" stroke="black" stroke-width="4"/>
+<path d="M128.763 107.328L146.558 85.8685" stroke="black" stroke-width="4"/>
+<path d="M146.558 85.8684L178.485 141.871" stroke="black" stroke-width="4"/>
+<path d="M178.485 141.871L150.746 183.219" stroke="black" stroke-width="4"/>
 </svg>
