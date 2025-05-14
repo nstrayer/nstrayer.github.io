@@ -107,18 +107,18 @@ export class WebGLParticleSystem {
         });
 
         // Handle window resize
-        let resizeTimeout: number | null = null;
         window.addEventListener('resize', () => {
-            // Clear previous timeout to debounce resize events
-            if (resizeTimeout) {
-                window.clearTimeout(resizeTimeout);
-            }
+            // Preserve particles before resizing
+            const preservedParticles = this.preserveParticlePositions();
             
-            // Debounce resize to avoid frequent redraws during scroll on mobile
-            resizeTimeout = window.setTimeout(() => {
-                // Only update canvas dimensions without recreating particles
-                this.resize(canvas);
-            }, 300);
+            // Update canvas dimensions
+            this.resize(canvas);
+            
+            // Restore particles with relative positions maintained
+            this.restoreParticlePositions(preservedParticles);
+            
+            // Update buffers with preserved particles using dynamic draw for smoother transitions
+            this.updateBuffers();
         });
     }
 
@@ -182,6 +182,43 @@ export class WebGLParticleSystem {
         
         return buffer;
     }
+    
+    /**
+     * Updates all buffers with current particle data
+     * Uses DYNAMIC_DRAW for smoother transitions during resize
+     */
+    private updateBuffers(): void {
+        // Update position buffer
+        const positionData = this.getParticleData('position');
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.positionBuffer);
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, positionData, this.gl.DYNAMIC_DRAW);
+        
+        // Update velocity buffer
+        const velocityData = this.getParticleData('velocity');
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.velocityBuffer);
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, velocityData, this.gl.DYNAMIC_DRAW);
+        
+        // Update radius and opacity buffers
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.radiusBuffer);
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, this.getParticleData('radius'), this.gl.DYNAMIC_DRAW);
+        
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.opacityBuffer);
+        this.gl.bufferData(this.gl.ARRAY_BUFFER, this.getParticleData('opacity'), this.gl.DYNAMIC_DRAW);
+        
+        // Update position texture
+        this.gl.bindTexture(this.gl.TEXTURE_2D, this.positionTexture);
+        this.gl.texImage2D(
+            this.gl.TEXTURE_2D,
+            0,
+            this.gl.RG32F,
+            this.particles.length,
+            1,
+            0,
+            this.gl.RG,
+            this.gl.FLOAT,
+            positionData
+        );
+    }
 
     private getParticleData(attribute: keyof Particle): Float32Array {
         const data = this.particles.map(p => {
@@ -205,14 +242,55 @@ export class WebGLParticleSystem {
         
         // Update WebGL viewport
         this.gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+    
+    /**
+     * Preserves particle positions as relative coordinates before resize
+     * Returns normalized particle data to be restored after resize
+     */
+    private preserveParticlePositions(): Array<{
+        relativePosition: [number, number],
+        velocity: [number, number],
+        radius: number,
+        opacity: number
+    }> {
+        const canvasWidth = this.gl.canvas.width;
+        const canvasHeight = this.gl.canvas.height;
         
-        // Adapt particle positions to new dimensions to prevent them all from moving off-screen
-        // This keeps existing particles visible while maintaining their relative positions
-        for (let i = 0; i < this.particles.length; i++) {
-            // Make sure particles stay within the new canvas bounds
-            this.particles[i].position[0] = Math.min(this.particles[i].position[0], canvas.width);
-            this.particles[i].position[1] = Math.min(this.particles[i].position[1], canvas.height);
-        }
+        // Convert absolute positions to relative positions (0-1 range)
+        return this.particles.map(particle => ({
+            relativePosition: [
+                particle.position[0] / canvasWidth,
+                particle.position[1] / canvasHeight
+            ],
+            velocity: [particle.velocity[0], particle.velocity[1]],
+            radius: particle.radius,
+            opacity: particle.opacity
+        }));
+    }
+    
+    /**
+     * Restores particle positions from relative coordinates after resize
+     */
+    private restoreParticlePositions(preservedParticles: Array<{
+        relativePosition: [number, number],
+        velocity: [number, number],
+        radius: number,
+        opacity: number
+    }>): void {
+        const canvasWidth = this.gl.canvas.width;
+        const canvasHeight = this.gl.canvas.height;
+        
+        // Convert relative positions back to absolute positions for the new dimensions
+        this.particles = preservedParticles.map(preserved => ({
+            position: new Float32Array([
+                preserved.relativePosition[0] * canvasWidth,
+                preserved.relativePosition[1] * canvasHeight
+            ]),
+            velocity: new Float32Array(preserved.velocity),
+            radius: preserved.radius,
+            opacity: preserved.opacity
+        }));
     }
 
     start() {
