@@ -1,9 +1,10 @@
 import { parse } from 'csv-parse/sync';
+import type { ImageMetadata } from 'astro';
 
 export interface Project {
   title: string;
   link: string;
-  photo: string;
+  photo: string | ImageMetadata;  // Updated to support both string and ImageMetadata
   github: string;
   description: string[];
 }

@@ -8,11 +8,16 @@ The project is currently in a redevelopment phase, with a focus on modernizing t
 
 Based on the git commits and file structure, the following recent changes have been made:
 
-1. Added lines between particles that are close to each other, creating a connected network effect in the background
-2. Reduced particle count from 250 to 150 for better performance while maintaining visual appeal
-3. Added a subtle grain texture to the background for improved aesthetics
-4. Improved text readability by adding a backdrop blur filter to content containers
-5. Fixed text contrast issues when particles appear behind text
+1. Consolidated CSS for better maintainability and performance
+2. Fixed navigation bar color to match page top on mobile devices
+3. Optimized WebGL particles to avoid re-rendering on every resize event
+4. Fixed jumpy scrolling behavior on mobile devices
+5. Reworded and highlighted hero section and description for improved clarity
+6. Added lines between particles that are close to each other, creating a connected network effect in the background
+7. Reduced particle count from 250 to 150 for better performance while maintaining visual appeal
+8. Added a subtle grain texture to the background for improved aesthetics
+9. Improved text readability by adding a backdrop blur filter to content containers
+10. Fixed text contrast issues when particles appear behind text
 
 ### Next Steps
 
@@ -49,16 +54,23 @@ Priority tasks for continued development:
    - Currently requires WebGL2 support
    - Need fallback rendering for browsers without WebGL2
    - Monitoring performance implications on various devices
+   - Optimized to prevent re-rendering particles on window resize events
 
-2. **Data Management**:
+2. **Mobile Optimization**:
+   - Fixed issues with jumpy scrolling behavior on mobile
+   - Ensured consistent navigation bar color on mobile devices
+   - Continuing to optimize responsive layout across device sizes
+
+3. **Data Management**:
    - Project data stored in CSV for ease of updates
    - Consider future needs for more complex content management
    - Evaluate if structured data (JSON-LD) should be added for SEO
 
-3. **Build Performance**:
+4. **Build Performance**:
    - Static site generation for optimal performance
    - Monitoring build times as content grows
    - Consider asset optimization strategies for images
+   - CSS consolidation for better performance and maintainability
 
 ## Important Patterns and Preferences
 

@@ -3,6 +3,7 @@ import type { Project } from '../data/projects';
 import { Icon } from 'astro-icon/components';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
 import { marked } from 'marked';
+import { Image } from 'astro:assets';
 
 type Props = Project;
 
@@ -13,7 +14,25 @@ const parsedDescription = description.map(desc => marked.parse(desc));
 <Card className="h-full backdrop-blur-sm transition-all hover:shadow-md hover:border-primary/50 flex flex-col">
     {photo && (
       <div class="overflow-hidden rounded-t-xl">
-        <img src={photo} alt={title} class="w-full h-48 object-cover transition-transform hover:scale-105" />
+        {typeof photo === 'string' ? (
+          <Image 
+            src={photo} 
+            alt={title} 
+            width={600} 
+            height={300} 
+            class="w-full h-48 object-cover transition-transform hover:scale-105" 
+            quality={80} 
+          />
+        ) : (
+          <Image 
+            src={photo} 
+            alt={title} 
+            width={600} 
+            height={300} 
+            class="w-full h-48 object-cover transition-transform hover:scale-105" 
+            quality={80} 
+          />
+        )}
       </div>
     )}
     <CardHeader>
