@@ -2,12 +2,13 @@
 import { SITE_CONFIG } from '../data/constants';
 import { Button, buttonVariants } from "@/components/ui/button"
 import Section from './Section.astro';
+import RoughNotation from './ui/RoughNotation.astro';
 ---
 
 <Section id="hero" class="min-h-screen flex items-center text-left pt-20">
-  <h1 class="text-6xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">Hi, I'm {SITE_CONFIG.name}</h1>
+  <h1 class="text-6xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">Hi, I'm Nick</h1>
   <p class="text-2xl text-text-light mb-6">{SITE_CONFIG.title}</p>
-  <p class="mb-8 text-xl md:text-lg">{SITE_CONFIG.description}</p>
+  <p class="mb-8 text-xl md:text-lg">I am a <RoughNotation type='underline'>principal software engineer</RoughNotation> at Posit building tools to help data scientists work better.</p>
   <div class="flex gap-4 justify-evenly">
     <a href="#contact" class={buttonVariants({variant: "outline"})}>Get in Touch</a>
     <a href="#projects" class={buttonVariants({variant: "outline"})}>View My Work</a>
