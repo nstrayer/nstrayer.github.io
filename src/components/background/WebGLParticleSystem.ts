@@ -107,13 +107,18 @@ export class WebGLParticleSystem {
         });
 
         // Handle window resize
+        let resizeTimeout: number | null = null;
         window.addEventListener('resize', () => {
-            this.resize(canvas);
-            // Recreate particles with new dimensions
-            this.particles = this.createParticles(particleCount, window.innerWidth, window.innerHeight);
-            // Update buffers
-            this.positionBuffer = this.createBuffer(this.getParticleData('position'));
-            this.velocityBuffer = this.createBuffer(this.getParticleData('velocity'));
+            // Clear previous timeout to debounce resize events
+            if (resizeTimeout) {
+                window.clearTimeout(resizeTimeout);
+            }
+            
+            // Debounce resize to avoid frequent redraws during scroll on mobile
+            resizeTimeout = window.setTimeout(() => {
+                // Only update canvas dimensions without recreating particles
+                this.resize(canvas);
+            }, 300);
         });
     }
 
@@ -200,6 +205,14 @@ export class WebGLParticleSystem {
         
         // Update WebGL viewport
         this.gl.viewport(0, 0, canvas.width, canvas.height);
+        
+        // Adapt particle positions to new dimensions to prevent them all from moving off-screen
+        // This keeps existing particles visible while maintaining their relative positions
+        for (let i = 0; i < this.particles.length; i++) {
+            // Make sure particles stay within the new canvas bounds
+            this.particles[i].position[0] = Math.min(this.particles[i].position[0], canvas.width);
+            this.particles[i].position[1] = Math.min(this.particles[i].position[1], canvas.height);
+        }
     }
 
     start() {
