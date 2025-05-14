@@ -1,6 +1,7 @@
 ---
 import { SITE_CONFIG } from '../data/constants';
 import Background from '../components/Background.astro';
+import Navigation from '../components/Navigation';
 
 interface Props {
   title: string;
@@ -22,19 +23,7 @@ const { title } = Astro.props;
   </head>
   <body>
     <Background />
-    <nav class="nav">
-      <div class="nav-container">
-        <a href="/" class="nav-logo">
-            <img src="/favicon.svg" alt="Logo" class="h-10" />
-        </a>
-        <div class="nav-links">
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#skills">Skills</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </div>
-    </nav>
+    <Navigation client:load />
     <slot />
     <footer class="footer">
       <p>&copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.</p>
@@ -89,43 +78,6 @@ const { title } = Astro.props;
     z-index: -1; /* Place it behind all content */
   }
 
-
-  .nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: var(--background);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(229, 231, 235, 0.5);
-    z-index: 100;
-  }
-
-  .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-
-  .nav-links {
-    display: flex;
-    gap: 2rem;
-  }
-
-  .nav-links a {
-    text-decoration: none;
-    color: var(--text);
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover {
-    color: var(--primary);
-  }
-
   .footer {
     text-align: center;
     padding: 2rem;
@@ -169,11 +121,5 @@ const { title } = Astro.props;
   .secondary-button:hover {
     background: var(--primary);
     color: white;
-  }
-
-  @media (max-width: 768px) {
-    .nav-links {
-      display: none;
-    }
   }
 </style>
