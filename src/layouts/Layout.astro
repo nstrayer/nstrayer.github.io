@@ -37,11 +37,7 @@ const { title } = Astro.props;
     --primary-light: #3b82f6;
     --text: #1f2937;
     --text-light: #6b7280;
-    --background: rgba(255, 255, 255, 0.569);
     --background-alt: rgba(243, 244, 246, 0.9);
-    /* Add a subtle grain texture using a generated SVG */
-    --grain-opacity: 0.15; /* Adjusted for desired intensity, was 0.15, Zed's is very subtle */
-    --grain-svg: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
 
@@ -54,29 +50,9 @@ const { title } = Astro.props;
   body {
     line-height: 1.6;
     min-height: 100vh;
-    background-color: #f8f9fa; /* A light base color */
-    /* Apply the grain texture */
-    background-image: var(--grain-svg);
-    background-repeat: repeat;
-    background-position: 0 0;
-    background-size: auto; /* Or a fixed size like 200px 200px */
-    /* Ensure the grain is subtle */
-    position: relative; /* Needed for the pseudo-element if we go that route */
+    position: relative; /* Needed for the pseudo-element */
   }
 
-  /* Optional: Apply grain as a pseudo-element for more control */
-  body::before {
-    content: "";
-    position: fixed; /* Use fixed to cover the viewport, or absolute for just the body */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: var(--grain-svg);
-    opacity: var(--grain-opacity);
-    pointer-events: none; /* Make sure it doesn't interfere with interactions */
-    z-index: -1; /* Place it behind all content */
-  }
 
   .footer {
     text-align: center;

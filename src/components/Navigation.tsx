@@ -20,7 +20,7 @@ const navItems = [
 
 export function Navigation() {
   return (
-    <div className="fixed top-0 w-full bg-background/80 backdrop-blur-md z-50 border-b border-border/40 px-4">
+    <div className="fixed top-0 w-full bg-background backdrop-blur-md z-50 border-b border-border/40 px-4">
       <div className="container flex h-16 max-w-screen-xl items-center justify-between mx-auto py-4">
         <a href="/" className="flex items-center space-x-2">
           <img src="/favicon.svg" alt="Logo" className="h-8 w-auto" />
