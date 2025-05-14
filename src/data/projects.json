@@ -1,0 +1,321 @@
+[
+  {
+    "title": "A graphical experiment of exponential spread",
+    "link": "https://observablehq.com/@nstrayer/a-graphical-experiment-of-exponential-spread",
+    "photo": "/epidemic_spread.png",
+    "github": "",
+    "description": [
+      "A real-time javascript simulation of epidemic spreading on a network",
+      "Built to provide intuition for spreading in constrained environments",
+      "All parameters related to spread are tunable"
+    ]
+  },
+  {
+    "title": "DataDrivenCV package",
+    "link": "http://nickstrayer.me/datadrivencv/",
+    "photo": "https://nickstrayer.me/datadrivencv/reference/figures/logo.svg",
+    "github": "https://github.com/nstrayer/datadrivencv",
+    "description": [
+      "An R package for building a CV/Resume from a spreadsheet of information",
+      "Built around the [pagedown](https://pagedown.rbind.io/) package in R",
+      "Framework supplied by package is entirely self-sufficient so user's are not dependent on package version changes."
+    ]
+  },
+  {
+    "title": "Phewas-ME ",
+    "link": "https://prod.tbilab.org/phewas_me_info/",
+    "photo": "https://prod.tbilab.org/phewas_me_info/figs/whole_app.png",
+    "github": "https://github.com/tbilab/meToolkit",
+    "description": [
+      "Shiny app for exploring results of Phenome-Wide Association Studies (PheWAS)",
+      "Allows user to look directly at individual data generating results to identify spurious or novel associations.",
+      "Build as R package framework allowing modular construction of apps based upon a projects needs."
+    ]
+  },
+  {
+    "title": "t-SNE explained in plain javascript",
+    "link": "https://observablehq.com/@nstrayer/t-sne-explained-in-plain-javascript",
+    "photo": "https://static.observableusercontent.com/thumbnail/7a8ed08e2b0a66f1ce25d14a30e8781a55b60293567f0e688385a6d150d728d3.jpg",
+    "github": "",
+    "description": [
+      "Full implementation and explaination of t-sne visualization algorithm",
+      "Featured in \"Explorables\" section of Observable"
+    ]
+  },
+  {
+    "title": "Javascript Statistics Snippets",
+    "link": "https://observablehq.com/@nstrayer/javascript-statistics-snippets",
+    "photo": "https://user-images.githubusercontent.com/6764693/57027780-e937e680-6c02-11e9-832a-cb42ff6de5dd.png",
+    "github": "",
+    "description": [
+      "A series of small self-contained functions for doing statistical computation in javascript",
+      "Functions are optimized for speed along with legibility"
+    ]
+  },
+  {
+    "title": "Shinysense",
+    "link": "https://github.com/nstrayer/shinysense",
+    "photo": "/projectPics/shinysense.gif",
+    "github": "https://github.com/nstrayer/shinysense/",
+    "description": [
+      "A set of shiny modules for letting shiny sense the world around it.",
+      "Currently has touch, sound, motion, and vision 'senses.'",
+      "Bundled into an R package."
+    ]
+  },
+  {
+    "title": "What are P-Values, Really?",
+    "link": "http://nickstrayer.me/pValueExplainer/",
+    "photo": "/projectPics/pvalues.png",
+    "github": "https://github.com/nstrayer/pValueExplainer/",
+    "description": [
+      "A resource for explaining what statistical significance really means.",
+      "Storified to try and make it memorable.",
+      "Takes the form of a reproducible r-markdown document so others can recreate"
+    ]
+  },
+  {
+    "title": "Data Visualization Best Practices in R",
+    "link": "https://www.datacamp.com/courses/visualization-best-practices-in-r",
+    "photo": "/vis_best_practices.jpg",
+    "github": "",
+    "description": [
+      "Intermediate level course exploring visualization best practices in R.",
+      "Uses ggplot2 and the tidyverse packages.",
+      "See the story [A Multimillion-Dollar Startup Hid A Sexual Harassment Incident By Its CEO](https://www.buzzfeednews.com/article/daveyalba/datacamp-sexual-harassment-metoo-tech-startup) for information on why I no longer actively promote this course."
+    ]
+  },
+  {
+    "title": "Making Nice Looking Websites Using RMarkdown",
+    "link": "http://nickstrayer.me/RMarkdown_Sites_tutorial/",
+    "photo": "/projectPics/markdown_sites.png",
+    "github": "https://github.com/nstrayer/RMarkdown_Sites_tutorial",
+    "description": [
+      "A walkthrough from start to finish of making a website using RMarkdown and hosting it on Github.",
+      "Made in collaboration with <a href='http://www.lucymcgowan.com/'>Lucy McGowan</a>",
+      "Presented at the statistical computing workshop for Vanderbilt Medical Center",
+      "See sample site <a href='http://nickstrayer.me/personal_site/'>here</a>"
+    ]
+  },
+  {
+    "title": "Conditional Survival Curves on Truncated Survival Data",
+    "link": "http://bl.ocks.org/nstrayer/4e613a109707f0487da87300097ca502",
+    "photo": "/projectPics/survival_curve.png",
+    "github": "https://gist.github.com/nstrayer/4e613a109707f0487da87300097ca502",
+    "description": [
+      "A visual exploration of Kaplin-Meier survival curves on left-truncated survival data.",
+      "Drag the conditional slider to see how the survival curve changes depending on the age of entry.",
+      "All logic for K-M curve written from scratch in javascript and much more performant than the <code>survival</code> package in R.",
+      "For more information on the algorithm to generate a K-M curve see <a href = 'https://en.wikipedia.org/wiki/Kaplan%E2%80%93Meier_estimator'> the </a> wikipedia page."
+    ]
+  },
+  {
+    "title": "Reusable Statistics Plots in D3",
+    "link": "http://bl.ocks.org/nstrayer/37a503dd1db369a8f7e3ce21757e19ee",
+    "photo": "/projectPics/reusableCharts.png",
+    "github": "https://github.com/nstrayer/d3Stats",
+    "description": [
+      "Also see my <a href = 'http://bl.ocks.org/nstrayer/776ca46537c557e59b994aa439fdb26c'>histogram</a> made in the same way.",
+      "My first attempts at making a d3 library.",
+      "Ultimately will be tied with a companion R app for interactive visualization for statisticians.",
+      "Uses the <a href = 'http://ejb.github.io/2016/05/23/a-better-way-to-structure-d3-code.html'> reusable d3 structure </a> proposed by <a href = 'https://twitter.com/elliot_bentley'>Elliot Bentely.</a>"
+    ]
+  },
+  {
+    "title": "What's In Season?",
+    "link": "http://nickstrayer.me/growingSeasons",
+    "photo": "/projectPics/growingSeasons.png",
+    "github": "https://github.com/nstrayer/growingSeasons",
+    "description": [
+      "An interactive exploration of what produce is in season.",
+      "Data scraped from <a href = 'http://www.sustainabletable.org/seasonalfoodguide/'>here</a> using python.",
+      "Allows the user to select different in season ingredients and search for recipes containing them.",
+      "Notebooks for scraping in github repo."
+    ]
+  },
+  {
+    "title": "Data Visualization In R",
+    "link": "http://nickstrayer.me/visualization_in_r/",
+    "photo": "/projectPics/rVisualization.png",
+    "github": "https://github.com/nstrayer/visualization_in_r",
+    "description": [
+      "Rmarkdown document for a statistical computing workshop I gave at Vanderbilt.",
+      "A brief overview of some common visualization mistakes and code to fix them in ggplot",
+      "Provides an overview of some newer visualization tools."
+    ]
+  },
+  {
+    "title": "Binomially Distributed Fun!",
+    "link": "http://nickstrayer.me/binomialFun/",
+    "photo": "/projectPics/binomial.png",
+    "github": "https://github.com/nstrayer/binomialFun",
+    "description": [
+      "Demonstrates how a sequence of independent Bernoulli Trials make up the Binomial Distribution.",
+      "Allows the user to toggle the parameters of the Bernoulli and generate a samples.",
+      "Calculates and displays a 95% confidence interval and wilson hypothesis test based upon the generated data.",
+      "All statistics funtions are written from scratch in vanilla javascript."
+    ]
+  },
+  {
+    "title": "The Likelihood Function",
+    "link": "http://nickstrayer.me/likelihood",
+    "photo": "/projectPics/likelihood.png",
+    "github": "https://github.com/nstrayer/likelihood",
+    "description": [
+      "An interactive exploration of the likelihood function.",
+      "Visually explains the concepts of support intervals and likelihood ratios.",
+      "Allows the user to input their own data for creating figures for reports/presentations."
+    ]
+  },
+  {
+    "title": "Confidence Intervals Explained",
+    "link": "http://nickstrayer.me/binomialFun/confidenceIntervals",
+    "photo": "/projectPics/confidenceIntervals.png",
+    "github": "https://github.com/nstrayer/binomialFun",
+    "description": [
+      "Allows the user to explore what a frequentist confidence interval truly is.",
+      "To many people, including the scientists who use them, the behavior of Confidence Intervals is confusing.",
+      "All statistics functions are written from base javascript. See github repo for code."
+    ]
+  },
+  {
+    "title": "Probability Integral Transformations",
+    "link": "http://nickstrayer.me/distributionTransforms/",
+    "photo": "/projectPics/integralTransform.png",
+    "github": "https://github.com/nstrayer/distributionTransforms",
+    "description": [
+      "Made in an effort to visualize what happens when you transform a probability distribution with a function.",
+      "Uses the normal distribution transformed by the normal cdf, resulting in a uniform distribution. See <a href = 'https://en.wikipedia.org/wiki/Probability_integral_transform'> here</a> for more info. ",
+      "Inspired by my course work in Probability at Vanderbilt."
+    ]
+  },
+  {
+    "title": "Where Are Wildfires Burning?",
+    "link": "http://nickstrayer.me/wildfires/",
+    "photo": "/projectPics/wildfires.png",
+    "github": "https://github.com/nstrayer/wildfires",
+    "description": [
+      "Uses open data from NASA satelites on global temperature anomalies.",
+      "Fresh data is downloaded every day and pushed to the static page via shell scripts avoiding the need for servers.",
+      "<a href = 'https://firms.modaps.eosdis.nasa.gov/active_fire/text/USA_contiguous_and_Hawaii_48h.csv'>Data source.</a>"
+    ]
+  },
+  {
+    "title": "Interactive Manhattan Plot R Package.",
+    "link": "http://nickstrayer.me/D3ManhattanPlots/",
+    "photo": "/projectPics/d3Manhattan.png",
+    "github": "https://github.com/nstrayer/D3ManhattanPlots",
+    "description": [
+      "An R package to generate interactive and embedable manhattan plots for genome wide association studies.",
+      "Binds R and Javascript + D3 using the <a href='http://www.htmlwidgets.org/'  target='_blank'>HTMLWidgets</a> package."
+    ]
+  },
+  {
+    "title": "State Farmers Market Profiles.",
+    "link": "http://nickstrayer.me/marketStory/",
+    "photo": "/marketStory.png",
+    "github": "https://github.com/nstrayer/marketStory",
+    "description": [
+      "Companion visualization to <a href='http://nickstrayer.me/farmersMarkets/' target='_blank'> What Do Farmer's Markets Sell?</a>",
+      "Explore different states path's through different metrics relating to farmers markets.",
+      "Uses equal sized states map as menu to reduce bias associated with normal projections.",
+      "Data courtesy of <a href='http://catalog.data.gov/dataset/farmers-markets-geographic-data' target='_blank'> Data.gov</a>."
+    ]
+  },
+  {
+    "title": "What Do Farmer's Markets Sell?",
+    "link": "http://nickstrayer.me/farmersMarkets/",
+    "photo": "/farmersMarkets.png",
+    "github": "https://github.com/nstrayer/farmersMarkets",
+    "description": [
+      "Select different good types (e.g. Vegetables, Fruit) and see which markets sell them.",
+      "Assemble different combinations of goods to explore regional trends.",
+      "Dynamic layout adjusts to mobile or desktop views.",
+      "Be patient with it, more than eight thousand points are being drawn to the screen. It will bog down older phones/computers.",
+      "Data courtesy of <a href='http://catalog.data.gov/dataset/farmers-markets-geographic-data' target='_blank'> Data.gov"
+    ]
+  },
+  {
+    "title": "Interactive Manhattan Plot Viewer.",
+    "link": "http://www.uvm.edu/~nstrayer/manhattanPlots",
+    "photo": "/projectPics/manhattanPlots.png",
+    "github": "https://github.com/nstrayer/manhattanPlots",
+    "description": [
+      "Developed as an experiment in exploratory data visualization.",
+      "Select different controls for comparison, e.g. non-dominant arm growth to see linked snps.",
+      "A manhattan plot is a commonly used tool in accessing genetic roots for traits",
+      "Uses data from the FAMuSS study (<a href='http://isites.harvard.edu/fs/docs/icb.topic1388631.files/thompson_FAMuSS.pdf' target='_blank'> Thompson Et Al. 2004</a>)."
+    ]
+  },
+  {
+    "title": "Learn ASL numbers with Leap Motion.",
+    "link": "http://www.uvm.edu/~nstrayer/signLanguage",
+    "photo": "/projectPics/signLanguage.jpg",
+    "github": "https://github.com/nstrayer/cs228/tree/master/final",
+    "description": [
+      "First place project at 2014 UVM CS Fair.",
+      "Teaches numbers 0-9 in American Sign Language.",
+      "Utilizes three.js and webGL for rendering.",
+      "Built to exploit multiple HCI and Cognitive Psychology theories (e.g. object consistancy and the generation effect) in order to maximize learning experience."
+    ]
+  },
+  {
+    "title": "Experimental Leap Motion + D3.js project.",
+    "link": "http://www.uvm.edu/~nstrayer/leapD3",
+    "photo": "/projectPics/leap.jpg",
+    "github": "https://github.com/nstrayer/leapD3",
+    "description": [
+      "Wave your hands around and watch D3.js mirror you!",
+      "Requires a leap motion device.",
+      "In the future I plan on implementing ways to interact with D3 visualizations by recognizing gestures using machine learning algorithms.",
+      "<a href='https://www.youtube.com/watch?v=yttEEA-Gd2A'>Video of it in action</a> for if you don't have a Leap.",
+      "<strong>Note:</strong> When using, start by waving your hands around above the Leap Motion device and watch it calibrate!</li>"
+    ]
+  },
+  {
+    "title": "Polio's impact on the United States.",
+    "link": "http://www.uvm.edu/~nstrayer/histOfPolio",
+    "photo": "/projectPics/polioHist.jpg",
+    "github": "https://github.com/nstrayer/math295",
+    "description": [
+      "A project for <a href='http://bagrow.com/ds2/' target='_blank'> Data Science 2 </a> (Math 295) taught by <a href='http://bagrow.com'>Professor James Bagrow</a> at the University of Vermont.",
+      "<a href='http://nbviewer.ipython.org/github/nstrayer/math295/blob/master/HW01/work/hw01.ipynb' target='_blank'> iPython notebook </a>and data files available on my <a href='https://github.com/nstrayer/math295' target='_blank'>github.</a>"
+    ]
+  },
+  {
+    "title": "labinthewild.org Interactive Visualization.",
+    "link": "http://www.labinthewild.org/studies/visualization/",
+    "photo": "/projectPics/labInTheWild.jpg",
+    "github": "",
+    "description": [
+      "A visualization developed for LabInTheWild at the University of Michigan to help participants place themselves among differing demographics.</li>"
+    ]
+  },
+  {
+    "title": "Alternative energy filling stations in the U.S..",
+    "link": "http://www.uvm.edu/~nstrayer/fillingStations",
+    "photo": "/projectPics/fillingStations.jpg",
+    "github": "https://github.com/nstrayer/hexbinFillingStations",
+    "description": [
+      "Using d3.hexbin I took took 18k+ data points and binned them to help explore geographic trends in alternative energy filling stations."
+    ]
+  },
+  {
+    "title": "Marvel Vs. DC in the theater.",
+    "link": "http://www.uvm.edu/~nstrayer/superHeroes",
+    "photo": "/projectPics/superHeroes.jpg",
+    "github": "https://github.com/nstrayer/superheroes",
+    "description": [
+      "I extracted data from The Verge article <a href='http://www.theverge.com/2014/8/22/6056617/marvels-movie-business-is-crushing-dcs-and-its-not-close' target='_blank'> 'Marvel's movie business is crushing DC's and it's not close.'"
+    ]
+  },
+  {
+    "title": "Where does California get its energy?",
+    "link": "http://www.uvm.edu/~nstrayer/powerVis",
+    "photo": "/projectPics/CAPower.jpg",
+    "github": "https://github.com/nstrayer/caPowerViz",
+    "description": [
+      "A visualization that explores how electricity is generated in the state of California. Data was cleaned using python and then the visualization was generated using d3.js."
+    ]
+  }
+]
