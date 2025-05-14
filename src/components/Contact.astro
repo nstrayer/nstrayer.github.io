@@ -53,17 +53,17 @@ import SectionTitle from './SectionTitle.astro';
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text);
+    color: hsl(var(--foreground));
     text-decoration: none;
     padding: 0.5rem 1rem;
     border-radius: 0.375rem;
-    background: var(--background-alt);
+    background: hsl(var(--muted));
     transition: all 0.2s;
   }
 
   .contact-link:hover {
-    background: var(--primary);
-    color: white;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
   }
 
   .icon {
