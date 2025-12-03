@@ -1,9 +1,9 @@
 export const SITE_CONFIG = {
   name: 'Nick Strayer',
-  title: 'Visual Software Engineer and Data Scientist',
+  title: 'Software Engineer and Data Scientist',
   email: 'nick.strayer@gmail.com',
   initials: 'NS',
-  description: 'I am a principal software engineer at Posit building tools to help data scientists work better.'
+  description: 'I am a tech lead at Posit, building a new AI-native Jupyter notebook experience in the Positron IDE.'
 };
 
 

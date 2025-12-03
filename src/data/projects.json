@@ -5,9 +5,9 @@
     "photo": "/projectPics/positron.png",
     "github": "https://github.com/posit-dev/positron",
     "description": [
-      "A language agnostic data science IDE and spiritual successor to the RStudio IDE, built by Posit (formerly RStudio) to support modern data science workflows",
-      "Unifies data exploration, analysis, and production workflows in a single environment",
-      "Tech lead for Jupyter notebooks, working on a fully new AI-native notebook editor"
+      "A next-generation, language-agnostic data science IDE and spiritual successor to RStudio, built by Posit to unify data exploration, analysis, and production workflows",
+      "Serving as tech lead for the Jupyter notebooks experience, building a completely reimagined notebook editor from the ground up",
+      "Implementing AI-native notebook interactions that integrate intelligent assistance directly into the data analysis workflow"
     ]
   },
   {
