@@ -1,5 +1,16 @@
 [
   {
+    "title": "Positron IDE",
+    "link": "https://positron.posit.co/",
+    "photo": "/projectPics/positron.png",
+    "github": "https://github.com/posit-dev/positron",
+    "description": [
+      "A language agnostic data science IDE and spiritual successor to the RStudio IDE, built by Posit (formerly RStudio) to support modern data science workflows",
+      "Unifies data exploration, analysis, and production workflows in a single environment",
+      "Tech lead for Jupyter notebooks, working on a fully new AI-native notebook editor"
+    ]
+  },
+  {
     "title": "A graphical experiment of exponential spread",
     "link": "https://observablehq.com/@nstrayer/a-graphical-experiment-of-exponential-spread",
     "photo": "/epidemic_spread.png",
@@ -24,7 +35,7 @@
   {
     "title": "Phewas-ME ",
     "link": "https://prod.tbilab.org/phewas_me_info/",
-    "photo": "https://prod.tbilab.org/phewas_me_info/figs/whole_app.png",
+    "photo": "/projectPics/phewasMe.jpeg",
     "github": "https://github.com/tbilab/meToolkit",
     "description": [
       "Shiny app for exploring results of Phenome-Wide Association Studies (PheWAS)",

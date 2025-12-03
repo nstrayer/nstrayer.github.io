@@ -1,4 +1,9 @@
 ---
+/**
+ * Projects Section Component
+ * 
+ * Grid of project cards with expandable list.
+ */
 import { PROJECTS } from '../data/projects';
 import ProjectCard from './ProjectCard.astro';
 import Section from './Section.astro';
@@ -8,9 +13,9 @@ const INITIAL_PROJECT_COUNT = 6;
 const hasMoreProjects = PROJECTS.length > INITIAL_PROJECT_COUNT;
 ---
 
-<Section id="projects" class="py-20" containerClass="max-w-6xl">
+<Section id="projects" class="py-24" containerClass="max-w-6xl">
   <SectionTitle>Projects</SectionTitle>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {PROJECTS.map((project, index) => (
       <div class={`project-wrapper h-full ${index >= INITIAL_PROJECT_COUNT ? 'hidden-project' : ''}`}>
         <ProjectCard {...project} />
@@ -21,7 +26,7 @@ const hasMoreProjects = PROJECTS.length > INITIAL_PROJECT_COUNT;
     <div class="flex justify-center mt-12">
       <button 
         id="show-more-projects"
-        class="bg-primary text-white py-3 px-6 rounded-md font-semibold text-base transition-all hover:bg-primary/90 hover:shadow-md hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-primary/50"
+        class="show-more-btn btn-stipple-light"
       >
         Show More Projects
       </button>
@@ -46,6 +51,17 @@ const hasMoreProjects = PROJECTS.length > INITIAL_PROJECT_COUNT;
 </script>
 
 <style>
+  .show-more-btn {
+    background: var(--foreground);
+    color: var(--background);
+    padding: 0.875rem 2rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+  }
+
   .project-wrapper {
     opacity: 1;
     transform: translateY(0);

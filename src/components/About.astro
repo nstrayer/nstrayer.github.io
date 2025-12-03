@@ -1,26 +1,24 @@
 ---
-import { SITE_CONFIG } from "../data/constants";
+/**
+ * About Section Component
+ * 
+ * Clean biographical content with emphasized place names.
+ */
 import Section from "./Section.astro";
 import SectionTitle from "./SectionTitle.astro";
-import RoughNotation from "./ui/RoughNotation.astro";
 ---
-
-<style>
-  .highlight-place {
-    font-weight: 600; /* semibold */
-    color: var(--color-chart-3);
-  }
-</style>
 
 <Section id="about">
   <SectionTitle>About me</SectionTitle>
-    <p class="mt-4 leading-relaxed">
-      At <strong class="highlight-place">Posit</strong>, I develop tools that enhance data scientists' workflows. My career spans multiple disciplines—from being a journalist at the <strong class="highlight-place">New York Times</strong> to a data scientist at <strong class="highlight-place">Johns Hopkins Data Science Lab</strong> and even a "data artist in residence" at a geospatial visualization startup.
+  <div class="prose prose-lg max-w-none text-muted-foreground">
+    <p class="leading-relaxed">
+      At <strong class="text-foreground">Posit</strong>, I develop tools that enhance data scientists' workflows. My career spans multiple disciplines—from being a journalist at the <strong class="text-foreground">New York Times</strong> to a data scientist at <strong class="text-foreground">Johns Hopkins Data Science Lab</strong> and even a "data artist in residence" at a geospatial visualization startup.
     </p>
-    <p class="mt-4 leading-relaxed">
-      My <strong>Ph.D. from <span class="highlight-place">Vanderbilt University</span></strong> focused on <RoughNotation type="underline" color="var(--color-chart-5)">statistical methodologies for network data, deep learning, and data visualization.</RoughNotation> At the <strong class="highlight-place">University of Vermont</strong>, I studied statistics, mathematics, and computer science.
+    <p class="mt-6 leading-relaxed">
+      My <strong class="text-foreground">Ph.D. from Vanderbilt University</strong> focused on statistical methodologies for network data, deep learning, and data visualization. At the <strong class="text-foreground">University of Vermont</strong>, I studied statistics, mathematics, and computer science.
     </p>
-    <p class="mt-4 leading-relaxed">
+    <p class="mt-6 leading-relaxed">
       When I am not in "work mode," I enjoy photographing birds and my daughter, running and hiking, reading science fiction, and contributing to open-source projects.
     </p>
+  </div>
 </Section>

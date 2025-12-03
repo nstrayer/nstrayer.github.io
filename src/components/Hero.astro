@@ -1,17 +1,59 @@
 ---
 import { SITE_CONFIG } from '../data/constants';
-import { Button, buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import Section from './Section.astro';
-import RoughNotation from './ui/RoughNotation.astro';
+import StippledPattern from './ui/StippledPattern.astro';
 ---
 
-<Section id="hero" class="min-h-screen flex items-center text-left pt-20">
-  <h1 class="text-6xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">Hi, I'm Nick</h1>
-  <p class="text-2xl text-text-light mb-6">{SITE_CONFIG.title}</p>
-  <p class="mb-8 text-xl md:text-lg">I am a <RoughNotation type='underline'>principal software engineer</RoughNotation> at Posit building tools to help data scientists work better.</p>
-  <div class="flex gap-4 justify-evenly">
-    <a href="#contact" class={buttonVariants({variant: "outline"})}>Get in Touch</a>
-    <a href="#projects" class={buttonVariants({variant: "outline"})}>View My Work</a>
-    
+<Section id="hero" class="min-h-screen flex items-center text-left pt-20 relative overflow-hidden">
+  <!-- Stippled gradient overlay - concentrated in top-right, fading to bottom-left -->
+  <div class="stippled-gradient" aria-hidden="true">
+    <StippledPattern density={0.55} dotSize={2.2} width="100%" height="100%" />
+  </div>
+  
+  <div class="max-w-2xl relative z-10">
+    <h1 class="text-5xl md:text-6xl font-bold mb-4 text-foreground tracking-tight leading-tight">
+      Hi, I'm Nick
+    </h1>
+    <p class="text-2xl md:text-3xl font-semibold mb-6 text-foreground/90">
+      {SITE_CONFIG.title}
+    </p>
+    <p class="mb-10 text-lg leading-relaxed text-muted-foreground max-w-xl">
+      I am a <span class="text-foreground font-medium">principal software engineer</span> at Posit building tools to help data scientists work better.
+    </p>
+    <div class="flex gap-4 flex-wrap">
+      <a href="#contact" class={buttonVariants({variant: "default", size: "lg"})}>
+        Get in Touch
+      </a>
+      <a href="#projects" class={buttonVariants({variant: "outline", size: "lg"})}>
+        View My Work
+      </a>
+    </div>
   </div>
 </Section>
+
+<style>
+  .stippled-gradient {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 80%;
+    height: 80%;
+    pointer-events: none;
+    /* Radial gradient mask: concentrated at top-right corner */
+    mask-image: radial-gradient(
+      ellipse 100% 100% at 100% 0%,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.35) 20%,
+      rgba(0, 0, 0, 0.15) 45%,
+      rgba(0, 0, 0, 0) 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 100% 100% at 100% 0%,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.35) 20%,
+      rgba(0, 0, 0, 0.15) 45%,
+      rgba(0, 0, 0, 0) 70%
+    );
+  }
+</style>

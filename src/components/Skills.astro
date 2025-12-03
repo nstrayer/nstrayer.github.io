@@ -1,4 +1,9 @@
 ---
+/**
+ * Skills Section Component
+ * 
+ * Simple, elegant skill tags in a flowing layout with stippled hover effect.
+ */
 import { SKILLS } from '../data/constants';
 import Section from './Section.astro';
 import SectionTitle from './SectionTitle.astro';
@@ -6,23 +11,24 @@ import SectionTitle from './SectionTitle.astro';
 
 <Section id="skills">
   <SectionTitle>Skills</SectionTitle>
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
-    {SKILLS.map((skill) => <span class="skill-tag">{skill}</span>)}
+  <div class="flex flex-wrap gap-3 justify-center">
+    {SKILLS.map((skill) => (
+      <span class="skill-tag btn-stipple-dark">{skill}</span>
+    ))}
   </div>
 </Section>
 
 <style>
-  .skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-  }
-
   .skill-tag {
-    background: hsl(var(--muted));
+    display: inline-block;
     padding: 0.5rem 1rem;
-    border-radius: 9999px;
+    font-size: 0.875rem;
     font-weight: 500;
+    color: var(--foreground);
+    border: 1.5px solid var(--foreground);
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+    cursor: default;
   }
 </style>

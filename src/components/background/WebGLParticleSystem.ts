@@ -443,9 +443,10 @@ export class WebGLParticleSystem {
                 const resolutionLocation = this.gl.getUniformLocation(this.lineProgram, 'u_resolution');
                 this.gl.uniform2fv(resolutionLocation, [this.gl.canvas.width, this.gl.canvas.height]);
 
-                // Set the color uniform for the lines (e.g., a semi-transparent white).
+                // Set the color uniform for the lines - monochromatic blue theme
                 const lineColorLocation = this.gl.getUniformLocation(this.lineProgram, 'u_lineColor');
-                this.gl.uniform4fv(lineColorLocation, [0.3, 0.3, 1.0, 0.5]); // Light blue-ish, 25% opacity
+                // Deep navy blue with transparency (approximately oklch(0.30 0.08 240) with 0.3 opacity)
+                this.gl.uniform4fv(lineColorLocation, [0.15, 0.25, 0.45, 0.3]);
 
                 // Enable the vertex attribute for line positions.
                 const linePositionLocation = this.gl.getAttribLocation(this.lineProgram, 'a_linePosition');

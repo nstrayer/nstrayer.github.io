@@ -1,6 +1,11 @@
 ---
-// src/components/SectionTitle.astro
+/**
+ * SectionTitle Component
+ * 
+ * Bold serif heading with understated elegance.
+ */
 import { cn } from "../lib/utils";
+import StippledPattern from './ui/StippledPattern.astro';
 
 interface Props {
   class?: string;
@@ -9,6 +14,12 @@ interface Props {
 const { class: className = "" } = Astro.props;
 ---
 
-<h2 class={cn("text-4xl font-bold text-center mb-12", className)}>
-  <slot />
-</h2>
+<div class="mb-16 text-center">
+  <h2 class={cn("text-4xl md:text-5xl font-bold text-foreground tracking-tight inline-block", className)}>
+    <slot />
+  </h2>
+  <!-- Subtle stippled underline accent -->
+  <div class="mx-auto mt-4 w-24 h-2 opacity-60">
+    <StippledPattern density={0.75} dotSize={2} width="100%" height="100%" />
+  </div>
+</div>

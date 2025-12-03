@@ -1,45 +1,23 @@
 ---
+/**
+ * Background Component
+ * 
+ * Simple, clean paper-like background that matches the print-inspired aesthetic.
+ * No animation - just a solid foundation for the content.
+ */
 ---
 
-<canvas id="background-canvas"></canvas>
-
-<script>
-  import { WebGLParticleSystem } from './background/WebGLParticleSystem';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('background-canvas') as HTMLCanvasElement;
-    
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    if (!prefersReducedMotion) {
-      try {
-        const particleSystem = new WebGLParticleSystem(canvas, 150);
-        particleSystem.start();
-
-        // Listen for changes to motion preference
-        window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
-          if (e.matches) {
-            particleSystem.stop();
-          } else {
-            particleSystem.start();
-          }
-        });
-      } catch (e) {
-        console.warn('WebGL2 not supported, falling back to Canvas version');
-        console.error(e);
-        // You could import and use the Canvas version as fallback here
-      }
-    }
-  });
-</script>
+<div id="background" aria-hidden="true"></div>
 
 <style>
-  #background-canvas {
+  #background {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: -2; /* Lowered to sit behind the grain overlay */
-    background: linear-gradient(to bottom right, #f8fafc, #f1f5f9);
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+    /* Warm paper-like background from our color palette */
+    background: var(--background);
   }
 </style>

@@ -1,4 +1,9 @@
 ---
+/**
+ * Contact Section Component
+ * 
+ * Clean, minimal contact links with stippled hover effect.
+ */
 import { SITE_CONFIG } from '../data/constants';
 import { Icon } from 'astro-icon/components';
 import Section from './Section.astro';
@@ -7,78 +12,57 @@ import SectionTitle from './SectionTitle.astro';
 
 <Section id="contact">
   <SectionTitle>Get in touch</SectionTitle>
-  <div class="contact-content">
-    <p>
-      I am always interested in getting involved in new projects or just connecting with others. Feel free to get in touch!
+  <div class="max-w-xl mx-auto text-center">
+    <p class="text-muted-foreground mb-8 leading-relaxed">
+      I am always interested in getting involved in new projects or connecting with others. 
+      Feel free to reach out!
     </p>
     <div class="contact-links">
-      <a href={`mailto:${SITE_CONFIG.email}`} class="contact-link">
-        <span class="icon"><Icon name="line-md:email-filled" /></span> {SITE_CONFIG.email}
+      <a href={`mailto:${SITE_CONFIG.email}`} class="contact-link btn-stipple-dark">
+        <Icon name="line-md:email-filled" class="icon" />
+        <span>Email</span>
       </a>
-      <a href="https://twitter.com/NicholasStrayer" target="_blank" class="contact-link">
-        <span class="icon"><Icon name="line-md:twitter" /></span> @NicholasStrayer
+      <a href="https://twitter.com/NicholasStrayer" target="_blank" class="contact-link btn-stipple-dark">
+        <Icon name="line-md:twitter" class="icon" />
+        <span>Twitter</span>
       </a>
-      <a href="https://github.com/nstrayer" target="_blank" class="contact-link">
-        <span class="icon"><Icon name="line-md:github" /></span> nstrayer
+      <a href="https://github.com/nstrayer" target="_blank" class="contact-link btn-stipple-dark">
+        <Icon name="line-md:github" class="icon" />
+        <span>GitHub</span>
       </a>
-      <a href="https://linkedin.com/in/nickstrayer" target="_blank" class="contact-link">
-        <span class="icon"><Icon name="line-md:linkedin" /></span> LinkedIn
+      <a href="https://linkedin.com/in/nickstrayer" target="_blank" class="contact-link btn-stipple-dark">
+        <Icon name="line-md:linkedin" class="icon" />
+        <span>LinkedIn</span>
       </a>
     </div>
   </div>
 </Section>
 
 <style>
-  .contact-content {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: left;
-  }
-
-  .contact-content p {
-    margin-bottom: 2rem;
-    line-height: 1.8;
-  }
-
   .contact-links {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
-    align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
   }
 
   .contact-link {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: hsl(var(--foreground));
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--foreground);
+    border: 1.5px solid var(--foreground);
     text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.375rem;
-    background: hsl(var(--muted));
-    transition: all 0.2s;
-  }
-
-  .contact-link:hover {
-    background: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
   }
 
   .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.25rem;
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  @media (max-width: 768px) {
-    .contact-links {
-      flex-direction: column;
-      align-items: stretch;
-    }
+    width: 1.25rem;
+    height: 1.25rem;
   }
 </style>

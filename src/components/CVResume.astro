@@ -1,44 +1,136 @@
 ---
+/**
+ * CV/Resume Section Component
+ * 
+ * Clean links to CV and Resume documents.
+ * Stippled gradient matches the hero aesthetic.
+ */
 import Section from './Section.astro';
 import SectionTitle from './SectionTitle.astro';
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
+import StippledPattern from './ui/StippledPattern.astro';
 ---
 
 <Section id="cv-resume">
-  <SectionTitle class="mb-8">The boring stuff</SectionTitle>
+  <SectionTitle>The boring stuff</SectionTitle>
   
-  <div class="grid gap-8 md:grid-cols-2 md:auto-rows-fr">
-    <Card class="bg-transparent backdrop-blur-sm h-full transition-all hover:shadow-md hover:border-primary/50">
-      <CardHeader>
-        <CardTitle class="text-2xl">CV</CardTitle>
-      </CardHeader>
-      <CardContent class="space-y-4">
-        <p>Want a longer list of the stuff I've done related to my career? I have a <strong>CV</strong>!</p>
-        <ul class="list-disc list-inside space-y-2">
-          <li><a href="http://nickstrayer.me/cv" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">HTML version of CV with clickable links</a></li>
-          <li><a href="https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">PDF version for printing</a></li>
-        </ul>
-      </CardContent>
-    </Card>
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="doc-card">
+      <!-- Stippled gradient - matches hero style -->
+      <div class="stippled-gradient" aria-hidden="true">
+        <StippledPattern density={0.55} dotSize={2.2} width="100%" height="100%" />
+      </div>
+      <h3 class="doc-title">CV</h3>
+      <p class="doc-description">
+        A comprehensive list of my career accomplishments, publications, and experience.
+      </p>
+      <div class="doc-links">
+        <a href="http://nickstrayer.me/cv" target="_blank" class="doc-link btn-stipple-dark">
+          HTML version →
+        </a>
+        <a href="https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf" target="_blank" class="doc-link btn-stipple-dark">
+          PDF for printing →
+        </a>
+      </div>
+    </div>
     
-    <Card class="bg-transparent backdrop-blur-sm h-full transition-all hover:shadow-md hover:border-primary/50">
-      <CardHeader>
-        <CardTitle class="text-2xl">Resume</CardTitle>
-      </CardHeader>
-      <CardContent class="space-y-4">
-        <p>Need a short and to-the-point single page annotation of my data-science career? Try my <strong>resume</strong>!</p>
-        <ul class="list-disc list-inside space-y-2">
-          <li><a href="http://nickstrayer.me/cv/resume.html" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">HTML</a></li>
-          <li><a href="https://github.com/nstrayer/cv/raw/master/strayer_resume.pdf" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">PDF</a></li>
-        </ul>
-      </CardContent>
-    </Card>
+    <div class="doc-card">
+      <!-- Stippled gradient - matches hero style -->
+      <div class="stippled-gradient" aria-hidden="true">
+        <StippledPattern density={0.55} dotSize={2.2} width="100%" height="100%" />
+      </div>
+      <h3 class="doc-title">Resume</h3>
+      <p class="doc-description">
+        A concise single-page summary of my data science career.
+      </p>
+      <div class="doc-links">
+        <a href="http://nickstrayer.me/cv/resume.html" target="_blank" class="doc-link btn-stipple-dark">
+          HTML version →
+        </a>
+        <a href="https://github.com/nstrayer/cv/raw/master/strayer_resume.pdf" target="_blank" class="doc-link btn-stipple-dark">
+          PDF for printing →
+        </a>
+      </div>
+    </div>
   </div>
   
-  <div class="mt-8 text-center">
+  <div class="mt-8 text-center text-sm text-muted-foreground">
     <p>
-      Interested in how I made these? Check out the repo: 
-      <a href="https://github.com/nstrayer/cv" class="text-blue-400 hover:underline transition-opacity hover:opacity-80" target="_blank">github.com/nstrayer/cv</a>
+      Built with my own R package: 
+      <a href="https://github.com/nstrayer/cv" class="text-foreground hover:underline" target="_blank">
+        github.com/nstrayer/cv
+      </a>
     </p>
   </div>
 </Section>
+
+<style>
+  .doc-card {
+    position: relative;
+    padding: 1.5rem;
+    border: 2px solid var(--foreground);
+    background: var(--card);
+    overflow: hidden;
+  }
+
+  .stippled-gradient {
+    position: absolute;
+    top: -20%;
+    right: -20%;
+    width: 70%;
+    height: 70%;
+    pointer-events: none;
+    /* Radial gradient mask - matches hero style */
+    mask-image: radial-gradient(
+      ellipse 100% 100% at 100% 0%,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.3) 30%,
+      rgba(0, 0, 0, 0.1) 60%,
+      rgba(0, 0, 0, 0) 85%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 100% 100% at 100% 0%,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.3) 30%,
+      rgba(0, 0, 0, 0.1) 60%,
+      rgba(0, 0, 0, 0) 85%
+    );
+  }
+
+  .doc-title {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--foreground);
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .doc-description {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    position: relative;
+  }
+
+  .doc-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: relative;
+  }
+
+  .doc-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--foreground);
+    border: 1.5px solid var(--foreground);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 0;
+  }
+</style>

@@ -40,7 +40,7 @@ export function Navigation() {
               <NavigationMenuItem key={item.href}>
                 <NavigationMenuLink
                   href={item.href}
-                  className={navigationMenuTriggerStyle()}
+                  className={cn(navigationMenuTriggerStyle(), "nav-link-stipple hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent")}
                 >
                   {item.label}
                 </NavigationMenuLink>
@@ -62,7 +62,7 @@ export function Navigation() {
                           <NavigationMenuLink
                             href={item.href}
                             className={cn(
-                              "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              "block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-transparent hover:text-accent-foreground focus:bg-transparent focus:text-accent-foreground nav-link-stipple"
                             )}
                           >
                             <div className="text-sm font-medium leading-none">

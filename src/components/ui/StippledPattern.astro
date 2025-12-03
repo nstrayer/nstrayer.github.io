@@ -1,0 +1,66 @@
+---
+/**
+ * StippledPattern Component
+ * 
+ * Creates a stippled/dotted pattern inspired by the reference image.
+ * Uses SVG to generate a uniform dot pattern reminiscent of print graphics.
+ * 
+ * @param density - Controls the density of dots (default: 0.5, range: 0.1-1.0)
+ * @param dotSize - Size of individual dots in pixels (default: 2)
+ * @param color - Color of the dots (default: uses foreground color)
+ * @param width - Width of the pattern area (default: 100%)
+ * @param height - Height of the pattern area (default: 100%)
+ * @param className - Additional CSS classes
+ */
+interface Props {
+  density?: number;
+  dotSize?: number;
+  color?: string;
+  width?: string;
+  height?: string;
+  className?: string;
+}
+
+const {
+  density = 0.5,
+  dotSize = 2,
+  color,
+  width = '100%',
+  height = '100%',
+  className = ''
+} = Astro.props;
+
+// Calculate spacing based on density (higher density = smaller spacing)
+// Density 0.1 = very sparse, 1.0 = very dense
+const spacing = Math.max(4, 18 * (1 - density) + 4);
+const patternId = `stippled-pattern-${Math.random().toString(36).substr(2, 9)}`;
+const dotColor = color || 'var(--foreground)';
+---
+
+<svg
+  width={width}
+  height={height}
+  class={`stippled-pattern ${className}`}
+  aria-hidden="true"
+>
+  <defs>
+    <pattern
+      id={patternId}
+      x="0"
+      y="0"
+      width={spacing}
+      height={spacing}
+      patternUnits="userSpaceOnUse"
+    >
+      <circle cx={spacing / 2} cy={spacing / 2} r={dotSize / 2} fill={dotColor} />
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill={`url(#${patternId})`} />
+</svg>
+
+<style>
+  .stippled-pattern {
+    display: block;
+    pointer-events: none;
+  }
+</style>

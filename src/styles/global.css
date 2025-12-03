@@ -41,78 +41,88 @@
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.147 0.004 49.25);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.147 0.004 49.25);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.147 0.004 49.25);
-  --primary: oklch(0.216 0.006 56.043);
-  --primary-foreground: oklch(0.985 0.001 106.423);
-  --secondary: oklch(0.97 0.001 106.424);
-  --secondary-foreground: oklch(0.216 0.006 56.043);
-  --muted: oklch(0.97 0.001 106.424);
-  --muted-foreground: oklch(0.553 0.013 58.071);
-  --accent: oklch(0.97 0.001 106.424);
-  --accent-foreground: oklch(0.216 0.006 56.043);
+  --radius: 0.25rem;
+  /* Paper-like warm off-white background inspired by printed materials */
+  --background: oklch(0.965 0.008 85);
+  /* Bold navy blue - more saturated and confident */
+  --foreground: oklch(0.32 0.12 245);
+  --card: oklch(0.975 0.006 85);
+  --card-foreground: oklch(0.32 0.12 245);
+  --popover: oklch(0.975 0.006 85);
+  --popover-foreground: oklch(0.32 0.12 245);
+  --primary: oklch(0.32 0.12 245);
+  --primary-foreground: oklch(0.965 0.008 85);
+  --secondary: oklch(0.94 0.01 85);
+  --secondary-foreground: oklch(0.32 0.12 245);
+  --muted: oklch(0.92 0.008 85);
+  --muted-foreground: oklch(0.45 0.08 245);
+  --accent: oklch(0.90 0.012 85);
+  --accent-foreground: oklch(0.32 0.12 245);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.923 0.003 48.717);
-  --input: oklch(0.923 0.003 48.717);
-  --ring: oklch(0.709 0.01 56.259);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0.001 106.423);
-  --sidebar-foreground: oklch(0.147 0.004 49.25);
-  --sidebar-primary: oklch(0.216 0.006 56.043);
-  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.97 0.001 106.424);
-  --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
-  --sidebar-border: oklch(0.923 0.003 48.717);
-  --sidebar-ring: oklch(0.709 0.01 56.259);
+  --border: oklch(0.32 0.12 245 / 0.15);
+  --input: oklch(0.32 0.12 245 / 0.15);
+  --ring: oklch(0.32 0.12 245);
+  --chart-1: oklch(0.45 0.12 245);
+  --chart-2: oklch(0.40 0.12 245);
+  --chart-3: oklch(0.35 0.12 245);
+  --chart-4: oklch(0.50 0.12 245);
+  --chart-5: oklch(0.55 0.12 245);
+  --sidebar: oklch(0.965 0.008 85);
+  --sidebar-foreground: oklch(0.32 0.12 245);
+  --sidebar-primary: oklch(0.32 0.12 245);
+  --sidebar-primary-foreground: oklch(0.965 0.008 85);
+  --sidebar-accent: oklch(0.94 0.01 85);
+  --sidebar-accent-foreground: oklch(0.32 0.12 245);
+  --sidebar-border: oklch(0.32 0.12 245 / 0.15);
+  --sidebar-ring: oklch(0.32 0.12 245);
+  
+  /* Stippled pattern for buttons - cream dots on navy */
+  --stipple-light: radial-gradient(
+    circle at center,
+    oklch(0.965 0.008 85) 1px,
+    transparent 1px
+  );
+  /* Stippled pattern for outline buttons - navy dots on cream */
+  --stipple-dark: radial-gradient(
+    circle at center,
+    oklch(0.32 0.12 245) 1px,
+    transparent 1px
+  );
 }
 
 .dark {
-  --background: oklch(0.147 0.004 49.25);
-  --foreground: oklch(0.985 0.001 106.423);
-  --card: oklch(0.216 0.006 56.043);
-  --card-foreground: oklch(0.985 0.001 106.423);
-  --popover: oklch(0.216 0.006 56.043);
-  --popover-foreground: oklch(0.985 0.001 106.423);
-  --primary: oklch(0.923 0.003 48.717);
-  --primary-foreground: oklch(0.216 0.006 56.043);
-  --secondary: oklch(0.268 0.007 34.298);
-  --secondary-foreground: oklch(0.985 0.001 106.423);
-  --muted: oklch(0.268 0.007 34.298);
-  --muted-foreground: oklch(0.709 0.01 56.259);
-  --accent: oklch(0.268 0.007 34.298);
-  --accent-foreground: oklch(0.985 0.001 106.423);
+  /* Dark mode - deep navy with cream text */
+  --background: oklch(0.18 0.06 245);
+  --foreground: oklch(0.92 0.02 85);
+  --card: oklch(0.22 0.07 245);
+  --card-foreground: oklch(0.92 0.02 85);
+  --popover: oklch(0.22 0.07 245);
+  --popover-foreground: oklch(0.92 0.02 85);
+  --primary: oklch(0.75 0.10 245);
+  --primary-foreground: oklch(0.18 0.06 245);
+  --secondary: oklch(0.28 0.06 245);
+  --secondary-foreground: oklch(0.92 0.02 85);
+  --muted: oklch(0.28 0.06 245);
+  --muted-foreground: oklch(0.72 0.08 85);
+  --accent: oklch(0.32 0.07 245);
+  --accent-foreground: oklch(0.92 0.02 85);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.553 0.013 58.071);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.216 0.006 56.043);
-  --sidebar-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-accent: oklch(0.268 0.007 34.298);
-  --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.553 0.013 58.071);
-}
-
-:root {
-  /* Add a subtle grain texture using a generated SVG */
-  --grain-opacity: 0.15; /* Adjusted for desired intensity */
-  --grain-svg: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  --border: oklch(0.92 0.02 85 / 0.15);
+  --input: oklch(0.92 0.02 85 / 0.15);
+  --ring: oklch(0.65 0.08 245);
+  --chart-1: oklch(0.60 0.10 245);
+  --chart-2: oklch(0.65 0.10 245);
+  --chart-3: oklch(0.70 0.10 245);
+  --chart-4: oklch(0.55 0.10 245);
+  --chart-5: oklch(0.75 0.10 245);
+  --sidebar: oklch(0.22 0.07 245);
+  --sidebar-foreground: oklch(0.92 0.02 85);
+  --sidebar-primary: oklch(0.75 0.10 245);
+  --sidebar-primary-foreground: oklch(0.18 0.06 245);
+  --sidebar-accent: oklch(0.28 0.06 245);
+  --sidebar-accent-foreground: oklch(0.92 0.02 85);
+  --sidebar-border: oklch(0.92 0.02 85 / 0.15);
+  --sidebar-ring: oklch(0.65 0.08 245);
 }
 
 @layer base {
@@ -121,26 +131,78 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* Apply grain texture */
-    background-image: var(--grain-svg);
-    background-repeat: repeat;
-    background-position: 0 0;
-    background-size: auto;
-  }
-  /* Grain overlay */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: var(--grain-svg);
-    opacity: var(--grain-opacity);
-    pointer-events: none;
-    z-index: -1;
   }
   .project-description p a {
-    @apply text-blue-500 underline;
+    @apply text-foreground underline;
+  }
+}
+
+/**
+ * Stippled button hover effects
+ * Creates a dot pattern that reveals on hover, matching the print-inspired aesthetic
+ */
+@layer components {
+  /* Default (filled) button - subtle light stipple on hover */
+  .btn-stipple-light {
+    position: relative;
+    z-index: 0;
+  }
+  
+  .btn-stipple-light::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--stipple-light);
+    background-size: 6px 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: -1;
+  }
+  
+  .btn-stipple-light:hover::before {
+    opacity: 0.18;
+  }
+  
+  /* Outline button - shows dark stipple on hover */
+  .btn-stipple-dark {
+    position: relative;
+    z-index: 0;
+  }
+  
+  .btn-stipple-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--stipple-dark);
+    background-size: 6px 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: -1;
+  }
+  
+  .btn-stipple-dark:hover::before {
+    opacity: 0.15;
+  }
+  
+  /* Navigation link with animated stippled underline */
+  .nav-link-stipple {
+    position: relative;
+  }
+  
+  .nav-link-stipple::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background-image: var(--stipple-dark);
+    background-size: 4px 4px;
+    transition: width 0.15s ease;
+  }
+  
+  .nav-link-stipple:hover::after,
+  .nav-link-stipple:focus::after {
+    width: 100%;
   }
 }

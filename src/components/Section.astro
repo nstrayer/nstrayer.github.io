@@ -1,5 +1,9 @@
 ---
-// src/components/Section.astro
+/**
+ * Section Component
+ * 
+ * Clean, minimal section wrapper with proper spacing.
+ */
 interface Props {
   id?: string;
   class?: string;
@@ -13,8 +17,8 @@ const {
 } = Astro.props;
 ---
 
-<section id={id} class={`py-16 relative z-10 ${className}`}>
-  <div class={`container mx-auto max-w-4xl px-6 md:px-8 backdrop-blur-[5px] rounded-lg ${containerClass}`}>
+<section id={id} class={`py-24 relative z-10 ${className}`}>
+  <div class={`container mx-auto max-w-4xl px-6 md:px-8 ${containerClass}`}>
     <slot />
   </div>
 </section>
