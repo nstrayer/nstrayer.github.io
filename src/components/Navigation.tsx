@@ -40,7 +40,7 @@ export function Navigation() {
               <NavigationMenuItem key={item.href}>
                 <NavigationMenuLink
                   href={item.href}
-                  className={cn(navigationMenuTriggerStyle(), "nav-link-stipple hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent data-[state=open]:hover:bg-transparent")}
+                  className={cn(navigationMenuTriggerStyle(), "nav-link-stipple")}
                 >
                   {item.label}
                 </NavigationMenuLink>
