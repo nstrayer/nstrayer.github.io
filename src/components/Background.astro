@@ -2,12 +2,43 @@
 /**
  * Background Component
  * 
- * Simple, clean paper-like background that matches the print-inspired aesthetic.
- * No animation - just a solid foundation for the content.
+ * Paper-like background with subtle texture, grain, and organic variation
+ * that matches the print-inspired aesthetic.
  */
 ---
 
-<div id="background" aria-hidden="true"></div>
+<div id="background" aria-hidden="true">
+  <!-- SVG filter for paper grain texture -->
+  <svg width="0" height="0" style="position: absolute;">
+    <defs>
+      <filter id="paper-grain" x="0%" y="0%" width="100%" height="100%">
+        <!-- Generate fractal noise - lower frequency = larger grain -->
+        <feTurbulence 
+          type="fractalNoise" 
+          baseFrequency="0.4" 
+          numOctaves="4" 
+          result="noise"
+        />
+        <!-- Convert to grayscale and extract luminance -->
+        <feColorMatrix 
+          in="noise" 
+          type="matrix"
+          values="0.33 0.33 0.33 0 0
+                  0.33 0.33 0.33 0 0
+                  0.33 0.33 0.33 0 0
+                  0    0    0    1 0"
+          result="graynoise"
+        />
+        <!-- Subtle contrast adjustment for natural grain -->
+        <feComponentTransfer in="graynoise" result="contrast">
+          <feFuncA type="linear" slope="1.2" intercept="-0.1"/>
+        </feComponentTransfer>
+        <!-- Blend with source for natural paper texture -->
+        <feBlend in="SourceGraphic" in2="contrast" mode="multiply" />
+      </filter>
+    </defs>
+  </svg>
+</div>
 
 <style>
   #background {
@@ -17,7 +48,27 @@
     right: 0;
     bottom: 0;
     z-index: -2;
-    /* Warm paper-like background from our color palette */
+    /* Base warm paper-like background */
     background: var(--background);
+    /* Subtle radial gradients for aged paper warmth variation */
+    background-image: 
+      radial-gradient(ellipse at 30% 20%, oklch(0.97 0.01 85 / 0.4), transparent 50%),
+      radial-gradient(ellipse at 70% 80%, oklch(0.96 0.01 85 / 0.3), transparent 50%);
+  }
+
+  /* Paper grain texture layer - sits on top of the base background */
+  #background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Warm tone matching the background - grain filter darkens parts of it */
+    background: oklch(0.96 0.008 85);
+    filter: url(#paper-grain);
+    /* Slightly reduced opacity for more subtle texture */
+    opacity: 0.09;
+    pointer-events: none;
   }
 </style>

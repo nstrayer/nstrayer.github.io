@@ -1,0 +1,58 @@
+---
+/**
+ * SectionDivider Component
+ * 
+ * Stippled gradient wash divider between sections.
+ * Matches the geometric aesthetic with subtle stippled pattern.
+ */
+import StippledPattern from './ui/StippledPattern.astro';
+
+interface Props {
+  /** Density of the stippled pattern (default: 0.4) */
+  density?: number;
+  /** Opacity of the divider (default: 0.15) */
+  opacity?: number;
+}
+
+const { density = 0.4, opacity = 0.15 } = Astro.props;
+---
+
+<div class="section-divider" aria-hidden="true">
+  <div class="stippled-gradient" style={`opacity: ${opacity};`}>
+    <StippledPattern density={density} dotSize={2} width="100%" height="100%" />
+  </div>
+</div>
+
+<style>
+  .section-divider {
+    width: 100%;
+    height: 80px;
+    overflow: hidden;
+    position: relative;
+    pointer-events: none;
+  }
+
+  .stippled-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Radial gradient mask: concentrated at center, fading to edges */
+    mask-image: radial-gradient(
+      ellipse 100% 100% at 50% 50%,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.4) 30%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0) 70%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 100% 100% at 50% 50%,
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(0, 0, 0, 0.4) 30%,
+      rgba(0, 0, 0, 0.2) 50%,
+      rgba(0, 0, 0, 0) 70%
+    );
+  }
+</style>
+

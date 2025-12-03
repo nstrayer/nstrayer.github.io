@@ -3,6 +3,7 @@ import { SITE_CONFIG } from '../data/constants';
 import { buttonVariants } from "@/components/ui/button"
 import Section from './Section.astro';
 import StippledPattern from './ui/StippledPattern.astro';
+import RoughNotation from './ui/RoughNotation.astro';
 ---
 
 <Section id="hero" class="min-h-screen flex items-center text-left pt-20 relative overflow-hidden">
@@ -11,17 +12,17 @@ import StippledPattern from './ui/StippledPattern.astro';
     <StippledPattern density={0.55} dotSize={2.2} width="100%" height="100%" />
   </div>
   
-  <div class="max-w-2xl relative z-10">
-    <h1 class="text-5xl md:text-6xl font-bold mb-4 text-foreground tracking-tight leading-tight">
-      Hi, I'm Nick
+  <div class="max-w-2xl relative z-10 hero-content">
+    <h1 class="hero-title text-5xl md:text-6xl font-bold mb-4 text-foreground tracking-tight leading-tight">
+      Hi, I'm <span class="hero-name">Nick</span>
     </h1>
-    <p class="text-2xl md:text-3xl font-semibold mb-6 text-foreground/90">
+    <p class="hero-subtitle text-2xl md:text-3xl font-semibold mb-6 text-foreground/90">
       {SITE_CONFIG.title}
     </p>
-    <p class="mb-10 text-lg leading-relaxed text-muted-foreground max-w-xl">
-      I am a <span class="text-foreground font-medium">principal software engineer</span> at Posit building tools to help data scientists work better.
+    <p class="hero-description mb-10 text-lg leading-relaxed text-muted-foreground max-w-xl">
+      I am a <RoughNotation type="underline" color="var(--foreground)" strokeWidth={2} padding={4} animate={true}><span class="text-foreground font-medium hero-role">principal software engineer</span></RoughNotation> at Posit building tools to help data scientists work better.
     </p>
-    <div class="flex gap-4 flex-wrap">
+    <div class="hero-buttons flex gap-4 flex-wrap">
       <a href="#contact" class={buttonVariants({variant: "default", size: "lg"})}>
         Get in Touch
       </a>
@@ -55,5 +56,77 @@ import StippledPattern from './ui/StippledPattern.astro';
       rgba(0, 0, 0, 0.15) 45%,
       rgba(0, 0, 0, 0) 70%
     );
+  }
+
+  /* Hero entrance animations */
+  @keyframes fadeUpBlur {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes popIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .hero-title {
+    animation: fadeUpBlur 0.8s ease-out 0s both;
+  }
+
+  .hero-subtitle {
+    animation: slideUp 0.6s ease-out 0.2s both;
+  }
+
+  .hero-description {
+    animation: fadeIn 0.6s ease-out 0.4s both;
+  }
+
+  .hero-buttons {
+    animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s both;
+  }
+
+  /* Respect reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-title,
+    .hero-subtitle,
+    .hero-description,
+    .hero-buttons {
+      animation: none;
+      opacity: 1;
+    }
   }
 </style>

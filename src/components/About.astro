@@ -6,16 +6,17 @@
  */
 import Section from "./Section.astro";
 import SectionTitle from "./SectionTitle.astro";
+import RoughNotation from "./ui/RoughNotation.astro";
 ---
 
 <Section id="about">
   <SectionTitle>About me</SectionTitle>
   <div class="prose prose-lg max-w-none text-muted-foreground">
     <p class="leading-relaxed">
-      At <strong class="text-foreground">Posit</strong>, I develop tools that enhance data scientists' workflows. My career spans multiple disciplines—from being a journalist at the <strong class="text-foreground">New York Times</strong> to a data scientist at <strong class="text-foreground">Johns Hopkins Data Science Lab</strong> and even a "data artist in residence" at a geospatial visualization startup.
+      At <RoughNotation type="underline" color="var(--foreground)" strokeWidth={2} padding={3} animate={true} scrollTrigger={true}><strong class="text-foreground">Posit</strong></RoughNotation>, I develop tools that enhance data scientists' workflows. My career spans multiple disciplines—from being a journalist at the <RoughNotation type="underline" color="var(--foreground)" strokeWidth={2} padding={3} animate={true} scrollTrigger={true}><strong class="text-foreground">New York Times</strong></RoughNotation> to a data scientist at <RoughNotation type="underline" color="var(--foreground)" strokeWidth={2} padding={3} animate={true} scrollTrigger={true}><strong class="text-foreground">Johns Hopkins Data Science Lab</strong></RoughNotation> and even a "data artist in residence" at a geospatial visualization startup.
     </p>
     <p class="mt-6 leading-relaxed">
-      My <strong class="text-foreground">Ph.D. from Vanderbilt University</strong> focused on statistical methodologies for network data, deep learning, and data visualization. At the <strong class="text-foreground">University of Vermont</strong>, I studied statistics, mathematics, and computer science.
+      My <RoughNotation type="underline" color="var(--foreground)" strokeWidth={2} padding={3} animate={true} scrollTrigger={true}><strong class="text-foreground">Ph.D. from Vanderbilt University</strong></RoughNotation> focused on statistical methodologies for network data, deep learning, and data visualization. At the <strong class="text-foreground">University of Vermont</strong>, I studied statistics, mathematics, and computer science.
     </p>
     <p class="mt-6 leading-relaxed">
       When I am not in "work mode," I enjoy photographing birds and my daughter, running and hiking, reading science fiction, and contributing to open-source projects.

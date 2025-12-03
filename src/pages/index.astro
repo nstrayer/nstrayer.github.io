@@ -6,6 +6,7 @@ import Projects from '../components/Projects.astro';
 import Skills from '../components/Skills.astro';
 import CVResume from '../components/CVResume.astro';
 import Contact from '../components/Contact.astro';
+import SectionDivider from '../components/SectionDivider.astro';
 import { SITE_CONFIG } from '../data/constants';
 import "../styles/global.css";
 
@@ -15,10 +16,15 @@ import "../styles/global.css";
 <Layout title={`${SITE_CONFIG.name} - ${SITE_CONFIG.title}`}>
   <main>
     <Hero />
+    <SectionDivider />
     <About />
+    <SectionDivider />
     <Projects />
+    <SectionDivider />
     <Skills />
+    <SectionDivider />
     <CVResume />
+    <SectionDivider />
     <Contact />
   </main>
 </Layout>

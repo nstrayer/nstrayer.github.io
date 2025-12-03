@@ -8,6 +8,8 @@ interface Props {
   animationDuration?: number;
   iterations?: number;
   animate?: boolean;
+  /** Whether to trigger animation on scroll into view (default: false) */
+  scrollTrigger?: boolean;
 }
 
 const { 
@@ -18,11 +20,23 @@ const {
   multiline = true, 
   animationDuration = 800, 
   iterations = 2,
-  animate = true 
+  animate = true,
+  scrollTrigger = false
 } = Astro.props;
 ---
 
-<span class="rough-notation" data-type={type}>
+<span 
+  class="rough-notation" 
+  data-type={type}
+  data-color={color}
+  data-stroke-width={strokeWidth}
+  data-padding={padding}
+  data-multiline={multiline}
+  data-animation-duration={animationDuration}
+  data-iterations={iterations}
+  data-animate={animate}
+  data-scroll-trigger={scrollTrigger}
+>
   <slot />
 </span>
 
@@ -36,11 +50,16 @@ const {
     // Select all elements with rough-notation class
     const elements = document.querySelectorAll('.rough-notation');
     
-    const annotations = Array.from(elements).map(element => {
+    const annotations: ReturnType<typeof annotate>[] = [];
+    const scrollTriggeredElements: HTMLElement[] = [];
+    
+    // Process all elements
+    Array.from(elements).forEach(element => {
       // Verify the element is an HTMLElement
       if (!(element instanceof HTMLElement)) {
-        return null;
+        return;
       }
+      
       // Get properties from data attributes
       const type = element.getAttribute('data-type');
       const color = element.getAttribute('data-color');
@@ -50,24 +69,75 @@ const {
       const animationDuration = element.getAttribute('data-animation-duration');
       const iterations = element.getAttribute('data-iterations');
       const animate = prefersReducedMotion ? false : element.getAttribute('data-animate') !== 'false';
+      const scrollTrigger = element.getAttribute('data-scroll-trigger') === 'true';
+      
+      // Resolve CSS variable colors to computed values
+      let resolvedColor = color || undefined;
+      if (resolvedColor && resolvedColor.startsWith('var(')) {
+        // Create a temporary element to compute the CSS variable
+        const tempEl = document.createElement('div');
+        tempEl.style.color = resolvedColor;
+        document.body.appendChild(tempEl);
+        resolvedColor = getComputedStyle(tempEl).color;
+        document.body.removeChild(tempEl);
+      }
       
       // Create annotation with provided options
-      return annotate(element, {
-        type,
-        color,
+      const annotation = annotate(element, {
+        type: type as any,
+        color: resolvedColor,
         strokeWidth: strokeWidth ? parseInt(strokeWidth, 10) : undefined,
         padding: padding ? parseInt(padding, 10) : undefined,
         multiline,
         animationDuration: animationDuration ? parseInt(animationDuration, 10) : 800,
         iterations: iterations ? parseInt(iterations, 10) : 2,
-        animate
+        animate: scrollTrigger ? false : animate // Don't auto-animate if scroll-triggered
       });
+      
+      if (scrollTrigger) {
+        scrollTriggeredElements.push(element);
+        annotations.push(annotation);
+      } else {
+        annotations.push(annotation);
+      }
     });
     
-    // Group annotations and show them
-    if (annotations.length > 0) {
-      const ag = annotationGroup(annotations);
+    // Show immediate annotations (non-scroll-triggered)
+    const immediateAnnotations = annotations.filter((_, index) => {
+      const element = Array.from(elements)[index];
+      return element instanceof HTMLElement && element.getAttribute('data-scroll-trigger') !== 'true';
+    });
+    
+    if (immediateAnnotations.length > 0) {
+      const ag = annotationGroup(immediateAnnotations);
       ag.show();
+    }
+    
+    // Set up scroll-triggered annotations
+    if (scrollTriggeredElements.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const element = entry.target as HTMLElement;
+            const index = Array.from(elements).indexOf(element);
+            const annotation = annotations[index];
+            
+            if (annotation && !annotation.isShowing()) {
+              annotation.show();
+            }
+            
+            // Unobserve after showing
+            observer.unobserve(element);
+          }
+        });
+      }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      scrollTriggeredElements.forEach(element => {
+        observer.observe(element);
+      });
     }
   });
 </script>

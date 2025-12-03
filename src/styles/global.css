@@ -130,7 +130,9 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    /* Background is transparent to allow the paper texture from Background.astro to show through */
+    @apply text-foreground;
+    background: transparent;
   }
   .project-description p a {
     @apply text-foreground underline;
@@ -184,7 +186,28 @@
     opacity: 0.15;
   }
   
-  /* Navigation link with animated stippled underline */
+  /* Navigation bar paper texture */
+  .fixed.top-0.w-full.bg-background {
+    position: relative;
+  }
+
+  .fixed.top-0.w-full.bg-background::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Warm tone matching the background - grain filter darkens parts of it */
+    background: oklch(0.96 0.008 85);
+    filter: url(#paper-grain);
+    /* Same opacity as background texture */
+    opacity: 0.09;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Navigation link with animated stippled underline - grows from center */
   .nav-link-stipple {
     position: relative;
   }
@@ -193,16 +216,101 @@
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0;
     height: 4px;
     background-image: var(--stipple-dark);
     background-size: 4px 4px;
-    transition: width 0.15s ease;
+    transition: width 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   
   .nav-link-stipple:hover::after,
   .nav-link-stipple:focus::after {
     width: 100%;
+    left: 0;
+    transform: translateX(0);
+  }
+
+  /* Button micro-interactions */
+  button,
+  a[class*="button"],
+  .btn-stipple-light,
+  .btn-stipple-dark {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  button:hover,
+  a[class*="button"]:hover,
+  .btn-stipple-light:hover,
+  .btn-stipple-dark:hover {
+    transform: scale(1.02);
+  }
+
+  button:active,
+  a[class*="button"]:active,
+  .btn-stipple-light:active,
+  .btn-stipple-dark:active {
+    transform: scale(0.98);
+  }
+
+  /* Contact icon micro-interactions */
+  .contact-link {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .contact-link:hover {
+    transform: translateY(-2px);
+  }
+
+  .contact-link .icon {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .contact-link:hover .icon {
+    transform: rotate(-5deg) scale(1.1);
+  }
+
+  .contact-link:active .icon {
+    transform: rotate(5deg) scale(1.05);
+  }
+
+  /* Skill tag micro-interactions */
+  .skill-tag {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+
+  .skill-tag:hover {
+    transform: translateY(-3px) rotate(1deg);
+    box-shadow: 0 4px 8px oklch(0.32 0.12 245 / 0.15);
+  }
+
+  .skill-tag:active {
+    transform: translateY(-1px) rotate(0deg);
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    button,
+    a[class*="button"],
+    .btn-stipple-light,
+    .btn-stipple-dark,
+    .contact-link,
+    .contact-link .icon,
+    .skill-tag {
+      transition: none;
+    }
+
+    button:hover,
+    a[class*="button"]:hover,
+    .btn-stipple-light:hover,
+    .btn-stipple-dark:hover,
+    .contact-link:hover,
+    .contact-link:hover .icon,
+    .skill-tag:hover {
+      transform: none;
+    }
   }
 }
