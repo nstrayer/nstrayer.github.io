@@ -1,6 +1,20 @@
 # Active Context: Nick Strayer's Personal Website
 
-## Current Work Focus
+## September 2026 Maintenance
+
+- Cloned `nstrayer/nstrayer.github.io` into `/Users/nicholasstrayer/dev/nstrayer.github.io`.
+- Updated to Astro 7.3.2, React 19.3, Tailwind CSS 4.3, and current stable dependencies.
+- Added `npm run check`; TypeScript 6 is the newest version supported by Astro's checker.
+- GitHub Pages workflow now uses Node 24 and checks source before building.
+- Current project data is `src/data/projects.json`; the live background is a paper
+  texture, not the retained WebGL experiments described in older notes below.
+- See README for current setup and server start/stop commands.
+- Changes are local on `chore/refresh-dependencies`; they have not been published.
+- Added a Markdown-backed Posts section using Astro content collections. Posts are
+  authored in `src/content/posts/`, listed on `/posts/`, previewed on the homepage,
+  and can opt into a styled AI-assistance disclosure through frontmatter.
+
+## Historical Work Focus
 
 The project is currently in a redevelopment phase, with a focus on modernizing the personal website using Astro. The site structure is established with core sections implemented (Hero, About, Projects, Skills, Contact), and the WebGL particle background continues to evolve with visual enhancements.
 

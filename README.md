@@ -1,53 +1,83 @@
 # Nick Strayer's Personal Website
 
-This is the source code for my personal website, built with Astro and featuring an interactive WebGL particle background animation.
+Source for [nickstrayer.me](https://nickstrayer.me), hosted on GitHub Pages from
+[nstrayer/nstrayer.github.io](https://github.com/nstrayer/nstrayer.github.io).
 
-Visit: [nickstrayer.me](https://nickstrayer.me)
+The site uses Astro 7, React 19, Tailwind CSS 4, and TypeScript. Its current design
+features a paper texture, stippled accents, and animated handwritten annotations.
 
-## 🚀 Features
+## Local development
 
-- Interactive WebGL particle background with mouse interaction
-- Responsive design for all device sizes
-- Accessibility features including reduced motion preferences
-- Project showcase with filterable categories
-- Skills and experience sections
-- Contact information
+Node.js 22.12 or newer and npm 9.6.5 or newer are required. Node 24 is the recommended
+version and is used in GitHub Actions; `.nvmrc` selects it if you use nvm.
 
-## 🔧 Technologies
-
-- **Astro**: Static site generator
-- **TypeScript**: Type-safe JavaScript
-- **WebGL**: Interactive particle background
-- **TailwindCSS**: Styling
-- **CSV**: Project data storage
-
-## 📁 Project Structure
-
-```text
-/
-├── public/           # Static assets (images, CNAME)
-├── src/
-│   ├── components/   # Astro components (Hero, About, Projects, etc.)
-│   │   └── background/  # WebGL particle system
-│   ├── data/         # Project data and constants
-│   ├── layouts/      # Page layouts
-│   └── pages/        # Page routes
-└── package.json
+```sh
+cd /Users/nicholasstrayer/dev/nstrayer.github.io
+# Optional, if nvm is installed: nvm install && nvm use
+npm ci
+npm run dev
 ```
 
-## 🧞 Development Commands
+Open <http://localhost:4321>. Changes reload automatically. Astro 7 runs the server
+in the background; use `npm run dev -- stop` to stop it and
+`npm run dev -- status` to check whether it is running.
+Use `npm run preview -- stop` to stop a production preview.
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `npm install`          | Installs dependencies                            |
-| `npm run dev`          | Starts local dev server at `localhost:4321`      |
-| `npm run build`        | Build production site to `./dist/`               |
-| `npm run preview`      | Preview production build locally                 |
+| Command | Action |
+| --- | --- |
+| `npm ci` | Install exactly the dependencies in the lockfile |
+| `npm run dev` | Start the local development server |
+| `npm run check` | Check Astro and TypeScript source |
+| `npm run build` | Generate the static site in `dist/` |
+| `npm run preview` | Serve the production build locally |
+| `npm outdated` | Check for newer dependency versions |
+| `npm audit` | Check dependencies for known vulnerabilities |
 
-## 🚢 Deployment
+## Editing the site
 
-The site is automatically deployed to GitHub Pages via GitHub Actions when changes are pushed to the master branch.
+- `src/data/constants.ts`: profile and site-wide settings
+- `src/data/projects.json`: project descriptions, images, and links
+- `src/content/posts/`: Markdown posts; copy an existing file to start a new one
+- `src/content.config.ts`: post frontmatter schema, including the optional AI disclosure
+- `src/components/`: page sections and reusable components
+- `src/styles/global.css`: Tailwind theme and shared styles
+- `public/`: static images, favicon, and custom-domain `CNAME`
+- `src/components/background/`: retained WebGL experiments; the current background
+  is the paper texture in `src/components/Background.astro`
 
-## 📝 License
+### Adding a post
 
-This project is available as open source under the terms of the MIT License.
+Create a Markdown file in `src/content/posts/`. The filename becomes its URL under
+`/posts/`. Each post needs a title, description, and publication date:
+
+```md
+---
+title: A useful note
+description: One sentence shown on the posts index.
+publishedAt: 2026-09-16
+tags:
+  - TypeScript
+ai:
+  statement: I used Codex to help edit this post.
+  tools:
+    - Codex
+---
+
+Post content starts here.
+```
+
+The `tags` and `ai` fields are optional. Set `draft: true` to keep a post out of
+the generated site.
+
+## Deployment
+
+Pushing to `master` runs `.github/workflows/deploy.yml`, checks the source, builds
+with Node 24, and publishes to GitHub Pages. Local development and builds do not
+publish changes. The custom domain is configured in GitHub Pages and
+`public/CNAME`.
+
+## Dependency compatibility
+
+Dependencies were refreshed in September 2026. TypeScript stays on the latest 6.x
+release because the current `@astrojs/check` supports TypeScript 5 and 6, not 7.
+Upgrade it when the checker adds support.

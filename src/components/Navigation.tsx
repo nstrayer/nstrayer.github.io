@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,11 +10,12 @@ import {
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "#about", label: "About" },
-  { href: "#projects", label: "Projects" },
-  { href: "#skills", label: "Skills" },
-  { href: "#cv-resume", label: "CV/Resume" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#about", label: "About" },
+  { href: "/posts/", label: "Posts" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#skills", label: "Skills" },
+  { href: "/#cv-resume", label: "CV/Resume" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function Navigation() {

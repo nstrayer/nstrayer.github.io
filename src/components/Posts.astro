@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import Section from './Section.astro';
+import SectionTitle from './SectionTitle.astro';
+import PostCard from './PostCard.astro';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
+  .slice(0, 3);
+---
+
+<Section id="posts">
+  <SectionTitle>Posts</SectionTitle>
+  <p class="intro">Short notes on software, data, visualization, and things learned along the way.</p>
+  <div class="posts-list">
+    {posts.map((post) => (
+      <PostCard
+        slug={post.id}
+        title={post.data.title}
+        description={post.data.description}
+        publishedAt={post.data.publishedAt}
+        tags={post.data.tags}
+      />
+    ))}
+  </div>
+  <a class="all-posts btn-stipple-dark" href="/posts/">View all posts <span aria-hidden="true">→</span></a>
+</Section>
+
+<style>
+  .intro {
+    max-width: 38rem;
+    margin: -2rem auto 3rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  .posts-list {
+    max-width: 46rem;
+    margin: 0 auto;
+  }
+
+  .all-posts {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 2rem auto 0;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--foreground);
+    color: var(--foreground);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+</style>

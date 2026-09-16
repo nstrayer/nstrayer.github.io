@@ -23,6 +23,7 @@ The website follows a component-based architecture using Astro's framework, with
    - CSV data store for projects
    - TypeScript data processing and transformation
    - Constants file for site-wide configuration
+   - Astro content collection for Markdown posts with validated frontmatter
 
 ## Design Patterns
 

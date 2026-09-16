@@ -34,6 +34,8 @@ const csvPlugin = {
 export default defineConfig({
   site: 'https://nickstrayer.me',
   output: 'static',
+  // Preserve spacing around inline components when upgrading from Astro 5.
+  compressHTML: true,
   vite: {
     plugins: [shaderPlugin, csvPlugin, tailwindcss()]
   },

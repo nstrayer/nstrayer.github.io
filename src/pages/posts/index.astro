@@ -1,0 +1,100 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import StippledPattern from '../../components/ui/StippledPattern.astro';
+import { SITE_CONFIG } from '../../data/constants';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf(),
+);
+---
+
+<Layout
+  title={`Posts — ${SITE_CONFIG.name}`}
+  description="Short notes on software, data, visualization, and things learned along the way."
+>
+  <main>
+    <header class="page-header">
+      <p class="eyebrow">Notes & observations</p>
+      <h1>Posts</h1>
+      <div class="title-accent" aria-hidden="true">
+        <StippledPattern density={0.75} dotSize={2} width="100%" height="100%" />
+      </div>
+      <p class="lede">Short notes on software, data, visualization, and things learned along the way.</p>
+    </header>
+
+    <section class="posts-list" aria-label="All posts">
+      {posts.length > 0 ? (
+        posts.map((post) => (
+          <PostCard
+            slug={post.id}
+            title={post.data.title}
+            description={post.data.description}
+            publishedAt={post.data.publishedAt}
+            tags={post.data.tags}
+          />
+        ))
+      ) : (
+        <p class="empty-state">No posts yet. Check back soon.</p>
+      )}
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 8rem);
+    padding: 10rem 1.5rem 6rem;
+  }
+
+  .page-header,
+  .posts-list {
+    width: 100%;
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+
+  .page-header {
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(3rem, 10vw, 5rem);
+    line-height: 1;
+  }
+
+  .title-accent {
+    width: 6rem;
+    height: 0.5rem;
+    margin: 1rem auto 0;
+    opacity: 0.6;
+  }
+
+  .lede {
+    max-width: 38rem;
+    margin: 1.75rem auto 0;
+    color: var(--muted-foreground);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .empty-state {
+    border-top: 2px solid var(--foreground);
+    padding-top: 1.5rem;
+    color: var(--muted-foreground);
+  }
+</style>

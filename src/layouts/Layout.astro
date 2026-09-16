@@ -2,19 +2,21 @@
 import { SITE_CONFIG } from '../data/constants';
 import Background from '../components/Background.astro';
 import Navigation from '../components/Navigation';
+import '../styles/global.css';
 
 interface Props {
   title: string;
+  description?: string;
 }
 
-const { title } = Astro.props;
+const { title, description = 'Nick Strayer’s personal website and portfolio.' } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Nick Strayers Personal Website and Portfolio" />
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />

@@ -1,0 +1,92 @@
+---
+import { formatPostDate } from '../lib/posts';
+
+interface Props {
+  slug: string;
+  title: string;
+  description: string;
+  publishedAt: Date;
+  tags?: string[];
+}
+
+const { slug, title, description, publishedAt, tags = [] } = Astro.props;
+---
+
+<article class="post-card">
+  <a href={`/posts/${slug}/`} aria-label={`Read ${title}`}>
+    <div class="post-meta">
+      <time datetime={publishedAt.toISOString()}>{formatPostDate(publishedAt)}</time>
+      {tags.length > 0 && <span aria-hidden="true">•</span>}
+      {tags.length > 0 && <span>{tags.join(' · ')}</span>}
+    </div>
+    <h3>{title}</h3>
+    <p>{description}</p>
+    <span class="read-more" aria-hidden="true">Read post <span>→</span></span>
+  </a>
+</article>
+
+<style>
+  .post-card {
+    border-top: 2px solid var(--foreground);
+  }
+
+  a {
+    display: block;
+    padding: 1.5rem 0 1.75rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    margin: 0.65rem 0 0.5rem;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    line-height: 1.25;
+  }
+
+  p {
+    max-width: 42rem;
+    margin: 0;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+  }
+
+  .read-more {
+    display: inline-flex;
+    gap: 0.4rem;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+
+  .read-more span {
+    transition: transform 160ms ease;
+  }
+
+  a:hover .read-more span,
+  a:focus-visible .read-more span {
+    transform: translateX(0.3rem);
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 0.4rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .read-more span {
+      transition: none;
+    }
+  }
+</style>

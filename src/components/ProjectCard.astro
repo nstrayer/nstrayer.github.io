@@ -14,7 +14,7 @@ import StippledPattern from './ui/StippledPattern.astro';
 type Props = Project;
 
 const { title, link, photo, github, description } = Astro.props;
-const parsedDescription = description.map(desc => marked.parse(desc));
+const parsedDescription = description.map(desc => marked.parseInline(desc, { async: false }));
 ---
 
 <article class="project-card">
@@ -48,7 +48,6 @@ const parsedDescription = description.map(desc => marked.parse(desc));
         )}
       </div>
     ) : (
-      <!-- Stippled placeholder for cards without photos -->
       <div class="card-placeholder">
         <StippledPattern density={0.5} dotSize={2.5} width="100%" height="100%" />
       </div>

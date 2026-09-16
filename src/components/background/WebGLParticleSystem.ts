@@ -23,7 +23,7 @@ export class WebGLParticleSystem {
     private radiusBuffer: WebGLBuffer;
     private opacityBuffer: WebGLBuffer;
     private startTime: number;
-    private animationFrame: number;
+    private animationFrame: number | null = null;
     private mousePosition: Float32Array;
     private pixelRatio: number;
     private positionTexture: WebGLTexture;
@@ -88,7 +88,6 @@ export class WebGLParticleSystem {
 
         // Set up document-level mouse tracking
         document.addEventListener('mousemove', (e) => {
-            const rect = canvas.getBoundingClientRect();
             const x = e.clientX;
             const y = e.clientY;
             
@@ -469,8 +468,9 @@ export class WebGLParticleSystem {
     }
 
     stop() {
-        if (this.animationFrame) {
+        if (this.animationFrame !== null) {
             cancelAnimationFrame(this.animationFrame);
+            this.animationFrame = null;
         }
     }
 }

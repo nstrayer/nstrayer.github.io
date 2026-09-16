@@ -27,6 +27,8 @@ The website is in active development with core functionality implemented. Based 
 - Projects loaded from CSV data
 - Skills section with categorized skills
 - Contact information
+- Markdown-backed short posts with a homepage preview, archive page, individual
+  post routes, tags, drafts, and optional AI-assistance attribution
 
 ✅ **Technical Foundation**
 - Astro framework configuration

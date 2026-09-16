@@ -1,0 +1,205 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import AIAttribution from '../../components/AIAttribution.astro';
+import { SITE_CONFIG } from '../../data/constants';
+import { formatPostDate } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
+---
+
+<Layout title={`${title} — ${SITE_CONFIG.name}`} description={description}>
+  <main>
+    <article>
+      <a class="back-link" href="/posts/"><span aria-hidden="true">←</span> All posts</a>
+
+      <header class="post-header">
+        <div class="post-meta">
+          <time datetime={publishedAt.toISOString()}>{formatPostDate(publishedAt)}</time>
+          {tags.length > 0 && <span aria-hidden="true">•</span>}
+          {tags.length > 0 && <span>{tags.join(' · ')}</span>}
+        </div>
+        <h1>{title}</h1>
+        <p>{description}</p>
+        {updatedAt && (
+          <p class="updated">Updated <time datetime={updatedAt.toISOString()}>{formatPostDate(updatedAt)}</time></p>
+        )}
+      </header>
+
+      <div class="post-body">
+        <Content />
+      </div>
+
+      {ai && <AIAttribution statement={ai.statement} tools={ai.tools} />}
+    </article>
+  </main>
+</Layout>
+
+<style>
+  main {
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 8rem);
+    padding: 8.5rem 1.5rem 6rem;
+  }
+
+  article {
+    width: 100%;
+    max-width: 45rem;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    gap: 0.45rem;
+    align-items: center;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--foreground);
+  }
+
+  .post-header {
+    margin: 3rem 0 3.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--foreground);
+  }
+
+  .post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 1rem;
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    max-width: 42rem;
+    margin: 0;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    line-height: 0.98;
+  }
+
+  .post-header > p:not(.updated) {
+    max-width: 38rem;
+    margin: 1.25rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 1.12rem;
+    line-height: 1.7;
+  }
+
+  .updated {
+    margin: 0.75rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+
+  .post-body {
+    color: var(--card-foreground);
+    font-size: 1.05rem;
+    line-height: 1.85;
+  }
+
+  .post-body :global(p),
+  .post-body :global(ul),
+  .post-body :global(ol),
+  .post-body :global(blockquote),
+  .post-body :global(pre) {
+    margin: 1.35rem 0;
+  }
+
+  .post-body :global(h2),
+  .post-body :global(h3) {
+    margin: 2.75rem 0 1rem;
+    line-height: 1.25;
+  }
+
+  .post-body :global(h2) {
+    font-size: 1.75rem;
+  }
+
+  .post-body :global(h3) {
+    font-size: 1.35rem;
+  }
+
+  .post-body :global(a) {
+    color: var(--foreground);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+  }
+
+  .post-body :global(ul),
+  .post-body :global(ol) {
+    padding-left: 1.4rem;
+  }
+
+  .post-body :global(li) {
+    margin: 0.5rem 0;
+    padding-left: 0.3rem;
+  }
+
+  .post-body :global(blockquote) {
+    padding-left: 1.25rem;
+    border-left: 4px solid var(--foreground);
+    color: var(--muted-foreground);
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 1.12rem;
+  }
+
+  .post-body :global(code) {
+    padding: 0.15em 0.35em;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-size: 0.88em;
+  }
+
+  .post-body :global(pre) {
+    overflow-x: auto;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+
+  .post-body :global(pre code) {
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .post-body :global(img) {
+    max-width: 100%;
+    height: auto;
+    margin: 2rem 0;
+    border: 1px solid var(--border);
+  }
+
+  .post-body :global(hr) {
+    margin: 3rem 0;
+    border: 0;
+    border-top: 1px solid var(--border);
+  }
+</style>
