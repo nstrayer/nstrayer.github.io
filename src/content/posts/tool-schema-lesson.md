@@ -5,7 +5,7 @@ publishedAt: 2026-09-16
 tags:
   - LLMs
 ai:
-  statement: I used Codex to create the Posts section, Markdown scaffold, and AI assistance panel.
+  statement: No AI used to write this post.
   tools:
     - Codex
 ---
