@@ -1,68 +1,21 @@
 ---
-/**
- * Contact Section Component
- * 
- * Clean, minimal contact links with stippled hover effect.
- */
 import { SITE_CONFIG } from '../data/constants';
-import { Icon } from 'astro-icon/components';
 import Section from './Section.astro';
 import SectionTitle from './SectionTitle.astro';
 ---
 
 <Section id="contact">
   <SectionTitle>Get in touch</SectionTitle>
-  <div class="max-w-xl mx-auto text-center">
-    <p class="text-muted-foreground mb-8 leading-relaxed">
-      I am always interested in getting involved in new projects or connecting with others. 
-      Feel free to reach out!
-    </p>
-    <div class="contact-links">
-      <a href={`mailto:${SITE_CONFIG.email}`} class="contact-link btn-stipple-dark">
-        <Icon name="line-md:email-filled" class="icon" />
-        <span>Email</span>
-      </a>
-      <a href="https://twitter.com/NicholasStrayer" target="_blank" class="contact-link btn-stipple-dark">
-        <Icon name="line-md:twitter" class="icon" />
-        <span>Twitter</span>
-      </a>
-      <a href="https://github.com/nstrayer" target="_blank" class="contact-link btn-stipple-dark">
-        <Icon name="line-md:github" class="icon" />
-        <span>GitHub</span>
-      </a>
-      <a href="https://linkedin.com/in/nickstrayer" target="_blank" class="contact-link btn-stipple-dark">
-        <Icon name="line-md:linkedin" class="icon" />
-        <span>LinkedIn</span>
-      </a>
-    </div>
+  <p class="contact-intro">I am always interested in getting involved in new projects or connecting with others. Feel free to reach out!</p>
+  <div class="link-row contact-links">
+    <a href={`mailto:${SITE_CONFIG.email}`} class="text-link">Email <span aria-hidden="true">↗</span></a>
+    <a href="https://twitter.com/NicholasStrayer" target="_blank" rel="noopener noreferrer" class="text-link">Twitter <span aria-hidden="true">↗</span></a>
+    <a href="https://github.com/nstrayer" target="_blank" rel="noopener noreferrer" class="text-link">GitHub <span aria-hidden="true">↗</span></a>
+    <a href="https://linkedin.com/in/nickstrayer" target="_blank" rel="noopener noreferrer" class="text-link">LinkedIn <span aria-hidden="true">↗</span></a>
   </div>
 </Section>
 
 <style>
-  .contact-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-  }
-
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    font-weight: 500;
-    font-size: 0.875rem;
-    color: var(--foreground);
-    border: 1.5px solid var(--foreground);
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-  }
-
-  .icon {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
+  .contact-intro { max-width: 62ch; line-height: 1.75; }
+  .contact-links { margin-top: 1.25rem; }
 </style>

@@ -9,12 +9,51 @@
 - Current project data is `src/data/projects.json`; the live background is a paper
   texture, not the retained WebGL experiments described in older notes below.
 - See README for current setup and server start/stop commands.
-- Changes are local on `chore/refresh-dependencies`; they have not been published.
+- The maintenance and posts commits are now on `origin/master`. This checkout was
+  fast-forwarded to `a06fc15` on September 17 before integrating the paper redesign.
 - Added a Markdown-backed Posts section using Astro content collections. Posts are
   authored in `src/content/posts/`, listed on `/posts/`, previewed on the homepage,
   and can opt into a styled AI-assistance disclosure through frontmatter.
 
-## Historical Work Focus
+## Current Design Work
+
+Post lists now use compact entries: a subtly underlined title link, description,
+then a small date/tag line. The separate “Read post” row is removed, and homepage
+“View all posts” sits beside the section heading. The homepage and posts archive
+share this presentation. The homepage Posts section retains generous outer spacing
+around its heading and list. Intro navigation uses small muted bullets and no longer
+includes the “Previously…” note.
+
+The homepage now opens with a full-screen header and vertically centered intro.
+`Layout.astro` accepts an `intro` slot and uses a `100svh` minimum height for that
+opening only; content can grow on short screens and print removes the minimum.
+Posts comes before Selected work, and the intro action links and Tools & methods
+section have been removed. Navigation follows the remaining section order.
+Desktop, mobile, and short-screen checks pass, as do source checks and the build.
+
+Project previews now use compact thumbnails (at most 288 × 192 CSS pixels on
+desktop and 256 × 160 on mobile), preserving the whole image without borders.
+Descriptions get a wider column, row spacing is tighter, and responsive image
+variants match the smaller display sizes. Desktop/mobile inspection and the
+production build pass.
+
+The redesign was initially implemented on an older local master that lacked the
+four posts/maintenance commits. Those commits are now integrated, with the Posts
+homepage section and navigation restored. The posts index, article, and AI note
+use the same paper treatment and sentence-case styling. The Markdown content,
+table captions, and latest attribution wording remain intact. `npm run check`
+reports no diagnostics and `npm run build` generates all three pages. Desktop
+navigation and mobile article overflow checks pass.
+
+September 17, 2026: The active background is now a static Texturelabs Paper 373 photo, replacing the synthetic SVG grain. `Background.astro` uses `.paper-surface` in `global.css`: a pale, stationary sheet behind unfiltered text, with WebP variants for standard and high-density displays. `scripts/prepare-paper-texture.mjs` regenerates those assets from the root JPEG. Historical WebGL notes below refer to the earlier implementation.
+
+The user settled on 40% paper opacity, then requested text that looks printed onto the paper. Headings and paragraphs now use multiply blending, with the same paper image faintly visible inside large `.ink-heading` letterforms at 90% ink coverage. Section and hero-content wrappers use automatic z-indices so blending reaches the background; the body retains isolation. Dark mode and contrast/print preferences restore solid text.
+
+The user prefers sentence-case labels and understated print cues. They dislike all-caps text and literal publication conventions such as "Fig. 01"; favor typography, spacing, alignment, and fine rules over decorative numbering.
+
+The approved layout is now implemented: static name header, an introduction with side navigation, left-aligned section titles and shared margins, selected-work rows with uncropped borderless images, simple CV/resume links, and a contact section. All 30 projects remain available, with six shown initially and the rest in a native disclosure. Local raster project images receive responsive WebP variants; the page no longer needs client-side React or animation scripts. The user explicitly requested no border around the selected-work screenshots. The previous stipple and bouncing hover effects are no longer used in the page.
+
+## Historical context
 
 The project is currently in a redevelopment phase, with a focus on modernizing the personal website using Astro. The site structure is established with core sections implemented (Hero, About, Projects, Skills, Contact), and the WebGL particle background continues to evolve with visual enhancements.
 

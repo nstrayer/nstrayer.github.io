@@ -1,100 +1,38 @@
 ---
-/**
- * Projects Section Component
- * 
- * Grid of project cards with expandable list.
- */
 import { PROJECTS } from '../data/projects';
 import ProjectCard from './ProjectCard.astro';
 import Section from './Section.astro';
 import SectionTitle from './SectionTitle.astro';
 
 const INITIAL_PROJECT_COUNT = 6;
-const hasMoreProjects = PROJECTS.length > INITIAL_PROJECT_COUNT;
+const selectedProjects = PROJECTS.slice(0, INITIAL_PROJECT_COUNT);
+const moreProjects = PROJECTS.slice(INITIAL_PROJECT_COUNT);
 ---
 
-<Section id="projects" class="py-24" containerClass="max-w-6xl">
-  <SectionTitle>Projects</SectionTitle>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    {PROJECTS.map((project, index) => (
-      <div class={`project-wrapper h-full ${index >= INITIAL_PROJECT_COUNT ? 'hidden-project' : ''}`}>
-        <ProjectCard {...project} />
-      </div>
-    ))}
+<Section id="projects">
+  <SectionTitle>Selected work</SectionTitle>
+  <div class="project-list">
+    {selectedProjects.map(project => <ProjectCard {...project} />)}
   </div>
-  {hasMoreProjects && (
-    <div class="flex justify-center mt-12">
-      <button 
-        id="show-more-projects"
-        class="show-more-btn btn-stipple-light"
-      >
-        Show More Projects
-      </button>
-    </div>
+  {moreProjects.length > 0 && (
+    <details class="more-projects">
+      <summary class="text-link">
+        <span class="when-closed">More projects <span aria-hidden="true">↓</span></span>
+        <span class="when-open">Fewer projects <span aria-hidden="true">↑</span></span>
+      </summary>
+      <div class="project-list additional-projects">
+        {moreProjects.map(project => <ProjectCard {...project} />)}
+      </div>
+    </details>
   )}
 </Section>
 
-<script>
-  const showMoreButton = document.getElementById('show-more-projects');
-  const projectsSection = document.getElementById('projects');
-  const hiddenProjects = document.querySelectorAll('.hidden-project');
-
-  if (showMoreButton && hiddenProjects) {
-    showMoreButton.addEventListener('click', () => {
-      const isExpanded = projectsSection?.classList.toggle('expanded');
-      hiddenProjects.forEach(project => {
-        project.classList.toggle('show');
-      });
-      showMoreButton.textContent = isExpanded ? 'Show Fewer Projects' : 'Show More Projects';
-    });
-  }
-</script>
-
 <style>
-  .show-more-btn {
-    background: var(--foreground);
-    color: var(--background);
-    padding: 0.875rem 2rem;
-    font-weight: 600;
-    font-size: 0.875rem;
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-  }
-
-  .project-wrapper {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .project-wrapper {
-      transition: none;
-    }
-  }
-
-  .hidden-project {
-    display: none;
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hidden-project {
-      transform: none;
-    }
-  }
-
-  .hidden-project.show {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hidden-project.show {
-      transform: none;
-    }
-  }
+  .project-list { display: grid; gap: 1.75rem; }
+  .more-projects { margin-top: 2rem; }
+  summary { width: fit-content; cursor: pointer; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  .when-open, details[open] .when-closed { display: none; }
+  details[open] .when-open { display: inline; }
+  .additional-projects { margin-top: 2rem; }
 </style>

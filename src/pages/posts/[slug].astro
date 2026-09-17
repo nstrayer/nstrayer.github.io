@@ -24,9 +24,9 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
 ---
 
 <Layout title={`${title} — ${SITE_CONFIG.name}`} description={description}>
-  <main>
+  <main id="content" class="page-width">
     <article>
-      <a class="back-link" href="/posts/"><span aria-hidden="true">←</span> All posts</a>
+      <a class="text-link" href="/posts/"><span aria-hidden="true">←</span> All posts</a>
 
       <header class="post-header">
         <div class="post-meta">
@@ -34,7 +34,7 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
           {tags.length > 0 && <span aria-hidden="true">•</span>}
           {tags.length > 0 && <span>{tags.join(' · ')}</span>}
         </div>
-        <h1>{title}</h1>
+        <h1 class="ink-heading">{title}</h1>
         <p>{description}</p>
         {updatedAt && (
           <p class="updated">Updated <time datetime={updatedAt.toISOString()}>{formatPostDate(updatedAt)}</time></p>
@@ -53,9 +53,8 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
 <style>
   main {
     position: relative;
-    z-index: 1;
     min-height: calc(100vh - 8rem);
-    padding: 8.5rem 1.5rem 6rem;
+    padding-block: 2rem 4rem;
   }
 
   article {
@@ -64,24 +63,10 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     margin: 0 auto;
   }
 
-  .back-link {
-    display: inline-flex;
-    gap: 0.45rem;
-    align-items: center;
-    color: var(--muted-foreground);
-    font-size: 0.875rem;
-    font-weight: 700;
-    text-decoration: none;
-  }
-
-  .back-link:hover {
-    color: var(--foreground);
-  }
-
   .post-header {
-    margin: 3rem 0 3.5rem;
+    margin: 2rem 0 2.5rem;
     padding-bottom: 2rem;
-    border-bottom: 2px solid var(--foreground);
+    border-bottom: 1px solid var(--rule);
   }
 
   .post-meta {
@@ -90,17 +75,15 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     gap: 0.45rem;
     margin-bottom: 1rem;
     color: var(--muted-foreground);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.055em;
-    text-transform: uppercase;
+    font-size: 0.8125rem;
   }
 
   h1 {
     max-width: 42rem;
     margin: 0;
-    font-size: clamp(2.5rem, 8vw, 4.5rem);
-    line-height: 0.98;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1.15;
   }
 
   .post-header > p:not(.updated) {
@@ -119,7 +102,7 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
   }
 
   .post-body {
-    color: var(--card-foreground);
+    color: var(--foreground);
     font-size: 1.05rem;
     line-height: 1.85;
   }
@@ -164,7 +147,7 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
 
   .post-body :global(blockquote) {
     padding-left: 1.25rem;
-    border-left: 4px solid var(--foreground);
+    border-left: 1px solid var(--rule);
     color: var(--muted-foreground);
     font-family: 'Bitter', Georgia, serif;
     font-size: 1.12rem;

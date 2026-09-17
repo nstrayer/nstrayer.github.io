@@ -43,9 +43,22 @@
 :root {
   --radius: 0.25rem;
   /* Paper-like warm off-white background inspired by printed materials */
-  --background: oklch(0.965 0.008 85);
-  /* Bold navy blue - more saturated and confident */
-  --foreground: oklch(0.32 0.12 245);
+  --background: #f4f1e9;
+  /* Texturelabs Paper 373. Keep its grain below the ink, with quiet tonal variation. */
+  --paper-texture: image-set(
+    url('../assets/paper-1920.webp') 1x,
+    url('../assets/paper-3840.webp') 2x
+  );
+  --paper-opacity: 0.40;
+  /* One continuous sheet; a minimum width keeps the grain fine on phones. */
+  --paper-size: max(1440px, 100vw, 150lvh) auto;
+  --ink-blend: multiply;
+  /* Dense navy ink with a little paper grain showing through large letterforms. */
+  --ink-coverage: 90%;
+  --ink-text-fill: transparent;
+  /* A muted navy ink, shared with the approved page design. */
+  --foreground: #173d54;
+  --rule: color-mix(in srgb, var(--foreground) 40%, transparent);
   --card: oklch(0.975 0.006 85);
   --card-foreground: oklch(0.32 0.12 245);
   --popover: oklch(0.975 0.006 85);
@@ -55,7 +68,7 @@
   --secondary: oklch(0.94 0.01 85);
   --secondary-foreground: oklch(0.32 0.12 245);
   --muted: oklch(0.92 0.008 85);
-  --muted-foreground: oklch(0.45 0.08 245);
+  --muted-foreground: #435e6c;
   --accent: oklch(0.90 0.012 85);
   --accent-foreground: oklch(0.32 0.12 245);
   --destructive: oklch(0.577 0.245 27.325);
@@ -91,6 +104,9 @@
 }
 
 .dark {
+  --paper-opacity: 0.04;
+  --ink-blend: normal;
+  --ink-text-fill: currentColor;
   /* Dark mode - deep navy with cream text */
   --background: oklch(0.18 0.06 245);
   --foreground: oklch(0.92 0.02 85);
@@ -126,191 +142,155 @@
 }
 
 @layer base {
+  html {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    scroll-behavior: smooth;
+    letter-spacing: -0.01em;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bitter', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+  a:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--foreground);
+    outline-offset: 5px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    /* Background is transparent to allow the paper texture from Background.astro to show through */
-    @apply text-foreground;
-    background: transparent;
+    @apply bg-background text-foreground;
+    /* Keep the negative-z paper layer above the body paint and below all content. */
+    isolation: isolate;
+    font-size: 1rem;
+    line-height: 1.65;
+    overflow-wrap: break-word;
   }
   .project-description p a {
     @apply text-foreground underline;
   }
 }
 
-/**
- * Stippled button hover effects
- * Creates a dot pattern that reveals on hover, matching the print-inspired aesthetic
- */
 @layer components {
-  /* Default (filled) button - subtle light stipple on hover */
-  .btn-stipple-light {
-    position: relative;
-    z-index: 0;
+  .page-width {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.5rem, 5vw, 4rem);
   }
-  
-  .btn-stipple-light::before {
+  .site-header { padding-top: 3rem; }
+  .site-header-inner, .site-footer-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+  }
+  .site-header-inner { border-bottom: 1px solid var(--rule); padding-bottom: 1rem; }
+  .site-name { font-family: 'Bitter', Georgia, serif; font-size: 1.75rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.03em; text-decoration: none; }
+  .site-role { font-size: 0.875rem; color: var(--muted-foreground); }
+  .site-footer { padding-bottom: 2rem; font-size: 0.8125rem; color: var(--muted-foreground); }
+  .site-footer-inner { border-top: 1px solid var(--rule); padding-top: 1rem; }
+  .page-section { position: relative; padding-bottom: 3rem; scroll-margin-top: 1.5rem; }
+  .section-inner { border-top: 1px solid var(--rule); padding-top: 1.25rem; }
+  .section-title {
+    display: table;
+    max-width: 100%;
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 1.75rem;
+    letter-spacing: -0.025em;
+  }
+  .link-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1.5rem; }
+  .text-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3em;
+    padding-block: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--foreground);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: text-decoration-color 150ms ease;
+  }
+  .text-link:hover { text-decoration-color: currentColor; }
+  .page-navigation { font-size: 0.875rem; }
+  .navigation-label { font-weight: 500; color: var(--muted-foreground); margin-bottom: 0.75rem; }
+  .page-navigation ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
+  .page-navigation li { display: flex; align-items: center; gap: 0.625rem; }
+  .page-navigation li::before {
     content: '';
-    position: absolute;
-    inset: 0;
-    background-image: var(--stipple-light);
-    background-size: 6px 6px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    z-index: -1;
+    flex: none;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
   }
-  
-  .btn-stipple-light:hover::before {
-    opacity: 0.18;
-  }
-  
-  /* Outline button - shows dark stipple on hover */
-  .btn-stipple-dark {
-    position: relative;
-    z-index: 0;
-  }
-  
-  .btn-stipple-dark::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: var(--stipple-dark);
-    background-size: 6px 6px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    z-index: -1;
-  }
-  
-  .btn-stipple-dark:hover::before {
-    opacity: 0.15;
-  }
-  
-  /* Navigation bar paper texture */
-  .fixed.top-0.w-full.bg-background {
-    position: relative;
+  .page-navigation a { display: inline-block; padding-block: 0.25rem; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; }
+  .page-navigation a:hover { text-decoration-color: currentColor; }
+  .skip-link { position: absolute; top: 0.5rem; left: 1.5rem; z-index: 100; padding: 0.75rem 1rem; background: var(--background); transform: translateY(-200%); }
+  .skip-link:focus { transform: translateY(0); }
+
+  /* Text blends with the paper, while images retain their original colors. */
+  :is(main, #hero) :is(h1, h2, h3, p) { mix-blend-mode: var(--ink-blend); }
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .ink-heading {
+      --ink-wash: color-mix(in srgb, var(--foreground) var(--ink-coverage), transparent);
+      background-image: linear-gradient(var(--ink-wash), var(--ink-wash)), var(--paper-texture);
+      background-size: auto, var(--paper-size);
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: var(--ink-text-fill);
+    }
+    .ink-heading::selection, .ink-heading ::selection {
+      background: var(--foreground);
+      color: var(--background);
+      -webkit-text-fill-color: var(--background);
+    }
   }
 
-  .fixed.top-0.w-full.bg-background::after {
+  .paper-surface { background-color: var(--background); isolation: isolate; }
+  .paper-surface::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    /* Warm tone matching the background - grain filter darkens parts of it */
-    background: oklch(0.96 0.008 85);
-    filter: url(#paper-grain);
-    /* Same opacity as background texture */
-    opacity: 0.09;
+    inset: 0;
+    background-image: var(--paper-texture);
+    background-size: var(--paper-size);
+    background-position: center top;
+    background-repeat: no-repeat;
+    filter: grayscale(1) brightness(1.45) contrast(1.1);
+    opacity: var(--paper-opacity);
     pointer-events: none;
     z-index: -1;
   }
 
-  /* Navigation link with animated stippled underline - grows from center */
-  .nav-link-stipple {
-    position: relative;
+  @media (max-width: 700px) {
+    .site-header { padding-top: 1.75rem; }
+    .site-header-inner { align-items: flex-start; flex-direction: column; }
+    .site-name { font-size: 1.5rem; }
+    .page-navigation ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
+    .section-title { font-size: 1.5rem; }
   }
-  
-  .nav-link-stipple::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 4px;
-    background-image: var(--stipple-dark);
-    background-size: 4px 4px;
-    transition: width 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  @media (pointer: coarse) {
+    .text-link, .page-navigation a { padding-block: 0.75rem; }
   }
-  
-  .nav-link-stipple:hover::after,
-  .nav-link-stipple:focus::after {
-    width: 100%;
-    left: 0;
-    transform: translateX(0);
-  }
-
-  /* Button micro-interactions */
-  button,
-  a[class*="button"],
-  .btn-stipple-light,
-  .btn-stipple-dark {
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  button:hover,
-  a[class*="button"]:hover,
-  .btn-stipple-light:hover,
-  .btn-stipple-dark:hover {
-    transform: scale(1.02);
-  }
-
-  button:active,
-  a[class*="button"]:active,
-  .btn-stipple-light:active,
-  .btn-stipple-dark:active {
-    transform: scale(0.98);
-  }
-
-  /* Contact icon micro-interactions */
-  .contact-link {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .contact-link:hover {
-    transform: translateY(-2px);
-  }
-
-  .contact-link .icon {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .contact-link:hover .icon {
-    transform: rotate(-5deg) scale(1.1);
-  }
-
-  .contact-link:active .icon {
-    transform: rotate(5deg) scale(1.05);
-  }
-
-  /* Skill tag micro-interactions */
-  .skill-tag {
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
-                box-shadow 0.2s ease;
-    cursor: pointer;
-  }
-
-  .skill-tag:hover {
-    transform: translateY(-3px) rotate(1deg);
-    box-shadow: 0 4px 8px oklch(0.32 0.12 245 / 0.15);
-  }
-
-  .skill-tag:active {
-    transform: translateY(-1px) rotate(0deg);
-  }
-
-  /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    button,
-    a[class*="button"],
-    .btn-stipple-light,
-    .btn-stipple-dark,
-    .contact-link,
-    .contact-link .icon,
-    .skill-tag {
-      transition: none;
-    }
-
-    button:hover,
-    a[class*="button"]:hover,
-    .btn-stipple-light:hover,
-    .btn-stipple-dark:hover,
-    .contact-link:hover,
-    .contact-link:hover .icon,
-    .skill-tag:hover {
-      transform: none;
-    }
+    .text-link { transition: none; }
+  }
+  @media print, (forced-colors: active), (prefers-contrast: more) {
+    :is(main, #hero) :is(h1, h2, h3, p) { mix-blend-mode: normal; }
+    .ink-heading { background-image: none; -webkit-text-fill-color: currentColor; }
+    .paper-surface::before { display: none; }
   }
 }

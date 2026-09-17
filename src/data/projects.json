@@ -1,6 +1,8 @@
 [
   {
     "title": "Positron IDE",
+    "category": "Software · Posit",
+    "caption": "Code, data, and plots in one workspace.",
     "link": "https://positron.posit.co/",
     "photo": "/projectPics/positron.png",
     "github": "https://github.com/posit-dev/positron",

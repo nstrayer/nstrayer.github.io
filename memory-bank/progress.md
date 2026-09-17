@@ -2,6 +2,20 @@
 
 ## Current Status
 
+The homepage landing fills the first viewport, with Posts immediately below it.
+The intro grows naturally on smaller screens; the full-screen treatment is not
+applied to post pages or print. Removed the intro action links and Tools & methods
+section, moved Posts before Selected work, and reduced project previews to compact
+borderless thumbnails. Browser checks, source checks, and the build pass.
+
+Synced local master to `origin/master` at `a06fc15` and reconciled the uncommitted
+paper redesign with the latest posts and dependency work. Homepage posts,
+`/posts/`, and the article render correctly with the updated design, semantic table
+caption, and unchanged attribution content. Source checks and the three-page
+production build pass; desktop navigation and mobile overflow were verified.
+
+September 17, 2026: Implemented the approved print-inspired page layout with sentence-case labels, fine rules, static navigation beside the introduction, borderless project images, grouped skills, and simpler document/contact links. The paper texture remains at 40% opacity with textured ink headings. Production build and desktop/mobile browser checks pass, including keyboard expansion/collapse of the project archive. Earlier WebGL notes below describe the historical implementation.
+
 The website is in active development with core functionality implemented. Based on the codebase examination, the project appears to be in a beta/near-complete state with the main structure and components in place. Recent efforts have focused on mobile optimization, performance improvements, and UI refinements.
 
 ### What Works

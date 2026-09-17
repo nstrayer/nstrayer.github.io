@@ -1,20 +1,23 @@
 export const SITE_CONFIG = {
   name: 'Nick Strayer',
-  title: 'Software Engineer and Data Scientist',
+  title: 'Software engineer & data scientist',
   email: 'nick.strayer@gmail.com',
   initials: 'NS',
   description: 'I am a tech lead at Posit, building a new AI-native Jupyter notebook experience in the Positron IDE.'
 };
 
 
-export const SKILLS = [
-  // Programming Languages
-  'TypeScript', 'JavaScript', 'R', 'Python', 'Swift',
-  'Software Architecture', 'UI', 'UX',
-  // Data Science & Statistics
-  'Statistical Computing', 'Machine Learning', 'Data Visualization', 'Biostatistics',
-  // Tools & Technologies
-  'React', 'Node.js', 'D3.js',
-  // Development
-  'VS Code Extension API'
+export const SKILL_GROUPS = [
+  {
+    title: 'Languages',
+    skills: ['TypeScript', 'JavaScript', 'R', 'Python', 'Swift'],
+  },
+  {
+    title: 'Practice',
+    skills: ['Software architecture', 'UI & UX', 'Statistical computing', 'Machine learning', 'Data visualization', 'Biostatistics'],
+  },
+  {
+    title: 'Tools',
+    skills: ['React', 'Node.js', 'D3.js', 'VS Code Extension API'],
+  },
 ];

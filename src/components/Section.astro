@@ -1,24 +1,16 @@
 ---
-/**
- * Section Component
- * 
- * Clean, minimal section wrapper with proper spacing.
- */
 interface Props {
   id?: string;
   class?: string;
   containerClass?: string;
 }
 
-const { 
-  id, 
-  class: className = "", 
-  containerClass = ""
-} = Astro.props;
+const { id, class: className = '', containerClass = '' } = Astro.props;
 ---
 
-<section id={id} class={`py-24 relative z-10 ${className}`}>
-  <div class={`container mx-auto max-w-4xl px-6 md:px-8 ${containerClass}`}>
+<!-- Automatic stacking lets the ink blend with the shared paper backdrop. -->
+<section id={id} class={`page-section page-width ${className}`}>
+  <div class={`section-inner ${containerClass}`}>
     <slot />
   </div>
 </section>

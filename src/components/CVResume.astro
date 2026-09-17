@@ -1,136 +1,37 @@
 ---
-/**
- * CV/Resume Section Component
- * 
- * Clean links to CV and Resume documents.
- * Stippled gradient matches the hero aesthetic.
- */
 import Section from './Section.astro';
 import SectionTitle from './SectionTitle.astro';
-import StippledPattern from './ui/StippledPattern.astro';
 ---
 
 <Section id="cv-resume">
-  <SectionTitle>The boring stuff</SectionTitle>
-  
-  <div class="grid gap-6 md:grid-cols-2">
-    <div class="doc-card">
-      <!-- Stippled gradient - matches hero style -->
-      <div class="stippled-gradient" aria-hidden="true">
-        <StippledPattern density={0.55} dotSize={2.2} width="100%" height="100%" />
-      </div>
-      <h3 class="doc-title">CV</h3>
-      <p class="doc-description">
-        A comprehensive list of my career accomplishments, publications, and experience.
-      </p>
-      <div class="doc-links">
-        <a href="http://nickstrayer.me/cv" target="_blank" class="doc-link btn-stipple-dark">
-          HTML version →
-        </a>
-        <a href="https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf" target="_blank" class="doc-link btn-stipple-dark">
-          PDF for printing →
-        </a>
+  <SectionTitle>CV &amp; resume</SectionTitle>
+  <div class="document-grid">
+    <div>
+      <h3>CV</h3>
+      <p>A comprehensive list of my career accomplishments, publications, and experience.</p>
+      <div class="link-row document-links">
+        <a href="http://nickstrayer.me/cv" target="_blank" rel="noopener noreferrer" class="text-link">Read online <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/nstrayer/cv/raw/master/strayer_cv.pdf" target="_blank" rel="noopener noreferrer" class="text-link">Download PDF <span aria-hidden="true">↓</span></a>
       </div>
     </div>
-    
-    <div class="doc-card">
-      <!-- Stippled gradient - matches hero style -->
-      <div class="stippled-gradient" aria-hidden="true">
-        <StippledPattern density={0.55} dotSize={2.2} width="100%" height="100%" />
-      </div>
-      <h3 class="doc-title">Resume</h3>
-      <p class="doc-description">
-        A concise single-page summary of my data science career.
-      </p>
-      <div class="doc-links">
-        <a href="http://nickstrayer.me/cv/resume.html" target="_blank" class="doc-link btn-stipple-dark">
-          HTML version →
-        </a>
-        <a href="https://github.com/nstrayer/cv/raw/master/strayer_resume.pdf" target="_blank" class="doc-link btn-stipple-dark">
-          PDF for printing →
-        </a>
+    <div>
+      <h3>Resume</h3>
+      <p>A concise single-page summary of my data science career.</p>
+      <div class="link-row document-links">
+        <a href="http://nickstrayer.me/cv/resume.html" target="_blank" rel="noopener noreferrer" class="text-link">Read online <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/nstrayer/cv/raw/master/strayer_resume.pdf" target="_blank" rel="noopener noreferrer" class="text-link">Download PDF <span aria-hidden="true">↓</span></a>
       </div>
     </div>
   </div>
-  
-  <div class="mt-8 text-center text-sm text-muted-foreground">
-    <p>
-      Built with my own R package: 
-      <a href="https://github.com/nstrayer/cv" class="text-foreground hover:underline" target="_blank">
-        github.com/nstrayer/cv
-      </a>
-    </p>
-  </div>
+  <p class="document-note">Built with my own R package: <a href="https://github.com/nstrayer/cv" target="_blank" rel="noopener noreferrer">github.com/nstrayer/cv</a></p>
 </Section>
 
 <style>
-  .doc-card {
-    position: relative;
-    padding: 1.5rem;
-    border: 2px solid var(--foreground);
-    background: var(--card);
-    overflow: hidden;
-  }
-
-  .stippled-gradient {
-    position: absolute;
-    top: -20%;
-    right: -20%;
-    width: 70%;
-    height: 70%;
-    pointer-events: none;
-    /* Radial gradient mask - matches hero style */
-    mask-image: radial-gradient(
-      ellipse 100% 100% at 100% 0%,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0.3) 30%,
-      rgba(0, 0, 0, 0.1) 60%,
-      rgba(0, 0, 0, 0) 85%
-    );
-    -webkit-mask-image: radial-gradient(
-      ellipse 100% 100% at 100% 0%,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0.3) 30%,
-      rgba(0, 0, 0, 0.1) 60%,
-      rgba(0, 0, 0, 0) 85%
-    );
-  }
-
-  .doc-title {
-    font-family: 'Bitter', Georgia, serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--foreground);
-    margin-bottom: 0.5rem;
-    position: relative;
-  }
-
-  .doc-description {
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-    margin-bottom: 1rem;
-    line-height: 1.5;
-    position: relative;
-  }
-
-  .doc-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    position: relative;
-  }
-
-  .doc-link {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--foreground);
-    border: 1.5px solid var(--foreground);
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-  }
+  .document-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .document-grid p { max-width: 42ch; font-size: 0.9375rem; line-height: 1.75; }
+  .document-links { margin-top: 1rem; }
+  .document-note { margin-top: 2rem; font-size: 0.8125rem; color: var(--muted-foreground); }
+  .document-note a { text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 550px) { .document-grid { grid-template-columns: 1fr; gap: 2rem; } }
 </style>

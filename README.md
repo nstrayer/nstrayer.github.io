@@ -4,7 +4,9 @@ Source for [nickstrayer.me](https://nickstrayer.me), hosted on GitHub Pages from
 [nstrayer/nstrayer.github.io](https://github.com/nstrayer/nstrayer.github.io).
 
 The site uses Astro 7, React 19, Tailwind CSS 4, and TypeScript. Its current design
-features a paper texture, stippled accents, and animated handwritten annotations.
+features a photographic paper texture, textured ink headings, fine rules, and
+uncropped borderless project images. Labels use sentence case and navigation
+works without client-side JavaScript.
 
 ## Local development
 
@@ -79,6 +81,20 @@ immediately after it. Inline Markdown is supported in the caption:
 
 Table: Error rate for the **current** tool schema.
 ```
+
+## Paper background
+
+The background uses the supplied `Texturelabs_Paper_373XL.jpg` from [Texturelabs](https://texturelabs.org), resized into WebP assets in `src/assets/`. The original stays outside the published site. To regenerate the assets after installing dependencies, run `node scripts/prepare-paper-texture.mjs`.
+
+The page uses the `.paper-surface` treatment in `src/styles/global.css`. Adjust `--paper-opacity` there to change the texture's strength (currently `0.40`). Brightness and contrast apply only to the decorative layer behind the text. The sheet does not tile or animate; print and increased-contrast modes omit the texture.
+
+Headings and paragraphs use multiply blending to feel printed onto the paper. Large `.ink-heading` titles also clip the paper image into a dense navy fill; `--ink-coverage` controls how much grain shows within the letters (currently `90%` ink). The text remains selectable, with native sharp edges. Dark mode, print, and increased-contrast modes use solid text. Keep section and hero-content z-indices automatic so text can blend with the page backdrop.
+
+## Page layout
+
+The header and introduction fill the first screen, with content allowed to grow on smaller screens. They share `.page-width` with the sections below. Navigation sits beside the introduction on desktop and wraps below it on mobile. Use sentence-case labels and simple rules; avoid decorative numbering and figure labels.
+
+Posts appear before Selected work, with compact title/description/date entries and more space around the section itself. Selected work uses small, uncropped, borderless thumbnails beside descriptions. `src/data/projects.json` supports optional `category` and `caption` fields for useful context. Local raster images are resized into responsive WebP variants by Astro; GIFs and remote images retain their original formats. The first six projects are visible, with the remaining projects in a native `<details>` disclosure that works without JavaScript.
 
 ## Deployment
 

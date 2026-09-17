@@ -1,33 +1,24 @@
 ---
-/**
- * Skills Section Component
- * 
- * Simple, elegant skill tags in a flowing layout with stippled hover effect.
- */
-import { SKILLS } from '../data/constants';
+import { SKILL_GROUPS } from '../data/constants';
 import Section from './Section.astro';
 import SectionTitle from './SectionTitle.astro';
 ---
 
 <Section id="skills">
-  <SectionTitle>Skills</SectionTitle>
-  <div class="flex flex-wrap gap-3 justify-center">
-    {SKILLS.map((skill) => (
-      <span class="skill-tag btn-stipple-dark">{skill}</span>
+  <SectionTitle>Tools &amp; methods</SectionTitle>
+  <div class="skill-index">
+    {SKILL_GROUPS.map(group => (
+      <div>
+        <h3>{group.title}</h3>
+        <ul>{group.skills.map(skill => <li>{skill}</li>)}</ul>
+      </div>
     ))}
   </div>
 </Section>
 
 <style>
-  .skill-tag {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--foreground);
-    border: 1.5px solid var(--foreground);
-    position: relative;
-    overflow: hidden;
-    z-index: 0;
-  }
+  .skill-index { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+  h3 { font-family: inherit; font-size: 0.875rem; font-weight: 600; margin-bottom: 0.75rem; }
+  ul { list-style: none; padding: 0; margin: 0; font-size: 0.9375rem; line-height: 1.85; color: var(--muted-foreground); }
+  @media (max-width: 550px) { .skill-index { grid-template-columns: 1fr; gap: 1.5rem; } }
 </style>

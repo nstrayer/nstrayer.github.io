@@ -1,194 +1,97 @@
 ---
-/**
- * ProjectCard Component
- * 
- * Print-inspired project card with sharp edges and defined borders.
- * Matches the overall aesthetic.
- */
+import type { ImageMetadata } from 'astro';
 import type { Project } from '../data/projects';
-import { Icon } from 'astro-icon/components';
 import { marked } from 'marked';
 import { Image } from 'astro:assets';
-import StippledPattern from './ui/StippledPattern.astro';
 
 type Props = Project;
-
-const { title, link, photo, github, description } = Astro.props;
+const { title, link, photo, github, description, caption, category } = Astro.props;
 const parsedDescription = description.map(desc => marked.parseInline(desc, { async: false }));
+const localImages = import.meta.glob<{ default: ImageMetadata }>(
+  '../../public/**/*.{png,jpg,jpeg,webp,gif}', { eager: true }
+);
+const localImage = typeof photo === 'string'
+  ? localImages[`../../public${photo}`]?.default
+  : photo;
 ---
 
-<article class="project-card">
-  <!-- Stippled shadow layer - revealed on hover -->
-  <div class="stippled-shadow" aria-hidden="true">
-    <StippledPattern density={0.7} dotSize={2.2} width="100%" height="100%" />
-  </div>
-  
-  <!-- Main card content -->
-  <div class="card-inner">
-    {photo ? (
-      <div class="card-image">
-        {typeof photo === 'string' ? (
-          <Image 
-            src={photo} 
-            alt={title} 
-            width={600} 
-            height={300} 
-            class="image" 
-            quality={80} 
-          />
-        ) : (
-          <Image 
-            src={photo} 
-            alt={title} 
-            width={600} 
-            height={300} 
-            class="image" 
-            quality={80} 
-          />
-        )}
-      </div>
-    ) : (
-      <div class="card-placeholder">
-        <StippledPattern density={0.5} dotSize={2.5} width="100%" height="100%" />
-      </div>
-    )}
-    
-    <div class="card-content">
-      <h3 class="card-title">{title}</h3>
-      <div class="card-description">
-        {parsedDescription.map((html) => <p set:html={html} />)}
-      </div>
+<article class:list={['project-entry', { 'project-without-image': !photo }]}>
+  {photo && (
+    <figure class="project-figure">
+      {localImage && localImage.format !== 'gif' ? (
+        <Image
+          src={localImage}
+          alt={title.trim()}
+          width={Math.min(864, localImage.width)}
+          widths={[256, 320, 576, 864].filter(width => width <= localImage.width)}
+          sizes="(max-width: 700px) 256px, 288px"
+          quality={80}
+          class="project-image"
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <img
+          src={typeof photo === 'string' ? photo : photo.src}
+          alt={title.trim()}
+          width={localImage?.width}
+          height={localImage?.height}
+          class="project-image"
+          loading="lazy"
+          decoding="async"
+        />
+      )}
+      {caption && <figcaption>{caption}</figcaption>}
+    </figure>
+  )}
+  <div class="project-copy">
+    {category && <p class="project-category">{category}</p>}
+    <h3>{title.trim()}</h3>
+    <div class="project-description">
+      {parsedDescription.map(html => <p set:html={html} />)}
     </div>
-    
     {(link || github) && (
-      <div class="card-footer">
-        {link && (
-          <a href={link} target="_blank" rel="noopener noreferrer" class="card-link btn-stipple-dark">
-            <Icon name="ri:external-link-line" size={16} />
-            <span>View</span>
-          </a>
-        )}
-        {github && (
-          <a href={github} target="_blank" rel="noopener noreferrer" class="card-link btn-stipple-dark">
-            <Icon name="ri:github-fill" size={16} />
-            <span>Code</span>
-          </a>
-        )}
+      <div class="link-row project-links">
+        {link && <a href={link} target="_blank" rel="noopener noreferrer" class="text-link">View project <span aria-hidden="true">↗</span></a>}
+        {github && <a href={github} target="_blank" rel="noopener noreferrer" class="text-link">Source code <span aria-hidden="true">↗</span></a>}
       </div>
     )}
   </div>
 </article>
 
 <style>
-  .project-card {
-    position: relative;
-    height: 100%;
+  .project-entry {
+    display: grid;
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+    align-items: start;
+    gap: 2rem;
   }
-
-  .stippled-shadow {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    right: -8px;
-    bottom: -8px;
-    opacity: 0;
-    z-index: 0;
-  }
-
-  .card-inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background: var(--card);
-    border: 2px solid var(--foreground);
-    position: relative;
-    z-index: 1;
-  }
-
-  .card-image {
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    border-bottom: 2px solid var(--foreground);
-  }
-
-  .image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .project-entry + .project-entry { border-top: 1px solid var(--border); padding-top: 1.75rem; }
+  .project-without-image { grid-template-columns: 1fr; }
+  .project-figure { min-width: 0; max-width: 18rem; margin: 0; }
+  .project-image {
     display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 12rem;
+    object-fit: contain;
+    object-position: top left;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
-
-  .card-placeholder {
-    width: 100%;
-    aspect-ratio: 16 / 10;
-    border-bottom: 2px solid var(--foreground);
-    opacity: 0.25;
-  }
-
-  .card-content {
-    flex: 1;
-    padding: 1.25rem;
-  }
-
-  .card-title {
-    font-family: 'Bitter', Georgia, serif;
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: var(--foreground);
-    margin-bottom: 0.75rem;
-    line-height: 1.3;
-  }
-
-  .card-description {
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--muted-foreground);
-  }
-
-  .card-description :global(p) {
-    margin-bottom: 0.5rem;
-  }
-
-  .card-description :global(p:last-child) {
-    margin-bottom: 0;
-  }
-
-  .card-description :global(a) {
-    color: var(--foreground);
-    text-decoration: underline;
-  }
-
-  .card-footer {
-    display: flex;
-    gap: 0;
-    border-top: 2px solid var(--foreground);
-    margin-top: auto;
-  }
-
-  .card-link {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--foreground);
-    text-decoration: none;
-    background: transparent;
-    transition: color 0.15s ease;
-    position: relative;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .card-link:hover {
-    color: var(--foreground);
-  }
-
-  .card-link:not(:last-child) {
-    border-right: 2px solid var(--foreground);
+  figcaption { margin-top: 0.625rem; font-size: 0.75rem; line-height: 1.6; color: var(--muted-foreground); }
+  .project-category { margin-bottom: 0.625rem; font-size: 0.8125rem; color: var(--muted-foreground); }
+  .project-copy { min-width: 0; }
+  h3 { font-size: 1.375rem; font-weight: 600; line-height: 1.3; margin-bottom: 0.75rem; }
+  .project-description { max-width: 65ch; font-size: 0.9375rem; line-height: 1.65; }
+  .project-description > p + p { margin-top: 0.5rem; }
+  .project-description :global(a) { text-decoration: underline; text-underline-offset: 3px; }
+  .project-links { margin-top: 0.75rem; }
+  @media (max-width: 700px) {
+    .project-entry { grid-template-columns: 1fr; gap: 1.25rem; }
+    .project-figure { max-width: 16rem; }
+    .project-image { max-height: 10rem; }
   }
 </style>

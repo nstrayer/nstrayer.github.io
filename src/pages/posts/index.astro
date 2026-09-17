@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import PostCard from '../../components/PostCard.astro';
-import StippledPattern from '../../components/ui/StippledPattern.astro';
 import { SITE_CONFIG } from '../../data/constants';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
@@ -14,13 +13,10 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   title={`Posts — ${SITE_CONFIG.name}`}
   description="Short notes on software, data, visualization, and things learned along the way."
 >
-  <main>
+  <main id="content" class="page-width">
     <header class="page-header">
-      <p class="eyebrow">Notes & observations</p>
-      <h1>Posts</h1>
-      <div class="title-accent" aria-hidden="true">
-        <StippledPattern density={0.75} dotSize={2} width="100%" height="100%" />
-      </div>
+      <a class="text-link" href="/"><span aria-hidden="true">←</span> Home</a>
+      <h1 class="ink-heading">Posts</h1>
       <p class="lede">Short notes on software, data, visualization, and things learned along the way.</p>
     </header>
 
@@ -45,55 +41,41 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
 <style>
   main {
     position: relative;
-    z-index: 1;
     min-height: calc(100vh - 8rem);
-    padding: 10rem 1.5rem 6rem;
+    padding-block: 2rem 4rem;
   }
 
   .page-header,
   .posts-list {
     width: 100%;
     max-width: 46rem;
-    margin-inline: auto;
   }
 
   .page-header {
-    margin-bottom: 4rem;
-    text-align: center;
-  }
-
-  .eyebrow {
-    margin: 0 0 0.75rem;
-    color: var(--muted-foreground);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    margin-bottom: 2rem;
   }
 
   h1 {
-    margin: 0;
-    font-size: clamp(3rem, 10vw, 5rem);
-    line-height: 1;
-  }
-
-  .title-accent {
-    width: 6rem;
-    height: 0.5rem;
-    margin: 1rem auto 0;
-    opacity: 0.6;
+    margin: 1.5rem 0 0;
+    font-size: clamp(2.5rem, 6vw, 3.25rem);
+    font-weight: 500;
+    line-height: 1.15;
   }
 
   .lede {
     max-width: 38rem;
-    margin: 1.75rem auto 0;
+    margin: 1.25rem 0 0;
     color: var(--muted-foreground);
     font-size: 1.05rem;
     line-height: 1.7;
   }
 
+  .posts-list {
+    border-top: 1px solid var(--rule);
+    padding-top: 0.75rem;
+  }
+
   .empty-state {
-    border-top: 2px solid var(--foreground);
     padding-top: 1.5rem;
     color: var(--muted-foreground);
   }

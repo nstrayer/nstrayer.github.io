@@ -7,6 +7,8 @@ export interface Project {
   photo: string | ImageMetadata;  // Updated to support both string and ImageMetadata
   github: string;
   description: string[];
+  caption?: string;
+  category?: string;
 }
 
 // No need for CSV parsing or transformation - data is already in the correct format

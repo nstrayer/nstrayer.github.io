@@ -22,9 +22,9 @@ const { statement, tools } = Astro.props;
 
 <style>
   .ai-attribution {
-    margin-top: 4rem;
-    background: var(--card);
-    border: 1px solid color-mix(in oklch, var(--foreground) 65%, transparent);
+    margin-top: 3rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
   }
 
   .attribution-heading {
@@ -32,8 +32,6 @@ const { statement, tools } = Astro.props;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 0.9rem 1.25rem;
-    border-bottom: 1px solid color-mix(in oklch, var(--foreground) 25%, transparent);
   }
 
   h2 {
@@ -44,7 +42,7 @@ const { statement, tools } = Astro.props;
 
   p {
     margin: 0;
-    padding: 0.85rem 1.25rem 1.25rem;
+    padding-block: 0.75rem;
     color: var(--muted-foreground);
     font-size: 0.95rem;
     line-height: 1.65;
@@ -53,9 +51,8 @@ const { statement, tools } = Astro.props;
   .tools-row {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
-    padding: 0.8rem 1.25rem;
-    border-top: 1px solid color-mix(in oklch, var(--foreground) 25%, transparent);
   }
 
   .tools-label {
@@ -74,9 +71,11 @@ const { statement, tools } = Astro.props;
   }
 
   li {
-    padding: 0.22rem 0.55rem;
-    border: 1px solid var(--border);
-    background: var(--background);
     font-size: 0.8rem;
+  }
+
+  li + li::before {
+    content: '·';
+    margin-right: 0.5rem;
   }
 </style>

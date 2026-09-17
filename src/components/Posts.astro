@@ -10,7 +10,10 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
 ---
 
 <Section id="posts">
-  <SectionTitle>Posts</SectionTitle>
+  <div class="posts-heading">
+    <SectionTitle>Posts</SectionTitle>
+    <a class="all-posts text-link" href="/posts/">View all posts <span aria-hidden="true">→</span></a>
+  </div>
   <p class="intro">Short notes on software, data, visualization, and things learned along the way.</p>
   <div class="posts-list">
     {posts.map((post) => (
@@ -23,34 +26,36 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
       />
     ))}
   </div>
-  <a class="all-posts btn-stipple-dark" href="/posts/">View all posts <span aria-hidden="true">→</span></a>
 </Section>
 
 <style>
+  :global(#posts) { padding-bottom: 4rem; }
+  :global(#posts > .section-inner) { padding-top: 2rem; }
+
+  .posts-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .posts-heading :global(.section-title) { margin-bottom: 0; }
+
   .intro {
-    max-width: 38rem;
-    margin: -2rem auto 3rem;
+    max-width: 65ch;
+    margin: 0 0 2rem;
     color: var(--muted-foreground);
-    line-height: 1.7;
-    text-align: center;
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
 
   .posts-list {
     max-width: 46rem;
-    margin: 0 auto;
   }
 
   .all-posts {
-    display: flex;
-    width: fit-content;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 2rem auto 0;
-    padding: 0.7rem 1rem;
-    border: 1px solid var(--foreground);
-    color: var(--foreground);
-    font-size: 0.875rem;
-    font-weight: 700;
-    text-decoration: none;
+    white-space: nowrap;
   }
 </style>
