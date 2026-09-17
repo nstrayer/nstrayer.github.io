@@ -5,7 +5,7 @@ publishedAt: 2026-09-16
 tags:
   - LLMs
 ai:
-  statement: No AI used to write this post.
+  statement: No AI used to write or edit (sorry) this post.
   tools:
     - Codex
 ---

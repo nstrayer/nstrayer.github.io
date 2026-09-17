@@ -8,10 +8,9 @@ const { statement, tools } = Astro.props;
 ---
 
 <aside class="ai-attribution" aria-labelledby="ai-attribution-title">
-  <div class="attribution-heading">
-    <h2 id="ai-attribution-title">AI assistance</h2>
-    <span class="info-mark" aria-hidden="true">i</span>
-  </div>
+  <header class="attribution-heading">
+    <h2 id="ai-attribution-title">How AI was used in the building of this post</h2>
+  </header>
   <p>{statement}</p>
   <div class="tools-row">
     <span class="tools-label">Tools</span>
@@ -33,25 +32,14 @@ const { statement, tools } = Astro.props;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    padding: 1.15rem 1.25rem 0;
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid color-mix(in oklch, var(--foreground) 25%, transparent);
   }
 
   h2 {
     margin: 0;
     font-size: 1rem;
-    font-weight: 700;
-  }
-
-  .info-mark {
-    display: grid;
-    width: 1.25rem;
-    height: 1.25rem;
-    place-items: center;
-    border: 1.5px solid currentColor;
-    border-radius: 50%;
-    font-family: 'Bitter', Georgia, serif;
-    font-size: 0.72rem;
-    font-weight: 700;
+    font-weight: 400;
   }
 
   p {
