@@ -190,6 +190,63 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     background: transparent;
   }
 
+  .post-body :global(table) {
+    width: max-content;
+    max-width: 100%;
+    margin: 2rem auto;
+    border-collapse: collapse;
+    border: 1px solid var(--foreground);
+    font-size: 0.94rem;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.45;
+  }
+
+  .post-body :global(th),
+  .post-body :global(td) {
+    padding: 0.75rem 1rem;
+    border-right: 1px solid var(--foreground);
+    border-bottom: 1px solid var(--foreground);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .post-body :global(th) {
+    background: color-mix(in oklch, var(--card) 85%, transparent);
+    font-family: 'Bitter', Georgia, serif;
+    font-weight: 700;
+  }
+
+  .post-body :global(tbody tr:nth-child(even)) {
+    background: color-mix(in oklch, var(--card) 55%, transparent);
+  }
+
+  .post-body :global(tbody tr:last-child td) {
+    border-bottom: 0;
+  }
+
+  .post-body :global(th:last-child),
+  .post-body :global(td:last-child) {
+    border-right: 0;
+  }
+
+  .post-body :global(th[align='right']),
+  .post-body :global(td[align='right']) {
+    text-align: right;
+  }
+
+  .post-body :global(table code) {
+    white-space: nowrap;
+  }
+
+  .post-body :global(caption) {
+    caption-side: bottom;
+    padding: 0.7rem 0.25rem 0;
+    color: var(--muted-foreground);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    text-align: left;
+  }
+
   .post-body :global(img) {
     max-width: 100%;
     height: auto;
@@ -201,5 +258,18 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     margin: 3rem 0;
     border: 0;
     border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    .post-body :global(table) {
+      display: block;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+    }
+
+    .post-body :global(th),
+    .post-body :global(td) {
+      padding: 0.65rem 0.75rem;
+    }
   }
 </style>

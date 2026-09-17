@@ -3,6 +3,8 @@ import tailwindcss from "@tailwindcss/vite";
 import icon from 'astro-icon';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
+import { satteri } from '@astrojs/markdown-satteri';
+import { tableCaptions } from './src/lib/markdown/tableCaptions.mjs';
 
 // Vite plugin for shader files
 const shaderPlugin = {
@@ -34,6 +36,11 @@ const csvPlugin = {
 export default defineConfig({
   site: 'https://nickstrayer.me',
   output: 'static',
+  markdown: {
+    processor: satteri({
+      hastPlugins: [tableCaptions],
+    }),
+  },
   // Preserve spacing around inline components when upgrading from Astro 5.
   compressHTML: true,
   vite: {

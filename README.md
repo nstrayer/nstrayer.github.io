@@ -69,6 +69,17 @@ Post content starts here.
 The `tags` and `ai` fields are optional. Set `draft: true` to keep a post out of
 the generated site.
 
+To add a semantic caption to a Markdown table, place a `Table:` paragraph
+immediately after it. Inline Markdown is supported in the caption:
+
+```md
+| Variant | Error rate |
+| --- | ---: |
+| Current | 58% |
+
+Table: Error rate for the **current** tool schema.
+```
+
 ## Deployment
 
 Pushing to `master` runs `.github/workflows/deploy.yml`, checks the source, builds
