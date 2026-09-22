@@ -82,7 +82,6 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     max-width: 42rem;
     margin: 0;
     font-size: clamp(2rem, 5vw, 3.25rem);
-    font-weight: 500;
     line-height: 1.15;
   }
 
@@ -173,12 +172,13 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     background: transparent;
   }
 
+  /* Typeset table: heavier rules above and below, hairlines between rows, no verticals. */
   .post-body :global(table) {
     width: max-content;
     max-width: 100%;
-    margin: 2rem auto;
+    margin: 2rem 0;
     border-collapse: collapse;
-    border: 1px solid var(--foreground);
+    border-block: 1.5px solid var(--foreground);
     font-size: 0.94rem;
     font-variant-numeric: tabular-nums;
     line-height: 1.45;
@@ -186,21 +186,18 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
 
   .post-body :global(th),
   .post-body :global(td) {
-    padding: 0.75rem 1rem;
-    border-right: 1px solid var(--foreground);
-    border-bottom: 1px solid var(--foreground);
+    padding: 0.5rem 1.25rem 0.5rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
     text-align: left;
     vertical-align: top;
   }
 
   .post-body :global(th) {
-    background: color-mix(in oklch, var(--card) 85%, transparent);
-    font-family: 'Bitter', Georgia, serif;
-    font-weight: 700;
+    font-weight: 600;
   }
 
-  .post-body :global(tbody tr:nth-child(even)) {
-    background: color-mix(in oklch, var(--card) 55%, transparent);
+  .post-body :global(thead th) {
+    border-bottom-color: var(--foreground);
   }
 
   .post-body :global(tbody tr:last-child td) {
@@ -209,7 +206,7 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
 
   .post-body :global(th:last-child),
   .post-body :global(td:last-child) {
-    border-right: 0;
+    padding-right: 0;
   }
 
   .post-body :global(th[align='right']),
@@ -223,7 +220,7 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
 
   .post-body :global(caption) {
     caption-side: bottom;
-    padding: 0.7rem 0.25rem 0;
+    padding: 0.7rem 0 0;
     color: var(--muted-foreground);
     font-size: 0.82rem;
     line-height: 1.5;
@@ -252,7 +249,7 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
 
     .post-body :global(th),
     .post-body :global(td) {
-      padding: 0.65rem 0.75rem;
+      padding-right: 1rem;
     }
   }
 </style>

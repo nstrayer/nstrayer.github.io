@@ -2,6 +2,8 @@
 
 ## Current Status
 
+September 22, 2026: The design sweep's first pass is done: multiply-blended paper and images, one heading weight, balanced and pretty text wrapping, post tables with horizontal rules only, and real italic fonts. `npm run check` and the build pass; checked at desktop and phone widths.
+
 The homepage landing fills the first viewport, with Posts immediately below it.
 The intro grows naturally on smaller screens; the full-screen treatment is not
 applied to post pages or print. Removed the intro action links and Tools & methods

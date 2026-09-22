@@ -49,7 +49,7 @@
     url('../assets/paper-1920.webp') 1x,
     url('../assets/paper-3840.webp') 2x
   );
-  --paper-opacity: 0.40;
+  --paper-opacity: 0.55;
   /* One continuous sheet; a minimum width keeps the grain fine on phones. */
   --paper-size: max(1440px, 100vw, 150lvh) auto;
   --ink-blend: multiply;
@@ -147,10 +147,14 @@
     scroll-behavior: smooth;
     letter-spacing: -0.01em;
   }
+  /* One heading weight throughout; hierarchy comes from size alone. */
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Bitter', Georgia, serif;
+    font-weight: 500;
     letter-spacing: -0.02em;
+    text-wrap: balance;
   }
+  p, li, figcaption, blockquote { text-wrap: pretty; }
   a:focus-visible, summary:focus-visible {
     outline: 2px solid var(--foreground);
     outline-offset: 5px;
@@ -200,7 +204,6 @@
     display: table;
     max-width: 100%;
     font-size: 1.75rem;
-    font-weight: 500;
     line-height: 1.3;
     margin-bottom: 1.75rem;
     letter-spacing: -0.025em;
@@ -240,8 +243,8 @@
   .skip-link { position: absolute; top: 0.5rem; left: 1.5rem; z-index: 100; padding: 0.75rem 1rem; background: var(--background); transform: translateY(-200%); }
   .skip-link:focus { transform: translateY(0); }
 
-  /* Text blends with the paper, while images retain their original colors. */
-  :is(main, #hero) :is(h1, h2, h3, p) { mix-blend-mode: var(--ink-blend); }
+  /* Text and images print onto the paper: white areas take on its tone and grain. */
+  :is(main, #hero) :is(h1, h2, h3, p, img) { mix-blend-mode: var(--ink-blend); }
   @supports (background-clip: text) or (-webkit-background-clip: text) {
     .ink-heading {
       --ink-wash: color-mix(in srgb, var(--foreground) var(--ink-coverage), transparent);
@@ -269,7 +272,9 @@
     background-size: var(--paper-size);
     background-position: center top;
     background-repeat: no-repeat;
-    filter: grayscale(1) brightness(1.45) contrast(1.1);
+    /* Multiply only darkens, so the grain shades the warm base without graying it. */
+    filter: grayscale(1) brightness(1.6) contrast(1.05);
+    mix-blend-mode: multiply;
     opacity: var(--paper-opacity);
     pointer-events: none;
     z-index: -1;
@@ -297,7 +302,7 @@
     .text-link { transition: none; }
   }
   @media print, (forced-colors: active), (prefers-contrast: more) {
-    :is(main, #hero) :is(h1, h2, h3, p) { mix-blend-mode: normal; }
+    :is(main, #hero) :is(h1, h2, h3, p, img) { mix-blend-mode: normal; }
     .ink-heading { background-image: none; -webkit-text-fill-color: currentColor; }
     .paper-surface::before { display: none; }
   }
