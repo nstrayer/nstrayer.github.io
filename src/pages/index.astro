@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import ContentsRibbon from '../components/ContentsRibbon.astro';
 import About from '../components/About.astro';
 import Projects from '../components/Projects.astro';
 import Posts from '../components/Posts.astro';
@@ -11,6 +12,7 @@ import { SITE_CONFIG } from '../data/constants';
 
 <Layout title={`${SITE_CONFIG.name} - ${SITE_CONFIG.title}`}>
   <Hero slot="intro" />
+  <ContentsRibbon />
   <main id="content">
     <Posts />
     <Projects />

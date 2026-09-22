@@ -1,0 +1,189 @@
+---
+/** Mobile section menu: a pale bookmark ribbon that opens a full-screen contents page. */
+import { SITE_CONFIG } from '../data/constants';
+import { navItems } from './Navigation';
+---
+
+<button class="ribbon" type="button" popovertarget="contents-sheet" aria-label="Open contents">
+  <span class="ribbon-cloth">
+    <svg width="14" height="11" viewBox="0 0 14 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+      <line x1="1" y1="1.5" x2="13" y2="1.5" />
+      <line x1="1" y1="5.5" x2="9.5" y2="5.5" />
+      <line x1="1" y1="9.5" x2="11.5" y2="9.5" />
+    </svg>
+  </span>
+</button>
+
+<div id="contents-sheet" class="contents-sheet paper-surface" popover aria-label="Contents">
+  <div class="contents-header">
+    <p class="contents-name">{SITE_CONFIG.name}</p>
+    <p class="site-role">{SITE_CONFIG.title}</p>
+  </div>
+  <nav aria-labelledby="contents-label">
+    <p id="contents-label" class="contents-label">On this page</p>
+    <ul>
+      {navItems.map(({ href, label }) => (
+        <li><a href={href} data-section={href.slice(1)}>{label}</a></li>
+      ))}
+    </ul>
+  </nav>
+  <div class="contents-footer">
+    <a class="text-link" href="#top"><span aria-hidden="true">↑</span> Back to top</a>
+    <a class="text-link" href="/posts/">All posts <span aria-hidden="true">→</span></a>
+  </div>
+  <button class="ribbon ribbon--close" type="button" popovertarget="contents-sheet" popovertargetaction="hide" aria-label="Close contents" autofocus>
+    <span class="ribbon-cloth">
+      <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+        <line x1="1.5" y1="1.5" x2="9.5" y2="9.5" />
+        <line x1="9.5" y1="1.5" x2="1.5" y2="9.5" />
+      </svg>
+    </span>
+  </button>
+</div>
+
+<script>
+  const sheet = document.getElementById('contents-sheet');
+  const links = sheet?.querySelectorAll<HTMLAnchorElement>('a') ?? [];
+
+  // Following a link should reveal the page, not leave the sheet on top of it.
+  links.forEach((link) => link.addEventListener('click', () => sheet?.hidePopover()));
+
+  // Popovers normally close on Escape, but not every browser does so reliably.
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && sheet?.matches(':popover-open')) sheet.hidePopover();
+  });
+
+  // Mark the section the reader was looking at when the sheet opens.
+  sheet?.addEventListener('beforetoggle', (event) => {
+    if ((event as ToggleEvent).newState !== 'open') return;
+    const threshold = window.innerHeight * 0.35;
+    let current: string | undefined;
+    sheet.querySelectorAll<HTMLAnchorElement>('a[data-section]').forEach((link) => {
+      const section = document.getElementById(link.dataset.section ?? '');
+      if (section && section.getBoundingClientRect().top <= threshold) current = link.dataset.section;
+    });
+    sheet.querySelectorAll<HTMLAnchorElement>('a[data-section]').forEach((link) => {
+      if (link.dataset.section === current) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  });
+</script>
+
+<style>
+  /* Hidden unless the screen is narrow and the browser supports popovers. */
+  .ribbon, .contents-sheet { display: none; }
+
+  .ribbon {
+    position: fixed;
+    top: 0;
+    right: 1rem;
+    z-index: 50;
+    width: 44px;
+    height: 58px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--foreground);
+    justify-content: center;
+    align-items: flex-start;
+    cursor: pointer;
+  }
+  .ribbon-cloth {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 30px;
+    height: 52px;
+    box-sizing: border-box;
+    padding-top: 18px;
+    background: color-mix(in srgb, var(--foreground) 17%, transparent);
+    mix-blend-mode: var(--ink-blend);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 88%, 0 100%);
+  }
+  .ribbon--close { position: absolute; height: 62px; }
+  .ribbon--close .ribbon-cloth { height: 56px; }
+  .ribbon:focus-visible { outline: 2px solid var(--foreground); outline-offset: 2px; }
+
+  .contents-sheet {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    padding: 1.75rem 1.5rem 2rem;
+    box-sizing: border-box;
+    flex-direction: column;
+    color: var(--foreground);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .contents-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 3.5rem 1rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .contents-name {
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+  .contents-label {
+    margin: 2.5rem 0 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+  }
+  .contents-sheet ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .contents-sheet li { border-bottom: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent); }
+  .contents-sheet li a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 4.5rem;
+    font-family: 'Bitter', Georgia, serif;
+    font-size: 2.125rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    text-decoration: none;
+    mix-blend-mode: var(--ink-blend);
+  }
+  .contents-sheet li a[aria-current]::after {
+    content: '';
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .contents-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .contents-sheet nav { margin-bottom: 2rem; }
+
+  @media (max-width: 700px) {
+    @supports selector(:popover-open) {
+      .ribbon { display: flex; }
+      .contents-sheet:popover-open { display: flex; }
+    }
+  }
+  @media print {
+    .ribbon, .contents-sheet { display: none !important; }
+  }
+</style>

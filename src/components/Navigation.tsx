@@ -1,4 +1,4 @@
-const navItems = [
+export const navItems = [
   { href: "#posts", label: "Posts" },
   { href: "#projects", label: "Selected work" },
   { href: "#about", label: "About" },
