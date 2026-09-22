@@ -274,6 +274,14 @@
     pointer-events: none;
     z-index: -1;
   }
+  /* Touch browsers tint their status bar with the flat paper color; fade the
+     texture in below the top edge so the page meets that bar without a seam. */
+  @media (pointer: coarse) {
+    .paper-surface::before {
+      -webkit-mask-image: linear-gradient(to bottom, transparent, #000 5rem);
+      mask-image: linear-gradient(to bottom, transparent, #000 5rem);
+    }
+  }
 
   @media (max-width: 700px) {
     .site-header { padding-top: 1.75rem; }
