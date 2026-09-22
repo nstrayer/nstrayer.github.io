@@ -102,7 +102,9 @@ import { navItems } from './Navigation';
   }
   .ribbon--close { position: absolute; height: 62px; }
   .ribbon--close .ribbon-cloth { height: 56px; }
-  .ribbon:focus-visible { outline: 2px solid var(--foreground); outline-offset: 2px; }
+  /* An outline can't follow the notched shape, so focus deepens the cloth instead. */
+  .ribbon:focus-visible { outline: none; }
+  .ribbon:focus-visible .ribbon-cloth { background: color-mix(in srgb, var(--foreground) 32%, transparent); }
 
   .contents-sheet {
     position: fixed;
@@ -151,12 +153,12 @@ import { navItems } from './Navigation';
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    min-height: 4.5rem;
+    min-height: 3.5rem;
     font-family: 'Bitter', Georgia, serif;
-    font-size: 2.125rem;
+    font-size: 1.625rem;
     font-weight: 500;
-    line-height: 1.1;
-    letter-spacing: -0.035em;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
     text-decoration: none;
     mix-blend-mode: var(--ink-blend);
   }
