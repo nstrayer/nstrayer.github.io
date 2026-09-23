@@ -22,6 +22,60 @@ const { title, description = 'Nick Strayer’s personal website and portfolio.' 
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {import.meta.env.DEV && (
+      <script is:inline>
+        /* [DEBUG-hs7x] temporary horizontal-overflow probe; remove after diagnosis */
+        (function () {
+          if (!location.search.includes('overflow-debug')) return;
+          function describe(e) {
+            var c = typeof e.className === 'string' ? e.className.trim().split(/\s+/).filter(function (n) { return n && n.indexOf('astro-') !== 0; }).join('.') : '';
+            return e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + (c ? '.' + c : '');
+          }
+          var box, maxScroll = 0, suffix = '';
+          function run() {
+            var root = document.documentElement, limit = root.clientWidth, list = [];
+            maxScroll = Math.max(maxScroll, root.scrollWidth);
+            document.querySelectorAll('body *').forEach(function (e) {
+              if (e.id === 'debug-hs7x') return;
+              var s = getComputedStyle(e);
+              if (s.display === 'none') return;
+              var r = e.getBoundingClientRect();
+              if (r.width > 0 && (r.right > limit + 0.5 || r.left < -0.5)) list.push((s.position === 'fixed' ? '[fixed] ' : '') + describe(e) + ' ' + Math.round(r.left) + '>' + Math.round(r.right));
+            });
+            if (!box) {
+              box = document.createElement('div');
+              box.id = 'debug-hs7x';
+              box.style.cssText = 'position:fixed;left:8px;right:8px;top:70px;z-index:99999;background:#fff;color:#000;font:13px/1.35 monospace;padding:8px;border:2px solid red;white-space:pre-wrap;word-break:break-all;pointer-events:none';
+              document.body.appendChild(box);
+            }
+            var vv = window.visualViewport;
+            box.textContent = 'DEBUG-hs7x ' + (maxScroll > limit || scrollX !== 0 ? 'RED' : 'GREEN') + ' scrollX=' + scrollX + ' inner=' + innerWidth + ' client=' + limit + ' scroll=' + root.scrollWidth + ' max=' + maxScroll + ' vv=' + (vv ? Math.round(vv.width) + '@' + vv.scale.toFixed(3) + ' off=' + Math.round(vv.offsetLeft) : '-') + ' y=' + Math.round(scrollY) + ' | ' + (list.slice(0, 8).join(' ; ') || 'no offenders') + suffix;
+          }
+          var queued = false;
+          function schedule() { if (queued) return; queued = true; requestAnimationFrame(function () { queued = false; run(); }); }
+          window.addEventListener('load', function () { setTimeout(run, 800); });
+          // ?overflow-debug=auto walks the whole page (loading lazy images), opens "More projects", and keeps the widest reading.
+          var seen = {};
+          if (location.search.includes('overflow-debug=auto')) window.addEventListener('load', function () {
+            var y = 0;
+            var timer = setInterval(function () {
+              run();
+              box.textContent.split(' | ')[1].split(' || ')[0].split(' ; ').forEach(function (o) { if (o !== 'no offenders') seen[o.replace(/ -?\d+>-?\d+$/, '')] = true; });
+              y += 500;
+              if (y > document.documentElement.scrollHeight) {
+                clearInterval(timer);
+                var more = document.querySelector('.more-projects'); if (more) more.open = true;
+                setTimeout(function () { suffix = ' || AUTO DONE, offenders seen: ' + (Object.keys(seen).join(' ; ') || 'none'); run(); }, 1500);
+              }
+              window.scrollTo(0, y);
+            }, 400);
+          });
+          window.addEventListener('scroll', schedule, { passive: true });
+          if (window.visualViewport) visualViewport.addEventListener('scroll', schedule);
+          setInterval(run, 1000);
+        })();
+      </script>
+    )}
     <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   </head>
   <body id="top">
