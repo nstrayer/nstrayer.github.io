@@ -40,6 +40,11 @@ const { posts } = Astro.props;
     border-bottom: 1px solid var(--rule-faint);
   }
 
+  /* The list ends without a trailing rule. */
+  li:last-child {
+    border-bottom: none;
+  }
+
   /* Date and tags share a narrow column, with the date on the title's baseline. */
   article {
     display: grid;
