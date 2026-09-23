@@ -1,6 +1,6 @@
-export function formatPostDate(date: Date): string {
+export function formatPostDate(date: Date, month: 'long' | 'short' = 'long'): string {
   return new Intl.DateTimeFormat('en-US', {
-    month: 'long',
+    month,
     day: 'numeric',
     year: 'numeric',
     timeZone: 'UTC',

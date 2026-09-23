@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Section from './Section.astro';
 import SectionTitle from './SectionTitle.astro';
-import PostCard from './PostCard.astro';
+import PostList from './PostList.astro';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf())
@@ -15,17 +15,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
     <a class="all-posts text-link" href="/posts/">View all posts <span aria-hidden="true">→</span></a>
   </div>
   <p class="intro">Short notes on software, data, visualization, and things learned along the way.</p>
-  <div class="posts-list">
-    {posts.map((post) => (
-      <PostCard
-        slug={post.id}
-        title={post.data.title}
-        description={post.data.description}
-        publishedAt={post.data.publishedAt}
-        tags={post.data.tags}
-      />
-    ))}
-  </div>
+  <PostList posts={posts} />
 </Section>
 
 <style>
@@ -47,10 +37,6 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
     max-width: 65ch;
     margin: 0 0 2rem;
     color: var(--muted-foreground);
-  }
-
-  .posts-list {
-    max-width: 46rem;
   }
 
   .all-posts {

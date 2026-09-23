@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import PostCard from '../../components/PostCard.astro';
+import PostList from '../../components/PostList.astro';
 import { SITE_CONFIG } from '../../data/constants';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
@@ -20,17 +20,9 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
       <p class="lede">Short notes on software, data, visualization, and things learned along the way.</p>
     </header>
 
-    <section class="posts-list" aria-label="All posts">
+    <section aria-label="All posts">
       {posts.length > 0 ? (
-        posts.map((post) => (
-          <PostCard
-            slug={post.id}
-            title={post.data.title}
-            description={post.data.description}
-            publishedAt={post.data.publishedAt}
-            tags={post.data.tags}
-          />
-        ))
+        <PostList posts={posts} />
       ) : (
         <p class="empty-state">No posts yet. Check back soon.</p>
       )}
@@ -45,13 +37,9 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
     padding-block: 2rem 4rem;
   }
 
-  .page-header,
-  .posts-list {
+  .page-header {
     width: 100%;
     max-width: 46rem;
-  }
-
-  .page-header {
     margin-bottom: 2rem;
   }
 
@@ -66,11 +54,6 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
     margin: 1.25rem 0 0;
     color: var(--muted-foreground);
     font-size: var(--text-large);
-  }
-
-  .posts-list {
-    border-top: 1px solid var(--rule);
-    padding-top: 0.75rem;
   }
 
   .empty-state {

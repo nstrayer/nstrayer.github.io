@@ -17,8 +17,13 @@
 
 ## Current Design Work
 
-Post lists now use compact entries: a subtly underlined title link, description,
-then a small date/tag line. The separate “Read post” row is removed, and homepage
+Post lists (September 22) are a dated list in `PostList.astro`, which replaced
+`PostCard.astro`: a `<ul>` with hairlines above, between, and below the entries. A
+6.5rem left column holds the short date ("Sep 16, 2026") on the title's baseline,
+with the tags beneath it to save height. The title and description sit to the right.
+On screens ≤600px the date and tags share one line ("Sep 16, 2026 · LLMs") above
+the title. The user chose this "printed contents page" look over compact rows and
+bullets. Title links have no underline at rest and gain one on hover. The homepage
 “View all posts” sits beside the section heading. The homepage and posts archive
 share this presentation. The homepage Posts section retains generous outer spacing
 around its heading and list. Intro navigation uses small muted bullets and no longer
@@ -53,7 +58,9 @@ September 22, 2026: Mobile (≤700px) homepage navigation now includes `Contents
 
 September 22, 2026 design sweep (goal: warm printed page, elegant and crisp, not skeuomorphic). Implemented: the paper layer now uses `mix-blend-mode: multiply` at 0.55 opacity (brightness 1.6), which keeps the full warmth of `#f4f1e9`; the old gray overlay halved it. All `img` in `main`/`#hero` now multiply-blend like the ink, reversing the earlier "images keep original colors" choice. Headings share one weight (500, set in the base layer) and use `text-wrap: balance`; paragraphs use `pretty`. Post tables have heavier rules above and below, hairlines between rows, and no vertical lines. The fonts link now loads real Bitter and DM Sans italics. Second pass: the shadcn palette, the `@theme` mapping and the never-applied `.dark` block are gone. `:root` now has one navy (`--foreground`), plus `--muted-foreground`, `--rule` (40%), `--rule-faint` (15%) and `--paper-light` (code backgrounds). Type tokens: `--text-caption` .8125, `--text-small` .875, `--text-body` 1, `--text-large` 1.125 (hero intro, ledes, post body), `--text-h3` 1.375, `--text-h2` 1.75 (1.5 at ≤700px), and `--text-display` (every h1). Leading is `--leading-body` 1.7 and `--leading-small` 1.5; headings default to 1.3 and h1 uses 1.12. Links in running text inside `main` share one base rule: a hairline underline at 40% of the text color that darkens on hover. Footnote markers and `.text-link` are excluded.
 
-Still open from the sweep: separator and title-dash mismatches, CV link rows misaligned, inconsistent project data, quieter code styling, smaller footnotes, optical centering of the intro, ribbon overlap on phones, and dead code (Skills, Card, SectionDivider, `ui/*`, WebGL; the Tailwind utilities are unused apart from preflight). Bug: the Markdown footnotes heading has class `sr-only`, but Tailwind never generates that class because it scans only source files, so "Footnotes" shows on the page.
+Third pass: project titles are now sentence case with no trailing periods, and every description line ends in punctuation. Spelling is fixed, stray `</li>` and unclosed `<a>` tags are repaired, and "Phewas-ME" is now "PheWAS-ME". The Positron entry is still the only one with a category and caption. Separators are `·` everywhere, page titles use " — ", the CV and Resume link rows line up, and `global.css` defines `.sr-only` so the Markdown "Footnotes" label is hidden. Footnotes are small and muted below a short rule, and post lists have their markers back (Tailwind preflight removes them).
+
+Still open from the sweep: quieter code styling, optical centering of the intro, ribbon overlap on phones, the favicon, social meta tags, post copy typos, and dead code (Skills, Card, SectionDivider, `ui/*`, WebGL; the Tailwind utilities are unused apart from preflight).
 
 The user prefers sentence-case labels and understated print cues. They dislike all-caps text and literal publication conventions such as "Fig. 01"; favor typography, spacing, alignment, and fine rules over decorative numbering.
 

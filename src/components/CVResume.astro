@@ -30,7 +30,9 @@ import SectionTitle from './SectionTitle.astro';
   .document-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
   h3 { font-size: var(--text-h3); margin-bottom: 0.75rem; }
   .document-grid p { max-width: 42ch; }
-  .document-links { margin-top: 1rem; }
+  /* Pin each link row to the bottom so the two columns line up. */
+  .document-grid > div { display: flex; flex-direction: column; }
+  .document-links { margin-top: auto; padding-top: 1rem; }
   .document-note { margin-top: 2rem; font-size: var(--text-caption); color: var(--muted-foreground); }
   @media (max-width: 550px) { .document-grid { grid-template-columns: 1fr; gap: 2rem; } }
 </style>

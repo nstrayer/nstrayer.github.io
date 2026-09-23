@@ -31,7 +31,7 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
       <header class="post-header">
         <div class="post-meta">
           <time datetime={publishedAt.toISOString()}>{formatPostDate(publishedAt)}</time>
-          {tags.length > 0 && <span aria-hidden="true">•</span>}
+          {tags.length > 0 && <span aria-hidden="true">·</span>}
           {tags.length > 0 && <span>{tags.join(' · ')}</span>}
         </div>
         <h1 class="ink-heading">{title}</h1>
@@ -130,6 +130,15 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     padding-left: 1.4rem;
   }
 
+  /* The CSS reset removes list markers; prose lists and footnotes need them back. */
+  .post-body :global(ul) {
+    list-style: disc;
+  }
+
+  .post-body :global(ol) {
+    list-style: decimal;
+  }
+
   .post-body :global(li) {
     margin: 0.5rem 0;
     padding-left: 0.3rem;
@@ -222,6 +231,44 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     height: auto;
     margin: 2rem 0;
     border: 1px solid var(--rule-faint);
+  }
+
+  /* Footnotes sit in small, muted type below a short rule, as on a printed page. */
+  .post-body :global(.footnotes) {
+    margin-top: 3rem;
+    color: var(--muted-foreground);
+    font-size: var(--text-small);
+  }
+
+  .post-body :global(.footnotes::before) {
+    content: '';
+    display: block;
+    width: 4rem;
+    margin-bottom: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .post-body :global(.footnotes ol) {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .post-body :global(.footnotes li) {
+    margin: 0.5rem 0;
+    padding-left: 0.25rem;
+  }
+
+  .post-body :global(.footnotes p) {
+    margin: 0;
+  }
+
+  .post-body :global([data-footnote-ref]) {
+    padding-left: 0.1em;
+  }
+
+  /* Some platforms draw ↩ as an emoji unless asked for the text form. */
+  .post-body :global([data-footnote-backref]) {
+    font-variant-emoji: text;
   }
 
   .post-body :global(hr) {
