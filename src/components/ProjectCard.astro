@@ -63,33 +63,37 @@ const localImage = typeof photo === 'string'
 
 <style>
   /* The markup follows the phone reading order: title, image, then text. On wider
-     screens, grid areas move the image into its own column beside the title and text. */
+     screens, grid areas move the image into its own column beside the title and text,
+     and the shorter of the two is centered against the taller one: the image beside
+     long text, or the text (between the two flexible rows) beside a tall image. */
   .project-entry {
     display: grid;
     grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    grid-template-areas: 'figure header' 'figure body';
+    grid-template-rows: 1fr auto auto 1fr;
+    grid-template-areas: 'figure .' 'figure header' 'figure body' 'figure .';
     align-items: start;
     column-gap: 2rem;
   }
   .project-entry + .project-entry { border-top: 1px solid var(--rule-faint); padding-top: 1.75rem; }
-  .project-without-image { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'header' 'body'; }
+  .project-without-image { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-template-areas: 'header' 'body'; }
   .project-header { grid-area: header; min-width: 0; }
-  .project-figure { grid-area: figure; min-width: 0; max-width: 18rem; margin: 0; }
+  .project-figure { grid-area: figure; align-self: center; min-width: 0; max-width: 18rem; margin: 0; }
   .project-body { grid-area: body; min-width: 0; }
+  /* Images narrower than their column sit centered in it, with the caption beneath. */
   .project-image {
     display: block;
     width: auto;
     max-width: 100%;
     height: auto;
     max-height: 12rem;
+    margin-inline: auto;
     object-fit: contain;
-    object-position: top left;
+    object-position: top;
     border: 0;
     border-radius: 0;
     box-shadow: none;
   }
-  figcaption { margin-top: 0.625rem; font-size: var(--text-caption); line-height: var(--leading-small); color: var(--muted-foreground); }
+  figcaption { margin-top: 0.625rem; text-align: center; font-size: var(--text-caption); line-height: var(--leading-small); color: var(--muted-foreground); }
   .project-category { margin-bottom: 0.625rem; font-size: var(--text-caption); color: var(--muted-foreground); }
   h3 { font-size: var(--text-h3); margin-bottom: 0.75rem; }
   .project-description { max-width: 65ch; }
