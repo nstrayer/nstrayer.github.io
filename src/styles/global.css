@@ -1,49 +1,11 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
+/* The page is one sheet of paper printed in one navy ink. Every other ink
+   color (muted text, rules) derives from --foreground. */
 :root {
-  --radius: 0.25rem;
-  /* Paper-like warm off-white background inspired by printed materials */
   --background: #f4f1e9;
+  /* Slightly lighter than the paper, for code. */
+  --paper-light: oklch(0.975 0.006 85);
   /* Texturelabs Paper 373. Keep its grain below the ink, with quiet tonal variation. */
   --paper-texture: image-set(
     url('../assets/paper-1920.webp') 1x,
@@ -56,89 +18,28 @@
   /* Dense navy ink with a little paper grain showing through large letterforms. */
   --ink-coverage: 90%;
   --ink-text-fill: transparent;
-  /* A muted navy ink, shared with the approved page design. */
+
   --foreground: #173d54;
-  --rule: color-mix(in srgb, var(--foreground) 40%, transparent);
-  --card: oklch(0.975 0.006 85);
-  --card-foreground: oklch(0.32 0.12 245);
-  --popover: oklch(0.975 0.006 85);
-  --popover-foreground: oklch(0.32 0.12 245);
-  --primary: oklch(0.32 0.12 245);
-  --primary-foreground: oklch(0.965 0.008 85);
-  --secondary: oklch(0.94 0.01 85);
-  --secondary-foreground: oklch(0.32 0.12 245);
-  --muted: oklch(0.92 0.008 85);
   --muted-foreground: #435e6c;
-  --accent: oklch(0.90 0.012 85);
-  --accent-foreground: oklch(0.32 0.12 245);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.32 0.12 245 / 0.15);
-  --input: oklch(0.32 0.12 245 / 0.15);
-  --ring: oklch(0.32 0.12 245);
-  --chart-1: oklch(0.45 0.12 245);
-  --chart-2: oklch(0.40 0.12 245);
-  --chart-3: oklch(0.35 0.12 245);
-  --chart-4: oklch(0.50 0.12 245);
-  --chart-5: oklch(0.55 0.12 245);
-  --sidebar: oklch(0.965 0.008 85);
-  --sidebar-foreground: oklch(0.32 0.12 245);
-  --sidebar-primary: oklch(0.32 0.12 245);
-  --sidebar-primary-foreground: oklch(0.965 0.008 85);
-  --sidebar-accent: oklch(0.94 0.01 85);
-  --sidebar-accent-foreground: oklch(0.32 0.12 245);
-  --sidebar-border: oklch(0.32 0.12 245 / 0.15);
-  --sidebar-ring: oklch(0.32 0.12 245);
-  
-  /* Stippled pattern for buttons - cream dots on navy */
-  --stipple-light: radial-gradient(
-    circle at center,
-    oklch(0.965 0.008 85) 1px,
-    transparent 1px
-  );
-  /* Stippled pattern for outline buttons - navy dots on cream */
-  --stipple-dark: radial-gradient(
-    circle at center,
-    oklch(0.32 0.12 245) 1px,
-    transparent 1px
-  );
+  /* Section and header rules, and hairlines between list entries. */
+  --rule: color-mix(in srgb, var(--foreground) 40%, transparent);
+  --rule-faint: color-mix(in srgb, var(--foreground) 15%, transparent);
+
+  /* Type scale: two sizes for running text, two for small print, one leading
+     for paragraphs and a tighter one for small print. */
+  --text-caption: 0.8125rem;
+  --text-small: 0.875rem;
+  --text-body: 1rem;
+  --text-large: 1.125rem;
+  --text-h3: 1.375rem;
+  --text-h2: 1.75rem;
+  --text-display: clamp(2.125rem, 1.25rem + 3.5vw, 3.25rem);
+  --leading-body: 1.7;
+  --leading-small: 1.5;
 }
 
-.dark {
-  --paper-opacity: 0.04;
-  --ink-blend: normal;
-  --ink-text-fill: currentColor;
-  /* Dark mode - deep navy with cream text */
-  --background: oklch(0.18 0.06 245);
-  --foreground: oklch(0.92 0.02 85);
-  --card: oklch(0.22 0.07 245);
-  --card-foreground: oklch(0.92 0.02 85);
-  --popover: oklch(0.22 0.07 245);
-  --popover-foreground: oklch(0.92 0.02 85);
-  --primary: oklch(0.75 0.10 245);
-  --primary-foreground: oklch(0.18 0.06 245);
-  --secondary: oklch(0.28 0.06 245);
-  --secondary-foreground: oklch(0.92 0.02 85);
-  --muted: oklch(0.28 0.06 245);
-  --muted-foreground: oklch(0.72 0.08 85);
-  --accent: oklch(0.32 0.07 245);
-  --accent-foreground: oklch(0.92 0.02 85);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.92 0.02 85 / 0.15);
-  --input: oklch(0.92 0.02 85 / 0.15);
-  --ring: oklch(0.65 0.08 245);
-  --chart-1: oklch(0.60 0.10 245);
-  --chart-2: oklch(0.65 0.10 245);
-  --chart-3: oklch(0.70 0.10 245);
-  --chart-4: oklch(0.55 0.10 245);
-  --chart-5: oklch(0.75 0.10 245);
-  --sidebar: oklch(0.22 0.07 245);
-  --sidebar-foreground: oklch(0.92 0.02 85);
-  --sidebar-primary: oklch(0.75 0.10 245);
-  --sidebar-primary-foreground: oklch(0.18 0.06 245);
-  --sidebar-accent: oklch(0.28 0.06 245);
-  --sidebar-accent-foreground: oklch(0.92 0.02 85);
-  --sidebar-border: oklch(0.92 0.02 85 / 0.15);
-  --sidebar-ring: oklch(0.65 0.08 245);
+@media (max-width: 700px) {
+  :root { --text-h2: 1.5rem; }
 }
 
 @layer base {
@@ -151,6 +52,7 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Bitter', Georgia, serif;
     font-weight: 500;
+    line-height: 1.3;
     letter-spacing: -0.02em;
     text-wrap: balance;
   }
@@ -162,19 +64,26 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
   }
-  * {
-    @apply border-border outline-ring/50;
-  }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
     /* Keep the negative-z paper layer above the body paint and below all content. */
     isolation: isolate;
-    font-size: 1rem;
-    line-height: 1.65;
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
     overflow-wrap: break-word;
   }
-  .project-description p a {
-    @apply text-foreground underline;
+  /* Links in running text get a hairline underline that darkens on hover.
+     Navigation and actions use .text-link; footnote markers stay plain. */
+  main :where(p, li, h3, td, caption, figcaption) a:not(.text-link, [data-footnote-ref], [data-footnote-backref]) {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color 150ms ease;
+  }
+  main :where(p, li, h3, td, caption, figcaption) a:not(.text-link, [data-footnote-ref], [data-footnote-backref]):hover {
+    text-decoration-color: currentColor;
   }
 }
 
@@ -194,17 +103,16 @@
     gap: 0.5rem 1.5rem;
   }
   .site-header-inner { border-bottom: 1px solid var(--rule); padding-bottom: 1rem; }
-  .site-name { font-family: 'Bitter', Georgia, serif; font-size: 1.75rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.03em; text-decoration: none; }
-  .site-role { font-size: 0.875rem; color: var(--muted-foreground); }
-  .site-footer { padding-bottom: 2rem; font-size: 0.8125rem; color: var(--muted-foreground); }
+  .site-name { font-family: 'Bitter', Georgia, serif; font-size: var(--text-h2); font-weight: 600; line-height: 1.2; letter-spacing: -0.03em; text-decoration: none; }
+  .site-role { font-size: var(--text-small); color: var(--muted-foreground); }
+  .site-footer { padding-bottom: 2rem; font-size: var(--text-caption); color: var(--muted-foreground); }
   .site-footer-inner { border-top: 1px solid var(--rule); padding-top: 1rem; }
   .page-section { position: relative; padding-bottom: 3rem; scroll-margin-top: 1.5rem; }
   .section-inner { border-top: 1px solid var(--rule); padding-top: 1.25rem; }
   .section-title {
     display: table;
     max-width: 100%;
-    font-size: 1.75rem;
-    line-height: 1.3;
+    font-size: var(--text-h2);
     margin-bottom: 1.75rem;
     letter-spacing: -0.025em;
   }
@@ -214,9 +122,9 @@
     align-items: baseline;
     gap: 0.3em;
     padding-block: 0.5rem;
-    font-size: 0.875rem;
+    font-size: var(--text-small);
     font-weight: 600;
-    line-height: 1.5;
+    line-height: var(--leading-small);
     color: var(--foreground);
     text-decoration: underline;
     text-decoration-color: transparent;
@@ -225,7 +133,7 @@
     transition: text-decoration-color 150ms ease;
   }
   .text-link:hover { text-decoration-color: currentColor; }
-  .page-navigation { font-size: 0.875rem; }
+  .page-navigation { font-size: var(--text-small); }
   .navigation-label { font-weight: 500; color: var(--muted-foreground); margin-bottom: 0.75rem; }
   .page-navigation ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.5rem; }
   .page-navigation li { display: flex; align-items: center; gap: 0.625rem; }
@@ -291,15 +199,13 @@
   @media (max-width: 700px) {
     .site-header { padding-top: 1.75rem; }
     .site-header-inner { align-items: flex-start; flex-direction: column; }
-    .site-name { font-size: 1.5rem; }
     .page-navigation ul { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
-    .section-title { font-size: 1.5rem; }
   }
   @media (pointer: coarse) {
     .text-link, .page-navigation a { padding-block: 0.75rem; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .text-link { transition: none; }
+    .text-link, main a { transition: none; }
   }
   @media print, (forced-colors: active), (prefers-contrast: more) {
     :is(main, #hero) :is(h1, h2, h3, p, img) { mix-blend-mode: normal; }

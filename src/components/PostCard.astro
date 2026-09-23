@@ -30,15 +30,7 @@ const { slug, title, description, publishedAt, tags = [] } = Astro.props;
   .post-card:last-child { padding-bottom: 0; }
 
   .post-card + .post-card {
-    border-top: 1px solid var(--border);
-  }
-
-  a {
-    color: inherit;
-    text-decoration: underline;
-    text-decoration-color: color-mix(in srgb, currentColor 30%, transparent);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 4px;
+    border-top: 1px solid var(--rule-faint);
   }
 
   .post-meta {
@@ -47,30 +39,17 @@ const { slug, title, description, publishedAt, tags = [] } = Astro.props;
     gap: 0.45rem;
     margin-top: 0.5rem;
     color: var(--muted-foreground);
-    font-size: 0.75rem;
+    font-size: var(--text-caption);
   }
 
   h3 {
     margin: 0 0 0.375rem;
-    font-size: 1.375rem;
-    line-height: 1.35;
+    font-size: var(--text-h3);
   }
 
   p {
     margin: 0;
     color: var(--muted-foreground);
-    font-size: 0.9375rem;
-    line-height: 1.6;
-  }
-
-  a:hover,
-  a:focus-visible {
-    text-decoration-color: currentColor;
-  }
-
-  a:focus-visible {
-    outline: 2px solid var(--ring);
-    outline-offset: 0.4rem;
   }
 
 </style>

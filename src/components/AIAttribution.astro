@@ -36,15 +36,14 @@ const { statement, tools } = Astro.props;
 
   h2 {
     margin: 0;
-    font-size: 1rem;
+    font-size: var(--text-body);
   }
 
   p {
     margin: 0;
     padding-block: 0.75rem;
     color: var(--muted-foreground);
-    font-size: 0.95rem;
-    line-height: 1.65;
+    font-size: var(--text-body);
   }
 
   .tools-row {
@@ -56,7 +55,7 @@ const { statement, tools } = Astro.props;
 
   .tools-label {
     color: var(--muted-foreground);
-    font-size: 0.875rem;
+    font-size: var(--text-small);
     font-weight: 600;
   }
 
@@ -70,7 +69,7 @@ const { statement, tools } = Astro.props;
   }
 
   li {
-    font-size: 0.8rem;
+    font-size: var(--text-caption);
   }
 
   li + li::before {

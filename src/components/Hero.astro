@@ -31,15 +31,14 @@ import Navigation from './Navigation';
   h1 {
     width: fit-content;
     max-width: 100%;
-    font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+    font-size: var(--text-display);
     line-height: 1.12;
     letter-spacing: -0.04em;
   }
   .hero-description {
     max-width: 54ch;
     margin-top: 1.5rem;
-    font-size: 1.0625rem;
-    line-height: 1.75;
+    font-size: var(--text-large);
   }
   .hero-aside { border-left: 1px solid var(--rule); padding-left: 1.5rem; }
   @media (max-width: 700px) {

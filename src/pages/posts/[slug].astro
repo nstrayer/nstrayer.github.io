@@ -75,35 +75,33 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     gap: 0.45rem;
     margin-bottom: 1rem;
     color: var(--muted-foreground);
-    font-size: 0.8125rem;
+    font-size: var(--text-caption);
   }
 
   h1 {
     max-width: 42rem;
     margin: 0;
-    font-size: clamp(2rem, 5vw, 3.25rem);
-    line-height: 1.15;
+    font-size: var(--text-display);
+    line-height: 1.12;
   }
 
   .post-header > p:not(.updated) {
     max-width: 38rem;
     margin: 1.25rem 0 0;
     color: var(--muted-foreground);
-    font-size: 1.12rem;
-    line-height: 1.7;
+    font-size: var(--text-large);
   }
 
   .updated {
     margin: 0.75rem 0 0;
     color: var(--muted-foreground);
-    font-size: 0.8rem;
+    font-size: var(--text-caption);
     font-style: italic;
   }
 
   .post-body {
     color: var(--foreground);
-    font-size: 1.05rem;
-    line-height: 1.85;
+    font-size: var(--text-large);
   }
 
   .post-body :global(p),
@@ -117,21 +115,14 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
   .post-body :global(h2),
   .post-body :global(h3) {
     margin: 2.75rem 0 1rem;
-    line-height: 1.25;
   }
 
   .post-body :global(h2) {
-    font-size: 1.75rem;
+    font-size: var(--text-h2);
   }
 
   .post-body :global(h3) {
-    font-size: 1.35rem;
-  }
-
-  .post-body :global(a) {
-    color: var(--foreground);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.2em;
+    font-size: var(--text-h3);
   }
 
   .post-body :global(ul),
@@ -149,21 +140,20 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     border-left: 1px solid var(--rule);
     color: var(--muted-foreground);
     font-family: 'Bitter', Georgia, serif;
-    font-size: 1.12rem;
   }
 
   .post-body :global(code) {
     padding: 0.15em 0.35em;
-    border: 1px solid var(--border);
-    background: var(--card);
+    border: 1px solid var(--rule-faint);
+    background: var(--paper-light);
     font-size: 0.88em;
   }
 
   .post-body :global(pre) {
     overflow-x: auto;
     padding: 1.25rem;
-    border: 1px solid var(--border);
-    background: var(--card);
+    border: 1px solid var(--rule-faint);
+    background: var(--paper-light);
   }
 
   .post-body :global(pre code) {
@@ -179,15 +169,15 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     margin: 2rem 0;
     border-collapse: collapse;
     border-block: 1.5px solid var(--foreground);
-    font-size: 0.94rem;
+    font-size: var(--text-body);
     font-variant-numeric: tabular-nums;
-    line-height: 1.45;
+    line-height: var(--leading-small);
   }
 
   .post-body :global(th),
   .post-body :global(td) {
     padding: 0.5rem 1.25rem 0.5rem 0;
-    border-bottom: 1px solid color-mix(in srgb, var(--foreground) 14%, transparent);
+    border-bottom: 1px solid var(--rule-faint);
     text-align: left;
     vertical-align: top;
   }
@@ -222,8 +212,8 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     caption-side: bottom;
     padding: 0.7rem 0 0;
     color: var(--muted-foreground);
-    font-size: 0.82rem;
-    line-height: 1.5;
+    font-size: var(--text-caption);
+    line-height: var(--leading-small);
     text-align: left;
   }
 
@@ -231,13 +221,13 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     max-width: 100%;
     height: auto;
     margin: 2rem 0;
-    border: 1px solid var(--border);
+    border: 1px solid var(--rule-faint);
   }
 
   .post-body :global(hr) {
     margin: 3rem 0;
     border: 0;
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--rule-faint);
   }
 
   @media (max-width: 640px) {

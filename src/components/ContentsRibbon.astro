@@ -131,14 +131,14 @@ import { navItems } from './Navigation';
   }
   .contents-name {
     font-family: 'Bitter', Georgia, serif;
-    font-size: 1.5rem;
+    font-size: var(--text-h2);
     font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.03em;
   }
   .contents-label {
     margin: 2.5rem 0 0.5rem;
-    font-size: 0.875rem;
+    font-size: var(--text-small);
     font-weight: 500;
     color: var(--muted-foreground);
   }
@@ -148,7 +148,7 @@ import { navItems } from './Navigation';
     padding: 0;
     border-top: 1px solid var(--rule);
   }
-  .contents-sheet li { border-bottom: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent); }
+  .contents-sheet li { border-bottom: 1px solid var(--rule-faint); }
   .contents-sheet li a {
     display: flex;
     align-items: center;
