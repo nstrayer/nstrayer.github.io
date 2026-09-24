@@ -4,8 +4,6 @@
    color (muted text, rules) derives from --foreground. */
 :root {
   --background: #f4f1e9;
-  /* Slightly lighter than the paper, for code. */
-  --paper-light: oklch(0.975 0.006 85);
   /* Texturelabs Paper 373. Keep its grain below the ink, with quiet tonal variation. */
   --paper-texture: image-set(
     url('../assets/paper-1920.webp') 1x,
@@ -57,6 +55,8 @@
     text-wrap: balance;
   }
   p, li, figcaption, blockquote { text-wrap: pretty; }
+  /* DM Mono is the monospace companion to DM Sans. */
+  code, kbd, samp, pre { font-family: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, monospace; }
   a:focus-visible, summary:focus-visible {
     outline: 2px solid var(--foreground);
     outline-offset: 5px;
@@ -165,6 +165,9 @@
 
   /* Text and images print onto the paper: white areas take on its tone and grain. */
   :is(main, #hero) :is(h1, h2, h3, p, img) { mix-blend-mode: var(--ink-blend); }
+  /* Safari draws the fixed paper sheet on its own layer and only blends content that is
+     also on a layer, so images (where the blend is visible) get one of their own. */
+  :is(main, #hero) img { transform: translateZ(0); }
   @supports (background-clip: text) or (-webkit-background-clip: text) {
     .ink-heading {
       --ink-wash: color-mix(in srgb, var(--foreground) var(--ink-coverage), transparent);

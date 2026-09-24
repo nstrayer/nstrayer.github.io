@@ -151,23 +151,24 @@ const { title, description, publishedAt, updatedAt, tags, ai } = post.data;
     font-family: 'Bitter', Georgia, serif;
   }
 
+  /* Code is set in DM Mono on a faint ink tint rather than in a bordered box. */
   .post-body :global(code) {
-    padding: 0.15em 0.35em;
-    border: 1px solid var(--rule-faint);
-    background: var(--paper-light);
-    font-size: 0.88em;
+    padding: 0.1em 0.3em;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--foreground) 7%, transparent);
+    font-size: 0.875em;
   }
 
   .post-body :global(pre) {
     overflow-x: auto;
-    padding: 1.25rem;
-    border: 1px solid var(--rule-faint);
-    background: var(--paper-light);
+    padding: 1rem 1.25rem;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--foreground) 5%, transparent);
+    line-height: var(--leading-small);
   }
 
   .post-body :global(pre code) {
     padding: 0;
-    border: 0;
     background: transparent;
   }
 

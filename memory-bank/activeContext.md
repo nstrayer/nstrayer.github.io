@@ -63,7 +63,17 @@ September 22, 2026 design sweep (goal: warm printed page, elegant and crisp, not
 
 Third pass: project titles are now sentence case with no trailing periods, and every description line ends in punctuation. Spelling is fixed, stray `</li>` and unclosed `<a>` tags are repaired, and "Phewas-ME" is now "PheWAS-ME". The Positron entry is still the only one with a category and caption. Separators are `·` everywhere, page titles use " — ", the CV and Resume link rows line up, and `global.css` defines `.sr-only` so the Markdown "Footnotes" label is hidden. Footnotes are small and muted below a short rule, and post lists have their markers back (Tailwind preflight removes them).
 
-Still open from the sweep: quieter code styling, optical centering of the intro, ribbon overlap on phones, the favicon, social meta tags, post copy typos, and dead code (Skills, Card, SectionDivider, `ui/*`, WebGL; the Tailwind utilities are unused apart from preflight).
+September 24, 2026, final design pass:
+- **Safari image blending:** Mobile Safari didn't multiply-blend images against the fixed paper layer, so white-backed images such as the DataDrivenCV logo showed as white boxes. Giving content images their own compositing layer (`transform: translateZ(0)`) fixes it. Checked in the iOS Simulator: 18.9% of the page area was pure white before the fix and 0% after.
+- **Code:** set in DM Mono (loaded with the other Google Fonts) on a faint ink tint, 7% for inline code and 5% for blocks, with no border. `--paper-light` is gone.
+- **Intro:** extra bottom padding of `8vh` lifts it to the optical center, and the headline's letter spacing went from -0.04em to -0.025em.
+- **Ribbon:** the phone menu ribbon slides up out of view while scrolling down (past 120px) and returns on any scroll up. Motion is disabled for reduced-motion users.
+- **Posts page:** `/posts/` uses the same centered 45rem column as post pages.
+- **Paper texture:** `scripts/prepare-paper-texture.mjs` now divides the photo by a heavily blurred copy, keeping 20% of the large-scale variation. Blotches and dark edges drop by about 4–5×, and the fine grain is kept.
+
+Horizontal scroll on the user's phone: not reproduced in Chrome emulation (240–430px) or in Safari in the iOS Simulator. Waiting on the page, browser, and text-size details from the user.
+
+Still open (content and cleanup): project categories and captions beyond Positron, post copy typos, the AI note that lists Codex while saying no AI was used, "tech lead" in constants vs "principal software engineer" in the intro, the favicon, social meta tags, and dead code (Skills, Card, SectionDivider, `ui/*`, WebGL, React; the Tailwind utilities are unused apart from preflight).
 
 The user prefers sentence-case labels and understated print cues. They dislike all-caps text and literal publication conventions such as "Fig. 01"; favor typography, spacing, alignment, and fine rules over decorative numbering.
 

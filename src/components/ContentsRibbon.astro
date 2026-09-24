@@ -44,6 +44,17 @@ import Navigation from './Navigation';
   // Following a link should reveal the page, not leave the sheet on top of it.
   links.forEach((link) => link.addEventListener('click', () => sheet?.hidePopover()));
 
+  // Tuck the ribbon away while reading down the page so it never sits over the text;
+  // it returns as soon as the reader scrolls back up or nears the top.
+  const ribbon = document.querySelector<HTMLButtonElement>('.ribbon:not(.ribbon--close)');
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (Math.abs(y - lastY) < 8) return;
+    ribbon?.classList.toggle('is-tucked', y > lastY && y > 120);
+    lastY = y;
+  }, { passive: true });
+
   // Popovers normally close on Escape, but not every browser does so reliably.
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && sheet?.matches(':popover-open')) sheet.hidePopover();
@@ -84,7 +95,9 @@ import Navigation from './Navigation';
     justify-content: center;
     align-items: flex-start;
     cursor: pointer;
+    transition: transform 200ms ease;
   }
+  .ribbon.is-tucked:not(:focus-visible) { transform: translateY(-100%); }
   .ribbon-cloth {
     display: flex;
     justify-content: center;
@@ -154,6 +167,9 @@ import Navigation from './Navigation';
       .ribbon { display: flex; }
       .contents-sheet:popover-open { display: flex; }
     }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ribbon { transition: none; }
   }
   @media print {
     .ribbon, .contents-sheet { display: none !important; }

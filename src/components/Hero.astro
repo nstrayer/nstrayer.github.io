@@ -26,14 +26,16 @@ import Navigation from './Navigation';
     display: grid;
     grid-template-columns: minmax(0, 3fr) minmax(11rem, 1fr);
     gap: clamp(2rem, 5vw, 4rem);
-    padding-block: 3rem 3.5rem;
+    /* Extra room below lifts the intro to the page's optical center, a little above
+       the geometric middle of the space under the header. */
+    padding-block: 3rem calc(3.5rem + 8vh);
   }
   h1 {
     width: fit-content;
     max-width: 100%;
     font-size: var(--text-display);
     line-height: 1.12;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.025em;
   }
   .hero-description {
     max-width: 54ch;
@@ -42,7 +44,7 @@ import Navigation from './Navigation';
   }
   .hero-aside { border-left: 1px solid var(--rule); padding-left: 1.5rem; }
   @media (max-width: 700px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 1.75rem; padding-block: 2rem 2.75rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 1.75rem; padding-block: 2rem calc(2.75rem + 8vh); }
     .hero-aside { border-left: 0; border-top: 1px solid var(--rule); padding: 1.25rem 0 0; }
     /* The contents ribbon replaces this list wherever it can open. */
     @supports selector(:popover-open) {
